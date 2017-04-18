@@ -1,0 +1,17 @@
+.v <- function(x) as.numeric(x)
+
+propagate <- function(..., method=getOption("errors.propagation", "taylor-first-order")) {
+  if (method == "taylor-first-order")
+    sqrt(colSums(rbind(...)^2))
+  else {
+    warning("error propagation '", method, "' not supported, falling back to 'taylor-first-order'")
+    options(errors.propagation = "taylor-first-order")
+    propagate(...)
+  }
+}
+
+cummatrix <- function(x, fill=0) {
+  t(sapply(seq_len(length(x)), function(lag) {
+    c(rep(fill, lag-1), x[1:(length(x)-lag+1)])
+  }))
+}
