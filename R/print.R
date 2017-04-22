@@ -18,6 +18,7 @@ print.errors <- function(x, ...) {
 #'
 #' Format errors for pretty printing.
 #'
+#' @param x an \code{errors} object.
 #' @param digits how many significant digits are to be used for errors. The default,
 #' \code{NULL}, uses \code{getOption("errors.digits", 1)}.
 #' @param scientific logical specifying whether the elements should be
@@ -56,7 +57,7 @@ format.errors = function(x,
     append[] <- ")"
     err <- err * 10^(pmax(0, value_digits-1))
   } else {
-    sep <- " ± "
+    sep <- " +/- "
     prepend[cond] <- "("
     append[cond] <- ")"
   }

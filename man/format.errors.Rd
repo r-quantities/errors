@@ -8,6 +8,8 @@
   notation = getOption("errors.notation", "parenthesis"), ...)
 }
 \arguments{
+\item{x}{an \code{errors} object.}
+
 \item{digits}{how many significant digits are to be used for errors. The default,
 \code{NULL}, uses \code{getOption("errors.digits", 1)}.}
 
