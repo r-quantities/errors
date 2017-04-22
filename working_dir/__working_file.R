@@ -17,3 +17,9 @@ mdat <- matrix(c(1,2,3, 11,12,13), nrow = 2, ncol = 3, byrow = TRUE,
                                c("C.1", "C.2", "C.3")))
 errors(mdat) <- 0.1
 mdat
+
+x <- set_errors(rep(11111.22222, 8),
+                c(12345678, 1234.5678, 12.345678, 1.2345678, .12345678, .012345678, .000012345678, .000000012345678))
+x[1]
+format(data.frame(x=x), scientific=TRUE)
+print(set_errors(1.6e-19, 1.45e-21), digits=2)
