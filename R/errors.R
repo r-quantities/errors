@@ -26,6 +26,7 @@
 #' x
 #' x^2 + x
 #' @docType package
+#' @import stats
 #' @name errors
 NULL
 
