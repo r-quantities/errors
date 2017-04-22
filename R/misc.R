@@ -24,7 +24,7 @@ rep.errors <- function(x, ...)
 
 #' @export
 c.errors <- function(..., recursive = FALSE)
-  structure(NextMethod(), "errors" = c(sapply(list(...), errors)), class = "errors")
+  structure(NextMethod(), "errors" = c(unlist(sapply(list(...), errors))), class = "errors")
 
 .as.errors <- function(x, value) {
   x = unclass(x)
