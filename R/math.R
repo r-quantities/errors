@@ -31,13 +31,13 @@ signif.errors <- floor.errors
 
 #' @export
 exp.errors <- function(x) {
-  err <- errors(x) * exp(.v(x))
+  err <- abs(errors(x) * exp(.v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
 #' @export
 log.errors <- function(x, base = exp(1)) {
-  err <- errors(x) / .v(x) / log(base)
+  err <- abs(errors(x) / .v(x) / log(base))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
@@ -51,25 +51,25 @@ log2.errors <- function(x) log(x, 2)
 
 #' @export
 log1p.errors <- function(x) {
-  err <- errors(1+x) / .v(1+x)
+  err <- abs(errors(1+x) / .v(1+x))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
 #' @export
 expm1.errors <- function(x) {
-  err <- errors(x) * exp(.v(x))
+  err <- abs(errors(x) * exp(.v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
 #' @export
 sin.errors <- function(x) {
-  err <- errors(x) * cos(.v(x))
+  err <- abs(errors(x) * cos(.v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
 #' @export
 cos.errors <- function(x) {
-  err <- errors(x) * sin(.v(x))
+  err <- abs(errors(x) * sin(.v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
@@ -104,14 +104,14 @@ atan.errors <- function(x) {
 #' @export
 #' @method sinpi errors
 sinpi.errors <- function(x) {
-  err <- errors(x) * pi * cos(pi * .v(x))
+  err <- abs(errors(x) * pi * cos(pi * .v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
 #' @export
 #' @method cospi errors
 cospi.errors <- function(x) {
-  err <- errors(x) * pi * sin(.v(x))
+  err <- abs(errors(x) * pi * sin(.v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
@@ -124,13 +124,13 @@ tanpi.errors <- function(x) {
 
 #' @export
 sinh.errors <- function(x) {
-  err <- errors(x) * cosh(.v(x))
+  err <- abs(errors(x) * cosh(.v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
 #' @export
 cosh.errors <- function(x) {
-  err <- errors(x) * cosh(.v(x))
+  err <- abs(errors(x) * sinh(.v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
@@ -154,7 +154,7 @@ acosh.errors <- function(x) {
 
 #' @export
 atanh.errors <- function(x) {
-  err <- errors(x) / (1 - .v(x)^2)
+  err <- abs(errors(x) / (1 - .v(x)^2))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 
