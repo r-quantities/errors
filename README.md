@@ -20,7 +20,7 @@ x
 # errors: 0.1 0.2 0.3 0.4 0.5 ...
 #  [1]  1  2  3  4  5  6  7  8  9 10
 
-df <- data.frame(x=x)
+df <- as.data.frame(x)
 
 (df$`3x` <- 3*x)
 # errors: 0.3 0.6 0.9 1.2 1.5 ...
