@@ -2,7 +2,7 @@
 
 #' @export
 sign.errors <- function(x) {
-  x <- unclass(x)
+  x <- .v(x)
   NextMethod()
 }
 
