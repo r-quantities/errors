@@ -40,8 +40,8 @@ format.errors = function(x,
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
-  exponent <- floor(log10(.v(x)))
-  value_digits <- digits - floor(log10(errors(x)))
+  exponent <- get_exponent(x)
+  value_digits <- digits - get_exponent(errors(x))
 
   err <- signif(errors(x), digits)
   value <- signif(.v(x), exponent + value_digits)
@@ -49,7 +49,7 @@ format.errors = function(x,
   cond <- scientific || (exponent > 4 || exponent < -3)
   err[cond] <- err[cond] * 10^(-exponent[cond])
   value[cond] <- value[cond] * 10^(-exponent[cond])
-  value_digits[cond] <- digits - floor(log10(err))[cond]
+  value_digits[cond] <- digits - get_exponent(err)[cond]
   value_digits[is.infinite(value_digits)] <- 0
 
   if (notation == "parenthesis") {

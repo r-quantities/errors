@@ -1,5 +1,7 @@
 .v <- function(x) as.numeric(x)
 
+get_exponent <- function(x) floor(log10(abs(.v(x))))
+
 propagate <- function(..., method=getOption("errors.propagation", "taylor-first-order")) {
   if (method == "taylor-first-order")
     sqrt(colSums(rbind(...)^2))
