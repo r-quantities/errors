@@ -13,8 +13,5 @@ Depends:
     R (>= 3.0.0)
 Suggests:
     testthat,
-    knitr,
-    rmarkdown,
     covr
 RoxygenNote: 6.0.1
-VignetteBuilder: knitr
