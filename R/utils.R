@@ -5,11 +5,11 @@ get_exponent <- function(x) floor(log10(abs(.v(x))))
 propagate <- function(..., method=getOption("errors.propagation", "taylor-first-order")) {
   if (method == "taylor-first-order")
     sqrt(colSums(rbind(...)^2))
-  else {
+  else { # nocov start
     warning("error propagation '", method, "' not supported, falling back to 'taylor-first-order'")
     options(errors.propagation = "taylor-first-order")
     propagate(...)
-  }
+  } # nocov end
 }
 
 cummatrix <- function(x, fill=0) {
