@@ -19,6 +19,12 @@ Maintainer: ‘Iñaki Ucar <i.ucar86@gmail.com>’
 
 New submission
 
+Found the following (possibly) invalid URLs:
+  URL: https://cran.rstudio.com/package=errors
+    From: README.md
+    Status: 404
+    Message: Not Found
+
 ## Downstream dependencies
 
 There are currently no downstream dependencies for this package.
