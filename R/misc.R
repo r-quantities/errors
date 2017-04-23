@@ -26,13 +26,6 @@ rep.errors <- function(x, ...)
 c.errors <- function(..., recursive = FALSE)
   structure(NextMethod(), "errors" = c(unlist(sapply(list(...), errors))), class = "errors")
 
-.as.errors <- function(x, value) {
-  x = unclass(x)
-  class(x) = "errors"
-  attr(x, "errors") = value
-  x
-}
-
 #' @export
 diff.errors <- function(x, lag = 1L, differences = 1L, ...) {
   ismat <- is.matrix(x)

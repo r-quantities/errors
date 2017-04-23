@@ -1,3 +1,4 @@
+# nocov start
 #' @export
 plot.errors <- function(x, y, ...) {
   NextMethod()
@@ -13,3 +14,4 @@ plot.errors <- function(x, y, ...) {
   if (inherits(y, "errors"))
     graphics::segments(x, errors_min(y), x, errors_max(y))
 }
+# nocov end

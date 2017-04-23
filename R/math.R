@@ -2,7 +2,7 @@
 
 #' @export
 sign.errors <- function(x) {
-  x <- .v(x)
+  x <- unclass(x)
   NextMethod()
 }
 
@@ -111,7 +111,7 @@ sinpi.errors <- function(x) {
 #' @export
 #' @method cospi errors
 cospi.errors <- function(x) {
-  err <- abs(errors(x) * pi * sin(.v(x)))
+  err <- abs(errors(x) * pi * sin(pi * .v(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 

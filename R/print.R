@@ -9,7 +9,7 @@ print.errors <- function(x, ...) {
     attr(y, "errors") <- NULL
     print(y, ...)
   } else {
-    cat(format(x, ...), "\n")
+    cat(format(x, ...), "\n", sep="")
   }
   invisible(x)
 }
