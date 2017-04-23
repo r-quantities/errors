@@ -49,8 +49,8 @@ mean.errors <- function(x, ...) {
 
 #' @name mean.errors
 #' @export
-weighted.mean.errors <- function(x, w, ...) {
-  err <- max(weighted.mean(errors(x), w), sd(.v(x))/sqrt(length(x)))
+weighted.mean.errors <- function(x, ...) {
+  err <- max(weighted.mean(errors(x), ...), sd(.v(x))/sqrt(length(x)))
   structure(NextMethod(), "errors" = err, class = "errors")
 }
 

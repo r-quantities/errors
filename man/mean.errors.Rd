@@ -10,7 +10,7 @@
 \usage{
 \method{mean}{errors}(x, ...)
 
-\method{weighted.mean}{errors}(x, w, ...)
+\method{weighted.mean}{errors}(x, ...)
 
 \method{median}{errors}(x, ...)
 }
