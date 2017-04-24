@@ -3,7 +3,7 @@
 errors: Error Propagation for R Vectors
 =======================================
 
-[![Build Status](https://travis-ci.org/Enchufa2/errors.svg?branch=master)](https://travis-ci.org/Enchufa2/errors) [![Coverage Status](https://codecov.io/gh/Enchufa2/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/Enchufa2/errors) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors) [![Downloads](http://cranlogs.r-pkg.org/badges/errors)](https://cran.rstudio.com/package=errors)
+[![Build Status](https://travis-ci.org/Enchufa2/errors.svg?branch=master)](https://travis-ci.org/Enchufa2/errors) [![Coverage Status](https://codecov.io/gh/Enchufa2/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/Enchufa2/errors) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors) [![Downloads](http://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
 
 The **errors** package provides support for painless automatic error propagation in numerical operations and pretty printing.
 
