@@ -1,4 +1,8 @@
-## First submission
+## Resubmission
+
+## Resubmission
+
+URL pointing to CRAN fixed.
 
 This package provides support for painless automatic error propagation in numerical operations and pretty printing.
 
@@ -18,12 +22,6 @@ There were 1 NOTEs:
 Maintainer: ‘Iñaki Ucar <i.ucar86@gmail.com>’
 
 New submission
-
-Found the following (possibly) invalid URLs:
-  URL: https://cran.rstudio.com/package=errors
-    From: README.md
-    Status: 404
-    Message: Not Found
 
 ## Downstream dependencies
 
