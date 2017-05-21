@@ -1,7 +1,7 @@
 context("ops")
 
 test_that("ops work properly", {
-  xval <- 1.1:10.1
+  xval <- -4.1:5.1
   xerr <- seq(0.005, 0.05, 0.005)
   x <- set_errors(xval, xerr)
 
