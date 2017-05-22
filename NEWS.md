@@ -3,3 +3,4 @@
 ## Minor changes and fixes:
 
 * Fix exponentiation with negative base (#2).
+* Fix formatting when the value equals zero (#3).

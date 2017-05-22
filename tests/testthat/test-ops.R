@@ -21,3 +21,9 @@ test_that("ops work properly", {
   expect_equal(as.numeric(x^x), xval^xval)
   expect_equal(x %/% 3, set_errors(floor(xval/3), xerr/3))
 })
+
+test_that("particular cases work properly", {
+  x <- set_errors(10, 1)
+  expect_equal(format(x - 10), "0(1)")
+  expect_equal(format(x - x), "0(1)")
+})
