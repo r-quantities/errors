@@ -1,9 +1,6 @@
 .v <- function(x) as.numeric(x)
 
-get_exponent <- function(x) {
-  if (x != 0) floor(log10(abs(.v(x))))
-  else 0
-}
+get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)
 
 propagate <- function(..., method=getOption("errors.propagation", "taylor-first-order")) {
   if (method == "taylor-first-order")

@@ -33,4 +33,11 @@ test_that("error formatting works properly", {
                c("(1 +/- 1000)e4", "(1.1 +/- 0.1)e4", "(1.111 +/- 0.001)e4", "(1.1111 +/- 0.0001)e4",
                  "(1.11112 +/- 0.00001)e4", "(1.111122 +/- 0.000001)e4", "(1.111122222 +/- 0.000000001)e4",
                  "(1.111122222000 +/- 0.000000000001)e4"))
+
+  x <- set_errors(10, 1)
+  expect_equal(format(x - 10), "0(1)")
+  expect_equal(format(x - x), "0(1)")
+
+  x <- set_errors(0.4, 0)
+  expect_equal(format(x), "0.4(0)")
 })

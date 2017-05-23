@@ -40,11 +40,10 @@ format.errors = function(x,
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
-  exponent <- get_exponent(x)
-  value_digits <- digits - get_exponent(errors(x))
-
   err <- signif(errors(x), digits)
-  value <- signif(.v(x), exponent + value_digits)
+  exponent <- get_exponent(x)
+  value_digits <- ifelse(err, digits - get_exponent(errors(x)), getOption("digits"))
+  value <- ifelse(err, signif(.v(x), exponent + value_digits), .v(x))
 
   cond <- scientific || (exponent > 4 || exponent < -3)
   err[cond] <- err[cond] * 10^(-exponent[cond])
@@ -63,9 +62,11 @@ format.errors = function(x,
   }
   append[cond] <- paste(append[cond], "e", exponent[cond], sep="")
 
-  err <- formatC(err, format="fg", digits=digits, width=digits, decimal.mark=getOption("OutDec"))
   value <- sapply(seq_along(value), function(i) {
-    formatC(value[[i]], format="f", digits=max(0, value_digits[[i]]-1), decimal.mark=getOption("OutDec"))
+    if (err[[i]])
+      formatC(value[[i]], format="f", digits=max(0, value_digits[[i]]-1), decimal.mark=getOption("OutDec"))
+    else as.character(value[[i]])
   })
+  err <- formatC(err, format="fg", digits=digits, width=digits, decimal.mark=getOption("OutDec"))
   paste(prepend, value, sep, err, append, sep="")
 }
