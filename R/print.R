@@ -1,7 +1,7 @@
 #' @export
 print.errors <- function(x, ...) {
   if (is.array(x) || length(x) > 1L) {
-    err <- paste(errors(x)[1:min(5, length(errors(x)))], collapse=" ")
+    err <- paste(format(errors(x)[1:min(5, length(errors(x)))]), collapse=" ")
     if (length(errors(x)) > 5L)
       err <- paste(err, "...")
     cat("errors: ", err, "\n", sep = "")
@@ -65,7 +65,7 @@ format.errors = function(x,
   value <- sapply(seq_along(value), function(i) {
     if (err[[i]])
       formatC(value[[i]], format="f", digits=max(0, value_digits[[i]]-1), decimal.mark=getOption("OutDec"))
-    else as.character(value[[i]])
+    else format(value[[i]])
   })
   err <- formatC(err, format="fg", digits=digits, width=digits, decimal.mark=getOption("OutDec"))
   paste(prepend, value, sep, err, append, sep="")
