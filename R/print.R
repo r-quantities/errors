@@ -67,6 +67,7 @@ format.errors = function(x,
       formatC(value[[i]], format="f", digits=max(0, value_digits[[i]]-1), decimal.mark=getOption("OutDec"))
     else format(value[[i]])
   })
-  err <- formatC(err, format="fg", digits=digits, width=digits, decimal.mark=getOption("OutDec"))
+  err <- formatC(err, format="fg", flag="#", digits=digits, width=digits, decimal.mark=getOption("OutDec"))
+  err <- sub("\\.$", "", err)
   paste(prepend, value, sep, err, append, sep="")
 }
