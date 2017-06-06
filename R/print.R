@@ -42,7 +42,7 @@ format.errors = function(x,
 
   err <- signif(errors(x), digits)
   exponent <- get_exponent(x)
-  value_digits <- ifelse(err, digits - get_exponent(errors(x)), getOption("digits"))
+  value_digits <- ifelse(err, digits - get_exponent(err), getOption("digits"))
   value <- ifelse(err, signif(.v(x), exponent + value_digits), .v(x))
 
   cond <- scientific || (exponent > 4 || exponent < -3)
