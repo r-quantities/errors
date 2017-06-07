@@ -1,7 +1,7 @@
 Package: errors
 Type: Package
 Title: Error Propagation for R Vectors
-Version: 0.0.1.9000
+Version: 0.0.2.9000
 Authors@R: c(
     person("Iñaki", "Ucar", email="i.ucar86@gmail.com", role=c("aut", "cph", "cre")))
 Description: Support for painless automatic error propagation in numerical operations.
