@@ -12,6 +12,7 @@ BugReports: https://github.com/Enchufa2/errors/issues
 Depends:
     R (>= 3.0.0)
 Suggests:
+    tibble,
     testthat,
     covr
 RoxygenNote: 6.0.1

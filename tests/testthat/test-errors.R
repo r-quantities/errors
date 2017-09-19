@@ -20,3 +20,9 @@ test_that("errors objects are correctly created", {
   expect_equal(x, set_errors(x, xerr/2))
   expect_equal(x, as.errors(x, xerr/2))
 })
+
+test_that("type_sum is available for errors objects", {
+  skip_if_not_installed("tibble")
+  library(tibble)
+  expect_equal(type_sum(set_errors(1, 0.1)), "errors")
+})

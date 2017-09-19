@@ -112,3 +112,6 @@ as.errors.default <- function(x, value = 0) set_errors(x, value)
 
 #' @export
 as.data.frame.errors <- as.data.frame.numeric
+
+#' @export type_sum.errors
+type_sum.errors <- function(x, ...) "errors"
