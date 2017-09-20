@@ -9,6 +9,7 @@ test_that("errors objects are correctly created", {
   expect_true(inherits(x, "errors"))
   expect_equal(as.numeric(x), xval)
   expect_equal(errors(x), xerr)
+  expect_equal(errors(xval), rep(0, 3))
   expect_equal(attr(x, "errors"), xerr)
   expect_equal(x, set_errors(xval, xerr))
   expect_equal(x, as.errors(xval, xerr))

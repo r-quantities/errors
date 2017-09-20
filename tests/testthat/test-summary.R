@@ -16,6 +16,9 @@ test_that("summary methods work properly", {
   expect_equal(max(x), x[length(x)])
   expect_equal(min(x), x[1])
 
+  expect_equal(range(x)[1], min(x))
+  expect_equal(range(x)[2], max(x))
+
   expect_equal(mean(x), set_errors(mean(xval), sd(xval)/sqrt(length(x))))
   expect_equal(mean(set_errors(xval, xerr*100)), set_errors(mean(xval), mean(xerr*100)))
 

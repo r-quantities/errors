@@ -1,5 +1,26 @@
 context("ops")
 
+test_that("bolean ops throw an error", {
+  x <- set_errors(1, 1)
+
+  expect_error(!x)
+  expect_error(x & x)
+  expect_error(x | x)
+  expect_error(x == x)
+  expect_error(x != x)
+  expect_error(x < x)
+  expect_error(x > x)
+  expect_error(x <= x)
+  expect_error(x >= x)
+})
+
+test_that("ops with numerics throw a warning", {
+  x <- set_errors(1, 1)
+
+  expect_warning(1 + x)
+  expect_warning(x + 1)
+})
+
 test_that("ops work properly", {
   xval <- -4.1:5.1
   xerr <- seq(0.005, 0.05, 0.005)
