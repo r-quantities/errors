@@ -92,10 +92,10 @@ errors_min.errors <- errors_min.numeric
 
 #' @name errors
 #' @export
-set_errors <- function(x, value) UseMethod("set_errors")
+set_errors <- function(x, value=0) UseMethod("set_errors")
 
 #' @export
-set_errors.numeric <- function(x, value) {
+set_errors.numeric <- function(x, value=0) {
   errors(x) <- value
   x
 }

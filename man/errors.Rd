@@ -25,7 +25,7 @@ errors_min(x)
 
 errors(x) <- value
 
-set_errors(x, value)
+set_errors(x, value = 0)
 
 as.errors(x, value = 0)
 }
