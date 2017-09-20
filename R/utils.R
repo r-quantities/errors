@@ -17,3 +17,8 @@ cummatrix <- function(x, fill=0) {
     c(rep(fill, lag-1), x[1:(length(x)-lag+1)])
   }))
 }
+
+cond2int <- function(...) {
+  args <- c(...)
+  sum(2^(seq_along(args) - 1) * args)
+}
