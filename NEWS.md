@@ -1,3 +1,13 @@
+# errors 0.0.2.9000
+
+## Minor changes and fixes:
+
+* Fix errors defined as integers (#12).
+* Do not allow boolean operators on `errors` objects (#13).
+* Give a default value to `set_errors` (#14).
+* Tidy `tibble` printing (#15).
+* Correct plot limits according to error bars (#16).
+
 # errors 0.0.2
 
 ## Minor changes and fixes:
