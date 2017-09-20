@@ -23,8 +23,10 @@ test_that("errors objects are correctly created", {
 })
 
 test_that("defaults work as expected", {
-  x <- set_errors(1:10)
-  expect_equal(errors(x), rep(0, 10))
+  xval <- c(0, NA, NaN, Inf)
+  x <- set_errors(xval)
+  expect_equal(as.numeric(x), xval)
+  expect_equal(errors(x), xval)
 })
 
 test_that("errors can be defined as integers", {

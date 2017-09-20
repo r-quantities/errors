@@ -35,9 +35,12 @@ test_that("error formatting works properly", {
                  "(1.111122222000 +/- 0.000000000001)e4"))
 
   x <- set_errors(10, 1)
-  expect_equal(format(x - 10), "0(1)")
+  expect_equal(format(x - set_errors(10)), "0(1)")
   expect_equal(format(x - x), "0(1)")
 
-  x <- set_errors(0.4, 0)
-  expect_equal(format(x), "0.4(0)")
+  x <- set_errors(c(0.4, NA, NaN, Inf))
+  expect_equal(format(x[1]), "0.4(0)")
+  expect_equal(format(x[2]), "NA(NA)")
+  expect_equal(format(x[3]), "NaN(NaN)")
+  expect_equal(format(x[4]), "Inf(Inf)")
 })
