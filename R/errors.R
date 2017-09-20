@@ -77,7 +77,7 @@ errors_min.errors <- errors_min.numeric
 
 #' @export
 `errors<-.numeric` <- function(x, value) {
-  stopifnot(inherits(value, "numeric"))
+  stopifnot(is.numeric(value))
   stopifnot(length(value) == length(x) || length(value) == 1L)
 
   if (length(value) == 1)

@@ -19,9 +19,16 @@ test_that("errors objects are correctly created", {
   errors(x) <- xerr/2
   expect_equal(x, set_errors(x, xerr/2))
   expect_equal(x, as.errors(x, xerr/2))
+})
 
+test_that("defaults work as expected", {
   x <- set_errors(1:10)
   expect_equal(errors(x), rep(0, 10))
+})
+
+test_that("errors can be defined as integers", {
+  x <- set_errors(1:3, 1:3)
+  expect_equal(errors(x), 1:3)
 })
 
 test_that("type_sum is available for errors objects", {
