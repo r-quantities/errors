@@ -59,6 +59,7 @@ class(x)
 x
 errors(x) <- seq(0.1, 0.3, 0.1)
 x
+# numeric values are automatically coerced to errors
 x^2 + x
 }
 \author{
