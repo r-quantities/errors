@@ -111,14 +111,3 @@ as.errors <- function(x, value = 0) UseMethod("as.errors")
 
 #' @export
 as.errors.default <- function(x, value = 0) set_errors(x, value)
-
-#' @export
-as.data.frame.errors <- as.data.frame.numeric
-
-#' type_sum for tidy tibble printing
-#'
-#' type_sum for tidy tibble printing
-#' @param x object of class errors
-#' @param ... ignored
-#' @export type_sum.errors
-type_sum.errors <- function(x, ...) "errors"

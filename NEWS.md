@@ -2,6 +2,7 @@
 
 ## Minor changes and fixes:
 
+* Improve support for arrays and matrices (#4).
 * `Inf`, `NaN` and `NA` values default to `Inf`, `NaN` and `NA` errors respectively (#10).
 * Fix errors defined as integers (#12).
 * Do not allow boolean operators on `errors` objects (#13).

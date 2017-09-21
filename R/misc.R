@@ -45,3 +45,25 @@ diff.errors <- function(x, lag = 1L, differences = 1L, ...) {
     r <- r[i1] - r[-length(r):-(length(r) - lag + 1L)]
   r
 }
+
+#' @export
+as.data.frame.errors <- as.data.frame.numeric
+
+#' type_sum for tidy tibble printing
+#'
+#' type_sum for tidy tibble printing
+#' @param x object of class errors
+#' @param ... ignored
+#' @export type_sum.errors
+type_sum.errors <- function(x, ...) "errors"
+
+#' @export
+as.matrix.errors <- function(x, ...)
+  structure(NextMethod(), "errors" = errors(x), class = "errors")
+
+#' @export
+t.errors <- function(x) {
+  e <- errors(x)
+  dim(e) <- dim(x)
+  structure(NextMethod(), "errors" = as.numeric(t(e)), class = "errors")
+}
