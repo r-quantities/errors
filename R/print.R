@@ -45,7 +45,7 @@ format.errors = function(x,
   value_digits <- ifelse(err, digits - get_exponent(err), getOption("digits"))
   value <- ifelse(err, signif(.v(x), exponent + value_digits), .v(x))
 
-  cond <- (scientific || (exponent > 4 || exponent < -3)) && !is.infinite(err)
+  cond <- (scientific | (exponent > 4 | exponent < -3)) & is.finite(err)
   err[cond] <- err[cond] * 10^(-exponent[cond])
   value[cond] <- value[cond] * 10^(-exponent[cond])
   value_digits[cond] <- digits - get_exponent(err)[cond]
@@ -54,7 +54,7 @@ format.errors = function(x,
   if (notation == "parenthesis") {
     sep <- "("
     append[] <- ")"
-    err <- err * 10^(pmax(0, value_digits-1))
+    err[is.finite(err)] <- err[is.finite(err)] * 10^(pmax(0, value_digits-1))
   } else {
     sep <- " +/- "
     prepend[cond] <- "("
@@ -63,7 +63,7 @@ format.errors = function(x,
   append[cond] <- paste(append[cond], "e", exponent[cond], sep="")
 
   value <- sapply(seq_along(value), function(i) {
-    if (is.na(err[[i]]) || is.nan(err[[i]]) || is.infinite(err[[i]]))
+    if (!is.finite(err[[i]]))
       format(.v(x)[[i]])
     else if (err[[i]])
       formatC(value[[i]], format="f", digits=max(0, value_digits[[i]]-1), decimal.mark=getOption("OutDec"))

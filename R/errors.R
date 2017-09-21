@@ -83,9 +83,7 @@ errors_min.errors <- errors_min.numeric
 
   if (length(value) == 1)
     value <- rep(value, length(x))
-  value[is.na(x)] <- NA
-  value[is.nan(x)] <- NaN
-  value[is.infinite(x)] <- Inf
+  value[!is.finite(x)] <- x[!is.finite(x)]
   attr(x, "errors") <- abs(value)
   class(x) <- "errors"
   x
