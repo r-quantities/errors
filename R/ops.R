@@ -31,3 +31,19 @@ Ops.errors <- function(e1, e2) {
   )
   structure(NextMethod(), "errors" = e, class = "errors")
 }
+
+#' Matrix Multiplication
+#' @name matmult
+#' @param x numeric matrix or vector
+#' @param y numeric matrix or vector
+#' @export
+`%*%` = function(x, y) UseMethod("%*%")
+
+#' @export
+`%*%.default` = function(x, y) base::`%*%`(x, y)
+
+#' @export
+`%*%.errors` = function(x, y) {
+  warning("propagation not supported, errors dropped")
+  base::`%*%`(unclass(x), unclass(y))
+}

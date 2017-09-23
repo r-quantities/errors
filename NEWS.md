@@ -4,6 +4,7 @@
 
 * Improve support for arrays and matrices (#4).
 * `Inf`, `NaN` and `NA` values default to `Inf`, `NaN` and `NA` errors respectively (#10).
+* Drop errors with a warning in matrix multiplication (#11).
 * Fix errors defined as integers (#12).
 * Do not allow boolean operators on `errors` objects (#13).
 * Give a default value to `set_errors` (#14).
