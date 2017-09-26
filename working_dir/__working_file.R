@@ -23,3 +23,40 @@ x <- set_errors(rep(11111.22222, 8),
 x[1]
 format(data.frame(x=x), scientific=TRUE)
 print(set_errors(1.6e-19, 1.45e-21), digits=2)
+
+################################################################################
+
+a <- 1:10
+b <- set_errors(a, a)
+
+rbind.errors <- function(..., deparse.level = 1) {
+  allargs <- lapply(list(...), unclass)
+  allerrs <- lapply(list(...), errors)
+  set_errors(
+    do.call(rbind, c(allargs, deparse.level=deparse.level)),
+    as.numeric(do.call(rbind, allerrs))
+  )
+}
+
+cbind.errors <- function(..., deparse.level = 1) {
+  allargs <- lapply(list(...), unclass)
+  allerrs <- lapply(list(...), errors)
+  set_errors(
+    do.call(cbind, c(allargs, deparse.level=deparse.level)),
+    as.numeric(do.call(cbind, allerrs))
+  )
+}
+
+rbind(a, a)
+rbind(b, b)
+rbind(rbind(a, a), a)
+rbind(rbind(b, b), b) # error
+rbind(a, rbind(a, a))
+rbind(b, rbind(b, b)) # error
+
+cbind(a, a)
+cbind(b, b)
+cbind(cbind(a, a), a)
+cbind(cbind(b, b), b) # error
+cbind(a, cbind(a, a))
+cbind(b, cbind(b, b)) # error
