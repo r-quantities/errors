@@ -1,4 +1,4 @@
-# errors 0.0.2.9000
+# errors 0.1.0
 
 ## Minor changes and fixes:
 

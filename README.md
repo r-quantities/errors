@@ -3,7 +3,7 @@
 errors: Error Propagation for R Vectors
 =======================================
 
-[![Build Status](https://travis-ci.org/Enchufa2/errors.svg?branch=master)](https://travis-ci.org/Enchufa2/errors) [![Coverage Status](https://codecov.io/gh/Enchufa2/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/Enchufa2/errors) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors) [![Downloads](http://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
+[![Build Status](http://travis-ci.org/Enchufa2/errors.svg?branch=master)](https://travis-ci.org/Enchufa2/errors) [![Coverage Status](http://codecov.io/gh/Enchufa2/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/Enchufa2/errors) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors) [![Downloads](http://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
 
 The **errors** package provides support for painless automatic error propagation in numerical operations and pretty printing.
 
@@ -28,6 +28,11 @@ Example
 
 ``` r
 library(errors)
+#> 
+#> Attaching package: 'errors'
+#> The following object is masked from 'package:base':
+#> 
+#>     %*%
 
 x <- 1:10
 errors(x) <- 0.1
@@ -42,10 +47,14 @@ x
 df <- as.data.frame(x)
 
 (df$`3x` <- 3*x)
+#> Warning in Ops.errors(3, x): first operand automatically coerced to an
+#> 'errors' object with zero error
 #> errors: 0.3 0.6 0.9 1.2 1.5 ...
 #>  [1]  3  6  9 12 15 18 21 24 27 30
 
 (df$`x^2` <- x^2)
+#> Warning in Ops.errors(x, 2): second operand automatically coerced to an
+#> 'errors' object with zero error
 #> errors: 0.2 0.8 1.8 3.2 5.0 ...
 #>  [1]   1   4   9  16  25  36  49  64  81 100
 

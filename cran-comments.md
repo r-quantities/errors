@@ -1,11 +1,11 @@
-## Maintenance release
+## Minor release
 
-Minor corrections and bug fixes.
+Some redesign of the inner workings, minor corrections for improved consistency and bug fixes.
 
 ## Test environments
 
-* Fedora 25 + GCC + clang (local), R 3.3.3
-* Ubuntu 12.04 + GCC (on travis-ci), R 3.3.3, 3.4.0, devel
+* Fedora 26 + GCC + clang (local), R 3.4.1
+* Ubuntu 14.04 + GCC (on travis-ci), R 3.3.3, 3.4.1, devel
 * win-builder, R devel
 
 ## R CMD check results
@@ -19,4 +19,4 @@ Maintainer: ‘Iñaki Ucar <i.ucar86@gmail.com>’
 
 ## Downstream dependencies
 
-There are currently no downstream dependencies for this package.
+There is one downstream dependency, constants, for which I'm the maintainer too.
