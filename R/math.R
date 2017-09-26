@@ -6,10 +6,8 @@ Math.errors <- function(x, ...) {
     "sign" = as.numeric(NextMethod()),
     "sqrt" = x^0.5,
     "floor" = , "ceiling" = , "trunc" = , "round" = , "signif" = {
-      err <- errors(x)
       values <- .v(NextMethod())
-      err_round <- abs(.v(x) - values)
-      set_errors(values, err + err_round)
+      set_errors(values, errors(x) + abs(.v(x) - values))
     },
     {
       e <- switch(
@@ -38,15 +36,15 @@ Math.errors <- function(x, ...) {
     },
     "cumprod" = {
       values <- NextMethod()
-      err <- propagate(cummatrix(errors(x)) * t(values / t(cummatrix(.v(x), fill=1))))
-      set_errors(values, err)
+      e <- propagate(cummatrix(errors(x)) * t(values / t(cummatrix(.v(x), fill=1))))
+      set_errors(values, e)
     },
     "cummax" = , "cummin" = {
       values <- NextMethod()
       indexes <- which(values == .v(x))
       reps <- diff(c(indexes, length(x)+1))
-      err <- rep(errors(x)[indexes], times=reps)
-      set_errors(values, err)
+      e <- rep(errors(x)[indexes], times=reps)
+      set_errors(values, e)
     },
     "lgamma" = , "gamma" = , "digamma" = , "trigamma" =
       stop("method not supported for `errors` objects")
@@ -64,6 +62,6 @@ log2.errors <- function(x) log(x, 2)
 # not a generic!
 # atan2.errors <- function(x, y) {
 #   z <- y/x
-#   err <- errors(z) / (1 + .v(z)^2)
-#   structure(NextMethod(), "errors" = err, class = "errors")
+#   e <- errors(z) / (1 + .v(z)^2)
+#   structure(NextMethod(), "errors" = e, class = "errors")
 # }
