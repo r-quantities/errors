@@ -13,8 +13,8 @@ test_that("summary methods work properly", {
   for (i in 1:length(x)) y <- y * x[i]
   expect_equal(prod(x), y)
 
-  expect_equal(max(x), x[length(x)])
-  expect_equal(min(x), x[1])
+  expect_equal(max(x), xval[length(x)] + xerr[length(x)])
+  expect_equal(min(x), xval[1] - xerr[1])
 
   expect_equal(range(x)[1], min(x))
   expect_equal(range(x)[2], max(x))

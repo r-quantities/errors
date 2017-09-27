@@ -5,21 +5,15 @@ Summary.errors <- function(..., na.rm = FALSE) {
     .Generic,
     "all" = , "any" =
       stop("method not supported for `errors` objects"),
+    "sum" = structure(NextMethod(), "errors" = propagate(cbind(errors(x))), class = "errors"),
     "prod" = {
       value <- NextMethod()
       e <- propagate(cbind(errors(x) * value / .v(x)))
-      set_errors(value, e)
+      structure(value, "errors" = e, class = "errors")
     },
-    {
-      e <- switch(
-        .Generic,
-        "sum" = propagate(cbind(errors(x))),
-        "max" = errors(x)[which.max(x)],
-        "min" = errors(x)[which.min(x)],
-        "range" = c(errors(min(x)), errors(max(x)))
-      )
-      structure(NextMethod(), "errors" = e, class = "errors")
-    }
+    "max" = NextMethod() + errors(x)[which.max(x)],
+    "min" = NextMethod() - errors(x)[which.min(x)],
+    "range" = c(min(x), max(x))
   )
 }
 

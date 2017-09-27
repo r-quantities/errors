@@ -3,6 +3,7 @@
 ## Minor changes and fixes:
 
 * Show a warning and drop errors in boolean operators instead of failing (#17).
+* `min`, `max`, `range` return numeric, including the error: value minus error, value plus error and `(min, max)` respectively (#18).
 
 # errors 0.1.0
 
