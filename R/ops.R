@@ -1,7 +1,9 @@
 #' @export
 Ops.errors <- function(e1, e2) {
-  if (.Generic %in% c("&", "|", "!", "==", "!=", "<", ">", "<=", ">="))
-    stop("boolean operators not allowed for 'errors' objects")
+  if (.Generic %in% c("&", "|", "!", "==", "!=", "<", ">", "<=", ">=")) {
+    warning("boolean operator not allowed for 'errors' objects, dropping errors")
+    return(NextMethod())
+  }
 
   if (!missing(e2)) switch(
     cond2int(!inherits(e1, "errors"), !inherits(e2, "errors")), {

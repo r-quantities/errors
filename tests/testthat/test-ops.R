@@ -1,17 +1,18 @@
 context("ops")
 
-test_that("bolean ops throw an error", {
-  x <- set_errors(1, 1)
+test_that("bolean ops throw a warning", {
+  xval <- 1
+  x <- set_errors(xval, 1)
 
-  expect_error(!x)
-  expect_error(x & x)
-  expect_error(x | x)
-  expect_error(x == x)
-  expect_error(x != x)
-  expect_error(x < x)
-  expect_error(x > x)
-  expect_error(x <= x)
-  expect_error(x >= x)
+  expect_warning(expect_equal(!x, !xval))
+  expect_warning(expect_equal(x & x, xval & xval))
+  expect_warning(expect_equal(x | x, xval | xval))
+  expect_warning(expect_equal(x == x, xval == xval))
+  expect_warning(expect_equal(x != x, xval != xval))
+  expect_warning(expect_equal(x < x, xval < xval))
+  expect_warning(expect_equal(x > x, xval > xval))
+  expect_warning(expect_equal(x <= x, xval <= xval))
+  expect_warning(expect_equal(x >= x, xval >= xval))
 })
 
 test_that("ops with numerics throw a warning", {

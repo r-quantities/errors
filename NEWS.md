@@ -1,3 +1,9 @@
+# errors 0.1.0.9000
+
+## Minor changes and fixes:
+
+* Show a warning and drop errors in boolean operators instead of failing (#17).
+
 # errors 0.1.0
 
 ## Minor changes and fixes:
