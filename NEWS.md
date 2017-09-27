@@ -4,6 +4,7 @@
 
 * Show a warning and drop errors in boolean operators instead of failing (#17).
 * `min`, `max`, `range` return numeric, including the error: value minus error, value plus error and `(min, max)` respectively (#18).
+* Use `structure` instead of `set_errors` internally (#20).
 
 # errors 0.1.0
 

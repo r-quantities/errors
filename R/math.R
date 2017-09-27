@@ -7,7 +7,8 @@ Math.errors <- function(x, ...) {
     "sqrt" = x^0.5,
     "floor" = , "ceiling" = , "trunc" = , "round" = , "signif" = {
       values <- .v(NextMethod())
-      set_errors(values, errors(x) + abs(.v(x) - values))
+      e <- errors(x) + abs(.v(x) - values)
+      structure(values, "errors" = e, class = "errors")
     },
     {
       e <- switch(
@@ -37,14 +38,14 @@ Math.errors <- function(x, ...) {
     "cumprod" = {
       values <- NextMethod()
       e <- propagate(cummatrix(errors(x)) * t(values / t(cummatrix(.v(x), fill=1))))
-      set_errors(values, e)
+      structure(values, "errors" = e, class = "errors")
     },
     "cummax" = , "cummin" = {
       values <- NextMethod()
       indexes <- which(values == .v(x))
       reps <- diff(c(indexes, length(x)+1))
       e <- rep(errors(x)[indexes], times=reps)
-      set_errors(values, e)
+      structure(values, "errors" = e, class = "errors")
     },
     "lgamma" = , "gamma" = , "digamma" = , "trigamma" =
       stop("method not supported for `errors` objects")
