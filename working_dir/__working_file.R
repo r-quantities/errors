@@ -29,34 +29,40 @@ print(set_errors(1.6e-19, 1.45e-21), digits=2)
 a <- 1:10
 b <- set_errors(a, a)
 
-rbind.errors <- function(..., deparse.level = 1) {
-  allargs <- lapply(list(...), unclass)
-  allerrs <- lapply(list(...), errors)
-  set_errors(
-    do.call(rbind, c(allargs, deparse.level=deparse.level)),
-    as.numeric(do.call(rbind, allerrs))
-  )
-}
-
-cbind.errors <- function(..., deparse.level = 1) {
-  allargs <- lapply(list(...), unclass)
-  allerrs <- lapply(list(...), errors)
-  set_errors(
-    do.call(cbind, c(allargs, deparse.level=deparse.level)),
-    as.numeric(do.call(cbind, allerrs))
-  )
-}
+x <- data.frame(a, b)
+cbind(x, a)
+cbind(x, data.frame(b))
+rbind(x, a[1:2])
+rbind(x, x[1,])
 
 rbind(a, a)
 rbind(b, b)
 rbind(rbind(a, a), a)
-rbind(rbind(b, b), b) # error
+rbind(rbind(b, b), b)
 rbind(a, rbind(a, a))
-rbind(b, rbind(b, b)) # error
+rbind(b, rbind(b, b))
 
 cbind(a, a)
 cbind(b, b)
 cbind(cbind(a, a), a)
-cbind(cbind(b, b), b) # error
+cbind(cbind(b, b), b)
 cbind(a, cbind(a, a))
-cbind(b, cbind(b, b)) # error
+cbind(b, cbind(b, b))
+
+library(dplyr)
+
+iris_e <- iris %>%
+  mutate_at(vars(-Species), funs(set_errors(., .*0.02)))
+
+aggregate(. ~ Species, data = iris_e, mean, simplify=TRUE)
+
+tapply(iris_e$Sepal.Length, iris_e$Species, mean, simplify=FALSE)
+
+by(iris_e, iris_e$Species, function(i) {
+  i$Species <- NULL
+  do.call(c, lapply(i, mean))
+})
+
+iris_e %>%
+  group_by(Species) %>%
+  summarise_all(mean)

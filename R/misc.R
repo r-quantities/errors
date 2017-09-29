@@ -1,30 +1,42 @@
 #' @export
-`[.errors` <- function(x, ...)
-  structure(NextMethod(), "errors" = errors(x)[...], class = "errors")
+`[.errors` <- function(x, ...) {
+  e <- errors(x)
+  dim(e) <- dim(x)
+  structure(NextMethod(), "errors" = as.numeric(e[...]), class = "errors")
+}
 
 #' @export
-`[[.errors` <- function(x, ...)
-  structure(NextMethod(), "errors" = errors(x)[[...]], class = "errors")
+`[[.errors` <- function(x, ...) {
+  e <- errors(x)
+  dim(e) <- dim(x)
+  structure(NextMethod(), "errors" = as.numeric(e[[...]]), class = "errors")
+}
 
 #' @export
 `[<-.errors` <- function(x, ..., value) {
-  errors(x)[...] <- errors(value)
-  NextMethod()
+  e <- errors(x)
+  e[...] <- errors(value)
+  structure(NextMethod(), "errors" = e, class = "errors")
 }
 
 #' @export
 `[[<-.errors` <- function(x, ..., value) {
-  errors(x)[[...]] <- errors(value)
-  NextMethod()
+  e <- errors(x)
+  e[[...]] <- errors(value)
+  structure(NextMethod(), "errors" = e, class = "errors")
 }
 
 #' @export
-rep.errors <- function(x, ...)
-  structure(NextMethod(), "errors" = rep(errors(x), ...), class = "errors")
+rep.errors <- function(x, ...) {
+  e <- rep(errors(x), ...)
+  structure(NextMethod(), "errors" = e, class = "errors")
+}
 
 #' @export
-c.errors <- function(..., recursive = FALSE)
-  structure(NextMethod(), "errors" = c(unlist(sapply(list(...), errors))), class = "errors")
+c.errors <- function(..., recursive = FALSE) {
+  e <- c(unlist(sapply(list(...), errors)))
+  structure(NextMethod(), "errors" = e, class = "errors")
+}
 
 #' @export
 diff.errors <- function(x, lag = 1L, differences = 1L, ...) {
@@ -47,7 +59,17 @@ diff.errors <- function(x, lag = 1L, differences = 1L, ...) {
 }
 
 #' @export
-as.data.frame.errors <- as.data.frame.numeric
+as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
+  e <- errors(x)
+  dim(e) <- dim(x)
+  e <- as.data.frame(e)
+  value <- as.data.frame(unclass(x), row.names, optional, ...)
+  if (!optional && ncol(value) == 1)
+    colnames(value) <- deparse(substitute(x))
+  for (i in seq_len(ncol(value)))
+    errors(value[[i]]) <- e[[i]]
+  value
+}
 
 #' type_sum for tidy tibble printing
 #'
@@ -67,3 +89,23 @@ t.errors <- function(x) {
   dim(e) <- dim(x)
   structure(NextMethod(), "errors" = as.numeric(t(e)), class = "errors")
 }
+
+#' @export
+rbind.errors <- function(..., deparse.level = 1) {
+  call <- as.character(match.call()[[1]])
+  allargs <- lapply(list(...), unclass)
+  names(allargs) <- sapply(substitute(list(...))[-1], deparse)
+  allerrs <- lapply(list(...), function(x) {
+    e <- errors(x)
+    dim(e) <- dim(x)
+    e
+  })
+  structure(
+    do.call(call, c(allargs, deparse.level=deparse.level)),
+    errors = as.numeric(do.call(call, allerrs)),
+    class = "errors"
+  )
+}
+
+#' @export
+cbind.errors <- rbind.errors

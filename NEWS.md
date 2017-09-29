@@ -5,12 +5,13 @@
 * Show a warning and drop errors in boolean operators instead of failing (#17).
 * `min`, `max`, `range` return numeric, including the error: value minus error, value plus error and `(min, max)` respectively (#18).
 * Use `structure` instead of `set_errors` internally (#20).
+* Improved support for matrices and data frames with the implementation of `rbind`, `cbind`, `as.data.frame` for `errors` objects (#21).
 
 # errors 0.1.0
 
 ## Minor changes and fixes:
 
-* Improve support for arrays and matrices (#4).
+* Improved support for arrays and matrices (#4).
 * `Inf`, `NaN` and `NA` values default to `Inf`, `NaN` and `NA` errors respectively (#10).
 * Drop errors with a warning in matrix multiplication (#11).
 * Fix errors defined as integers (#12).
