@@ -1,6 +1,6 @@
 ## Minor release
 
-Some redesign of the inner workings, minor corrections for improved consistency and bug fixes.
+Several bug fixes. Improved S3 method support, consistency, documentation and testing.
 
 ## Test environments
 

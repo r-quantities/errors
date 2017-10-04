@@ -1,4 +1,4 @@
-# errors 0.1.0.9000
+# errors 0.2.0
 
 ## Minor changes and fixes:
 
@@ -6,7 +6,7 @@
 * `min`, `max`, `range` return numeric, including the error: value minus error, value plus error and `(min, max)` respectively (#18).
 * Use `structure` instead of `set_errors` internally (#20).
 * Improved support for matrices and data frames with the implementation of `rbind`, `cbind`, `as.data.frame` for `errors` objects (#21).
-* Improved documentation (#19).
+* Improved documentation and testing (#19).
 
 # errors 0.1.0
 
