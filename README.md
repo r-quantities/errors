@@ -3,7 +3,7 @@
 errors: Error Propagation for R Vectors
 =======================================
 
-[![Build Status](https://travis-ci.org/Enchufa2/errors.svg?branch=master)](https://travis-ci.org/Enchufa2/errors) [![Coverage Status](https://codecov.io/gh/Enchufa2/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/Enchufa2/errors) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors) [![Downloads](https://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
+[![Build Status](https://travis-ci.org/r-quantities/errors.svg?branch=master)](https://travis-ci.org/r-quantities/errors) [![Coverage Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/r-quantities/errors) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors) [![Downloads](https://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
 
 The **errors** package provides support for painless automatic error propagation in numerical operations and pretty printing.
 
@@ -20,7 +20,7 @@ The installation from GitHub requires the [remotes](https://cran.r-project.org/p
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("Enchufa2/errors")
+remotes::install_github("r-quantities/errors")
 ```
 
 Example
