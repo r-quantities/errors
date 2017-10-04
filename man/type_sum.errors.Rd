@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{type_sum.errors}
 \alias{type_sum.errors}
-\title{type_sum for tidy tibble printing}
+\title{\code{type_sum} for Tidy \code{tibble} Printing}
 \usage{
 type_sum.errors(x, ...)
 }
@@ -12,5 +12,5 @@ type_sum.errors(x, ...)
 \item{...}{ignored}
 }
 \description{
-type_sum for tidy tibble printing
+S3 method for \code{errors} objects.
 }

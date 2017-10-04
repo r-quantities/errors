@@ -1,3 +1,21 @@
+#' @rdname groupGeneric.errors
+#'
+#' @details \subsection{\code{Ops}}{
+#' Boolean operators drop the errors (showing a warning) and operate on the
+#' numeric values. The rest of the operators propagate the error as expected from
+#' the first-order Taylor series method. Any numeric operand is automatically
+#' coerced to \code{errors} (showing a warning) with zero error.}
+#'
+#' @examples
+#' y <- set_errors(4:6, 0.2)
+#' x / sqrt(y) + y * sin(x)
+#'
+#' # numeric values are automatically coerced to errors
+#' x^2
+#'
+#' # boolean operators drop errors
+#' y > x
+#'
 #' @export
 Ops.errors <- function(e1, e2) {
   if (.Generic %in% c("&", "|", "!", "==", "!=", "<", ">", "<=", ">=")) {
@@ -35,9 +53,10 @@ Ops.errors <- function(e1, e2) {
 }
 
 #' Matrix Multiplication
-#' @name matmult
-#' @param x numeric matrix or vector
-#' @param y numeric matrix or vector
+#'
+#' Not implemented for \code{errors} objects. Errors are dropped.
+#' @name matmult.errors
+#' @inheritParams base::matmult
 #' @export
 `%*%` = function(x, y) UseMethod("%*%")
 

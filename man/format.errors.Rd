@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{format.errors}
 \alias{format.errors}
-\title{Encode errors}
+\title{Encode \code{errors}}
 \usage{
 \method{format}{errors}(x, digits = NULL, scientific = FALSE,
   notation = getOption("errors.notation", "parenthesis"), ...)
@@ -22,5 +22,13 @@ are supported through the \code{"errors.notation"} option.}
 \item{...}{ignored.}
 }
 \description{
-Format errors for pretty printing.
+Format an \code{errors} object for pretty printing.
+}
+\examples{
+x <- set_errors(1:3*100, 1:3*100 * 0.05)
+format(x)
+format(x, digits=2)
+format(x, scientific=TRUE)
+format(x, notation="plus-minus")
+
 }

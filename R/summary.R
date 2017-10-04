@@ -1,3 +1,18 @@
+#' @rdname groupGeneric.errors
+#'
+#' @details \subsection{\code{Summary}}{
+#' The methods \code{all} and \code{any} are not supported for \code{errors}
+#' objects and fail with an informative message. \code{min}, \code{max} (and
+#' \code{range}) return the minimum or (and) maximum value minus/plus its error.
+#' \code{sum} and \code{prod} propagate the error as expected from the first-order
+#' Taylor series method.}
+#'
+#' @examples
+#' c(min(x), max(x))
+#' range(x)
+#' sum(y)
+#' prod(y)
+#'
 #' @export
 Summary.errors <- function(..., na.rm = FALSE) {
   x <- c(...)

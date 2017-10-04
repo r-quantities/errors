@@ -1,22 +1,6 @@
-#' @export
-print.errors <- function(x, ...) {
-  if (is.array(x) || length(x) > 1L) {
-    e <- paste(format(errors(x)[1:min(5, length(errors(x)))]), collapse=" ")
-    if (length(errors(x)) > 5L)
-      e <- paste(e, "...")
-    cat("errors: ", e, "\n", sep = "")
-    y <- unclass(x)
-    attr(y, "errors") <- NULL
-    print(y, ...)
-  } else {
-    cat(format(x, ...), "\n", sep="")
-  }
-  invisible(x)
-}
-
-#' Encode errors
+#' Encode \code{errors}
 #'
-#' Format errors for pretty printing.
+#' Format an \code{errors} object for pretty printing.
 #'
 #' @param x an \code{errors} object.
 #' @param digits how many significant digits are to be used for errors. The default,
@@ -26,6 +10,13 @@ print.errors <- function(x, ...) {
 #' @param notation error notation; \code{"parenthesis"} and \code{"plus-minus"}
 #' are supported through the \code{"errors.notation"} option.
 #' @param ... ignored.
+#'
+#' @examples
+#' x <- set_errors(1:3*100, 1:3*100 * 0.05)
+#' format(x)
+#' format(x, digits=2)
+#' format(x, scientific=TRUE)
+#' format(x, notation="plus-minus")
 #'
 #' @export
 format.errors = function(x,
@@ -72,4 +63,35 @@ format.errors = function(x,
   e <- formatC(e, format="fg", flag="#", digits=digits, width=digits, decimal.mark=getOption("OutDec"))
   e <- sub("\\.$", "", e)
   paste(prepend, value, sep, e, append, sep="")
+}
+
+#' Print Values
+#'
+#' S3 method for \code{errors} objects.
+#'
+#' @param x an \code{errors} object.
+#' @inheritParams base::print
+#'
+#' @examples
+#' x <- set_errors(1:10, 1:10 * 0.05)
+#' print(x)
+#' print(x[1:3])
+#' print(x[1])
+#' print(x[1], digits=2)
+#' print(x[1], notation="plus-minus")
+#'
+#' @export
+print.errors <- function(x, ...) {
+  if (is.array(x) || length(x) > 1L) {
+    e <- paste(format(errors(x)[1:min(5, length(errors(x)))]), collapse=" ")
+    if (length(errors(x)) > 5L)
+      e <- paste(e, "...")
+    cat("errors: ", e, "\n", sep = "")
+    y <- unclass(x)
+    attr(y, "errors") <- NULL
+    print(y, ...)
+  } else {
+    cat(format(x, ...), "\n", sep="")
+  }
+  invisible(x)
 }
