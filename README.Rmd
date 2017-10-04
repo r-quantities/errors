@@ -45,23 +45,11 @@ x <- 1:10
 errors(x) <- 0.1
 x
 
-(x <- set_errors(1:10, seq(0.1, 1, 0.1)))
+(x <- set_errors(1:10, 1:10 * 0.05))
 
-df <- as.data.frame(x)
+(df <- data.frame(x, 3*x, x^2, sin(x), cumsum(x)))
 
-(df$`3x` <- 3*x)
-
-(df$`x^2` <- x^2)
-
-(df$`sin(x)` <- sin(x))
-
-(df$`cumsum(x)` <- cumsum(x))
-
-df
-
-options(errors.notation = "plus-minus")
-
-df
+format(df, notation="plus-minus")
 
 sum(x)
 
