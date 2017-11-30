@@ -32,7 +32,7 @@ Ops.errors <- function(e1, e2) {
     if (coercion) {
       warn_once(
         "non-'errors' operand automatically coerced to an 'errors' object with zero error",
-        fun = .Generic,
+        fun = "Ops",
         type = "coercion"
       )
       switch(coercion, e1=set_errors(e1), e2=set_errors(e2))

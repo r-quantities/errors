@@ -45,9 +45,7 @@ x
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 
 (df <- data.frame(x, 3*x, x^2, sin(x), cumsum(x)))
-#> Warning in Ops.errors(3, x): first operand automatically coerced to an
-#> 'errors' object with zero error
-#> Warning in Ops.errors(x, 2): second operand automatically coerced to an
+#> Warning: In 'Ops' : non-'errors' operand automatically coerced to an
 #> 'errors' object with zero error
 #>          x  X3...x     x.2   sin.x. cumsum.x.
 #> 1  1.00(5)  3.0(2)  1.0(1)  0.84(3)   1.00(5)
