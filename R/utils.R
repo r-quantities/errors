@@ -1,3 +1,17 @@
+.onLoad <- function(libname, pkgname) {
+  types <- c("bool", "coercion", "matmult")
+  types <- paste0("errors.warn.", types)
+  options(as.list(setNames(rep.int(TRUE, length(types)), types)))
+}
+
+warn_once <- function(message, fun, type) {
+  type <- paste0("errors.warn.", type)
+  if (getOption(type)) {
+    options(as.list(setNames(FALSE, type)))
+    warning("In '", fun, "' : ", message, call. = FALSE)
+  }
+}
+
 .v <- function(x) as.numeric(x)
 
 get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)

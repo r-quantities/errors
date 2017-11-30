@@ -38,10 +38,10 @@ error to the original error. \code{lgamma}, \code{gamma}, \code{digamma} and
 error as expected from the first-order Taylor series method.}
 
 \subsection{\code{Ops}}{
-Boolean operators drop the errors (showing a warning) and operate on the
+Boolean operators drop the errors (showing a warning once) and operate on the
 numeric values. The rest of the operators propagate the error as expected from
 the first-order Taylor series method. Any numeric operand is automatically
-coerced to \code{errors} (showing a warning) with zero error.}
+coerced to \code{errors} (showing a warning once) with zero error.}
 
 \subsection{\code{Summary}}{
 The methods \code{all} and \code{any} are not supported for \code{errors}

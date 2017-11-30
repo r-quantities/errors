@@ -1,10 +1,10 @@
 #' @rdname groupGeneric.errors
 #'
 #' @details \subsection{\code{Ops}}{
-#' Boolean operators drop the errors (showing a warning) and operate on the
+#' Boolean operators drop the errors (showing a warning once) and operate on the
 #' numeric values. The rest of the operators propagate the error as expected from
 #' the first-order Taylor series method. Any numeric operand is automatically
-#' coerced to \code{errors} (showing a warning) with zero error.}
+#' coerced to \code{errors} (showing a warning once) with zero error.}
 #'
 #' @examples
 #' y <- set_errors(4:6, 0.2)
@@ -19,19 +19,25 @@
 #' @export
 Ops.errors <- function(e1, e2) {
   if (.Generic %in% c("&", "|", "!", "==", "!=", "<", ">", "<=", ">=")) {
-    warning("boolean operator not allowed for 'errors' objects, dropping errors")
+    warn_once(
+      "boolean operators not defined for 'errors' objects, errors dropped",
+      fun = .Generic,
+      type = "bool"
+    )
     return(NextMethod())
   }
 
-  if (!missing(e2)) switch(
-    cond2int(!inherits(e1, "errors"), !inherits(e2, "errors")), {
-      warning("first operand automatically coerced to an 'errors' object with zero error")
-      e1 <- set_errors(e1)
-    }, {
-      warning("second operand automatically coerced to an 'errors' object with zero error")
-      e2 <- set_errors(e2)
+  if (!missing(e2)) {
+    coercion <- cond2int(!inherits(e1, "errors"), !inherits(e2, "errors"))
+    if (coercion) {
+      warn_once(
+        "non-'errors' operand automatically coerced to an 'errors' object with zero error",
+        fun = .Generic,
+        type = "coercion"
+      )
+      switch(coercion, e1=set_errors(e1), e2=set_errors(e2))
     }
-  )
+  }
 
   e <- switch(
     .Generic,
@@ -65,6 +71,10 @@ Ops.errors <- function(e1, e2) {
 
 #' @export
 `%*%.errors` = function(x, y) {
-  warning("propagation not supported, errors dropped")
+  warn_once(
+    "matrix multiplication not supported for 'errors' objects, errors dropped",
+    fun = .Generic,
+    type = "matmult"
+  )
   base::`%*%`(unclass(x), unclass(y))
 }

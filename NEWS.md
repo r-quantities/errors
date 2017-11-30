@@ -1,3 +1,9 @@
+# errors 0.2.0.9000
+
+## Minor changes and fixes:
+
+* Show `Ops` warnings once (#22).
+
 # errors 0.2.0
 
 ## Minor changes and fixes:
