@@ -12,6 +12,17 @@
 #'
 #' @author Iñaki Ucar
 #'
+#' @docType package
+#' @import stats
+#' @name errors-package
+NULL
+
+#' Set Measurement Errors on a Numeric Vector
+#'
+#' Set/retrieve measurement errors to/from numeric vectors.
+#'
+#' @param x a numeric object, or object of class \code{errors}.
+#'
 #' @details \code{errors} returns a vector of errors. \code{errors_max}
 #' (\code{errors_min}) returns the values plus (minus) the errors.
 #'
@@ -38,12 +49,6 @@
 #' errors_max(x)
 #' errors_min(x)
 #'
-#' @docType package
-#' @import stats
-#' @name errors
-NULL
-
-#' @param x a numeric object, or object of class \code{errors}.
 #' @export
 errors <- function(x) UseMethod("errors")
 
