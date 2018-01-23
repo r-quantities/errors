@@ -1,7 +1,6 @@
 context("ops")
 
-detach("package:errors", unload = TRUE)
-library(errors)
+.onLoad()
 
 test_that("bolean ops throw a warning once", {
   xval <- 1
