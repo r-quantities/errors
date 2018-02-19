@@ -3,6 +3,7 @@
 ## Minor changes and fixes:
 
 * Show `Ops` warnings once (#22).
+* Refactor `print` method (2c252d9).
 
 # errors 0.2.0
 
