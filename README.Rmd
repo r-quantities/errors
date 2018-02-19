@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> errors: Error Propagation for R Vectors
+# <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4" style="vertical-align:bottom"> errors: Error Propagation for R Vectors
 
 [![Build Status](https://travis-ci.org/r-quantities/errors.svg?branch=master)](https://travis-ci.org/r-quantities/errors)
 [![Coverage Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/r-quantities/errors)
