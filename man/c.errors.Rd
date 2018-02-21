@@ -4,10 +4,14 @@
 \alias{c.errors}
 \title{Combine Values into a Vector or List}
 \usage{
-\method{c}{errors}(...)
+\method{c}{errors}(..., recursive = FALSE)
 }
 \arguments{
 \item{...}{objects to be concatenated.}
+
+\item{recursive}{logical.  If \code{recursive = TRUE}, the function
+    recursively descends through lists (and pairlists) combining all
+    their elements into a vector.}
 }
 \description{
 S3 method for \code{errors} objects (see \code{\link{c}}).

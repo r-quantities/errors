@@ -78,7 +78,7 @@ rep.errors <- function(x, ...) {
 #' c(set_errors(1, 0.2), set_errors(7:9, 0.1), 3)
 #'
 #' @export
-c.errors <- function(...) {
+c.errors <- function(..., recursive = FALSE) {
   e <- c(unlist(sapply(list(...), errors)))
   structure(NextMethod(), "errors" = e, class = "errors")
 }
