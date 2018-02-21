@@ -87,7 +87,7 @@ print.errors <- function(x, ...) {
     e <- paste(format(err[1:min(5, length(err))]), collapse=" ")
     if (length(err) > 5L)
       e <- paste(e, "...")
-    cat("errors: ", e, "\n", sep = "")
+    cat("Errors: ", e, "\n", sep = "")
     x <- unclass(x)
     attr(x, "errors") <- NULL
     NextMethod()
