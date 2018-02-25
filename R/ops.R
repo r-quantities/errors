@@ -58,23 +58,23 @@ Ops.errors <- function(e1, e2) {
   structure(NextMethod(), "errors" = e, class = "errors")
 }
 
-#' Matrix Multiplication
+#' #' Matrix Multiplication
+#' #'
+#' #' Not implemented for \code{errors} objects. Errors are dropped.
+#' #' @name matmult.errors
+#' #' @inheritParams base::matmult
+#' #' @export
+#' `%*%` = function(x, y) UseMethod("%*%")
 #'
-#' Not implemented for \code{errors} objects. Errors are dropped.
-#' @name matmult.errors
-#' @inheritParams base::matmult
-#' @export
-`%*%` = function(x, y) UseMethod("%*%")
-
-#' @export
-`%*%.default` = function(x, y) base::`%*%`(x, y)
-
-#' @export
-`%*%.errors` = function(x, y) {
-  warn_once(
-    "matrix multiplication not supported for 'errors' objects, errors dropped",
-    fun = .Generic,
-    type = "matmult"
-  )
-  base::`%*%`(unclass(x), unclass(y))
-}
+#' #' @export
+#' `%*%.default` = function(x, y) base::`%*%`(x, y)
+#'
+#' #' @export
+#' `%*%.errors` = function(x, y) {
+#'   warn_once(
+#'     "matrix multiplication not supported for 'errors' objects, errors dropped",
+#'     fun = .Generic,
+#'     type = "matmult"
+#'   )
+#'   base::`%*%`(unclass(x), unclass(y))
+#' }
