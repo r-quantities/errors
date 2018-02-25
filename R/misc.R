@@ -203,7 +203,11 @@ t.errors <- function(x) {
 cbind.errors <- function(..., deparse.level = 1) {
   call <- as.character(match.call()[[1]])
   allargs <- lapply(list(...), unclass)
-  names(allargs) <- sapply(substitute(list(...))[-1], deparse)
+  nm <- names(as.list(match.call()))
+  nm <- nm[nm != "" & nm != "deparse.level"]
+  if (is.null(nm))
+    names(allargs) <- sapply(substitute(list(...))[-1], deparse)
+  else names(allargs) <- nm
   allerrs <- lapply(list(...), function(x) {
     e <- errors(x)
     dim(e) <- dim(x)
