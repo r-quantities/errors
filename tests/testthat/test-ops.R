@@ -64,5 +64,5 @@ test_that("ops work properly", {
   expect_true(all(errors(x / x) > 0))
   expect_equal(as.numeric(x^x), xval^xval)
   expect_equal(x %/% set_errors(3), set_errors(floor(xval/3), xerr/3))
-  expect_warning(expect_equal(x %*% x, xval %*% xval))
+  #expect_warning(expect_equal(x %*% x, xval %*% xval))
 })
