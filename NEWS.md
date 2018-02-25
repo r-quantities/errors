@@ -4,6 +4,7 @@
 
 * Show `Ops` warnings once (#22).
 * Refactor `print` method (2c252d9).
+* Drop support for matrix multiplication: no warning is issued anymore (090e953).
 
 # errors 0.2.0
 
