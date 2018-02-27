@@ -71,7 +71,7 @@ Math.errors <- function(x, ...) {
       structure(values, "errors" = e, class = "errors")
     },
     "lgamma" = , "gamma" = , "digamma" = , "trigamma" =
-      stop("method not supported for `errors` objects")
+      stop("method '", .Generic, "' not supported for 'errors' objects")
   )
 }
 
