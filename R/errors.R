@@ -95,7 +95,7 @@ errors_min.errors <- errors_min.numeric
 
 #' @export
 `errors<-.numeric` <- function(x, value) {
-  stopifnot(is.numeric(value))
+  if(is.null(value)) return(drop_errors(x))
   stopifnot(length(value) == length(x) || length(value) == 1L)
 
   if (length(value) == 1)
@@ -128,3 +128,22 @@ as.errors <- function(x, value = 0) UseMethod("as.errors")
 
 #' @export
 as.errors.default <- function(x, value = 0) set_errors(x, value)
+
+#' Drop Errors
+#'
+#' @param x an \code{errors} object.
+#'
+#' @return the numeric without any \code{errors} attributes, while preserving other
+#'   attributes like dimensions or other classes.
+#'
+#' @note Equivalent to \code{errors(x) <- NULL} or \code{set_errors(x, NULL)}.
+#'
+#' @export
+drop_errors <- function(x) UseMethod("drop_errors")
+
+#' @export
+drop_errors.errors <- function(x) {
+  class(x) <- setdiff(class(x), "errors")
+  attr(x, "errors") <- NULL
+  x
+}

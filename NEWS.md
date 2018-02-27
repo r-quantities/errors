@@ -1,5 +1,9 @@
 # errors 0.2.0.9000
 
+## New features
+
+* New `drop_errors` method drops `errors` class and attributes. Equivalent to setting a `NULL` error (#23).
+
 ## Minor changes and fixes:
 
 * Show `Ops` warnings once (#22).

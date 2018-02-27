@@ -39,3 +39,16 @@ test_that("type_sum is available for errors objects", {
   library(tibble)
   expect_equal(type_sum(set_errors(1, 0.1)), "errors")
 })
+
+test_that("errors are dropped", {
+  x1 <- set_errors(1:3, 0.1)
+  x2 <- set_errors(x1, NULL)
+  x3 <- drop_errors(x1)
+  errors(x1) <- NULL
+  expect_true(!inherits(x1, "errors"))
+  expect_true(!inherits(x2, "errors"))
+  expect_true(!inherits(x3, "errors"))
+  expect_null(attr(x1, "errors"))
+  expect_null(attr(x2, "errors"))
+  expect_null(attr(x3, "errors"))
+})
