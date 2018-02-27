@@ -94,7 +94,7 @@ errors_min.errors <- errors_min.numeric
 `errors<-` <- function(x, value) UseMethod("errors<-")
 
 #' @export
-`errors<-.numeric` <- function(x, value) {
+`errors<-.errors` <- function(x, value) {
   if(is.null(value)) return(drop_errors(x))
   stopifnot(length(value) == length(x) || length(value) == 1L)
 
@@ -107,7 +107,10 @@ errors_min.errors <- errors_min.numeric
 }
 
 #' @export
-`errors<-.errors` <- `errors<-.numeric`
+`errors<-.numeric` <- function(x, value) {
+  if(is.null(value)) return(x)
+  `errors<-.errors`(x, value)
+}
 
 #' @name errors
 #' @export
