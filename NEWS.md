@@ -3,6 +3,7 @@
 ## New features
 
 * New `drop_errors` method drops `errors` class and attributes. Equivalent to setting a `NULL` error (#23).
+* Implement `pillar_shaft` for tidy `tibble` printing and improve `type_sum` (700f1aa).
 
 ## Minor changes and fixes:
 
@@ -10,6 +11,7 @@
 * Refactor `print` method (2c252d9).
 * Drop support for matrix multiplication: no warning is issued anymore (090e953).
 * Fix `cbind`/`rbind` column/row name parsing for named arguments (b8ea6b5).
+* Improve plus-minus separator (8b3d231).
 
 # errors 0.2.0
 
