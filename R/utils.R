@@ -1,3 +1,5 @@
+.pm <- function() intToUtf8(177)
+
 .onLoad <- function(libname, pkgname) {
   types <- c("bool", "coercion", "matmult")
   types <- paste0("errors.warn.", types)
