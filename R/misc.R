@@ -141,15 +141,34 @@ as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
   value
 }
 
-#' \code{type_sum} for Tidy \code{tibble} Printing
+#' Methods for Tidy \code{tibble} Printing
 #'
-#' S3 method for \code{errors} objects.
+#' S3 methods for \code{errors} objects.
 #'
-#' @param x object of class errors
-#' @param ... ignored
+#' @param x object of class errors.
+#' @param ... see \link[pillar]{pillar_shaft}.
 #'
+#' @name tibble
 #' @export type_sum.errors
-type_sum.errors <- function(x, ...) "errors"
+type_sum.errors <- function(x) {
+  not <- getOption("errors.notation")
+  out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm(), "err"))
+  paste0("[", out, "]")
+}
+
+#' @name tibble
+#' @export pillar_shaft.errors
+pillar_shaft.errors <- function(x, ...) {
+  out <- format(x)
+  if (!requireNamespace("pillar", quietly = TRUE))
+    return(out)
+
+  not <- getOption("errors.notation")
+  sep <- ifelse(is.null(not) || not == "parenthesis", "(", " ")
+  out <- strsplit(out, "[[:space:]|\\(]")[[1]]
+  out <- paste0(out[1], pillar::style_subtle(paste0(sep, out[-1], collapse="")))
+  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
+}
 
 #' Coerce to a Matrix
 #'

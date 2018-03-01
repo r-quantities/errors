@@ -37,7 +37,14 @@ test_that("errors can be defined as integers", {
 test_that("type_sum is available for errors objects", {
   skip_if_not_installed("tibble")
   library(tibble)
-  expect_equal(type_sum(set_errors(1, 0.1)), "errors")
+  expect_equal(type_sum(set_errors(1, 0.1)), "[(err)]")
+})
+
+test_that("pillar_shaft is available for errors objects", {
+  skip_if_not_installed("pillar")
+  library(pillar)
+  expect_equal(as.character(pillar_shaft(set_errors(1, 0.1))),
+               paste0("1.0", style_subtle("(1)")))
 })
 
 test_that("errors are dropped", {
