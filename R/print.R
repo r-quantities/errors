@@ -28,6 +28,7 @@ format.errors = function(x,
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
   if (is.null(digits))
     digits = getOption("errors.digits", 1)
+  scipen <- getOption("scipen", 0)
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
@@ -36,7 +37,7 @@ format.errors = function(x,
   value_digits <- ifelse(e, digits - get_exponent(e), getOption("digits"))
   value <- ifelse(e, signif(.v(x), exponent + value_digits), .v(x))
 
-  cond <- (scientific | (exponent > 4 | exponent < -3)) & is.finite(e)
+  cond <- (scientific | (exponent > 4+scipen | exponent < -3-scipen)) & is.finite(e)
   e[cond] <- e[cond] * 10^(-exponent[cond])
   value[cond] <- value[cond] * 10^(-exponent[cond])
   value_digits[cond] <- digits - get_exponent(e)[cond]
