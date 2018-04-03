@@ -3,13 +3,16 @@
 \docType{package}
 \name{errors-package}
 \alias{errors-package}
-\title{\pkg{errors}: Error Propagation for R Vectors}
+\title{\pkg{errors}: Uncertainty Propagation for R Vectors}
 \description{
-Support for painless automatic error propagation in numerical operations.
+Support for measurement errors in R vectors, matrices and arrays: automatic
+uncertainty propagation and reporting.
 Errors are automatically propagated when you operate with \code{errors}
 objects, or with \code{errors} and numeric objects (then numeric values are
 automatically coerced to errors with zero error).
-\cr\cr This package treats errors as coming from Gaussian, linear and independent
+}
+\details{
+This package treats errors as coming from Gaussian, linear and independent
 sources, and propagates them using the first-order Taylor series method for
 propagation of uncertainty. Although the above assumptions are valid in a wide
 range of applications in science and engineering, the practitioner should

@@ -1,10 +1,11 @@
 Package: errors
 Type: Package
-Title: Error Propagation for R Vectors
+Title: Uncertainty Propagation for R Vectors
 Version: 0.2.0.9000
 Authors@R: c(
     person("Iñaki", "Ucar", email="i.ucar86@gmail.com", role=c("aut", "cph", "cre")))
-Description: Support for painless automatic error propagation in numerical operations.
+Description: Support for measurement errors in R vectors, matrices and arrays: 
+  automatic uncertainty propagation and reporting.
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://github.com/r-quantities/errors

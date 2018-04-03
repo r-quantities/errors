@@ -1,4 +1,4 @@
-# errors 0.2.0.9000
+# errors 0.2.1
 
 ## New features
 
