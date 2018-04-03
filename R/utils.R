@@ -1,4 +1,4 @@
-.pm <- function() intToUtf8(177)
+.pm <- intToUtf8(177)
 
 .onLoad <- function(libname, pkgname) {
   types <- c("bool", "coercion", "matmult")

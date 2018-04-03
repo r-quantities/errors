@@ -152,7 +152,7 @@ as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
 #' @export type_sum.errors
 type_sum.errors <- function(x) {
   not <- getOption("errors.notation")
-  out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm(), "err"))
+  out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm, "err"))
   paste0("[", out, "]")
 }
 

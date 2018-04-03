@@ -48,7 +48,7 @@ format.errors = function(x,
     append[] <- ")"
     e[is.finite(e)] <- e[is.finite(e)] * 10^(pmax(0, value_digits-1))
   } else {
-    sep <- paste0(" ", .pm(), " ")
+    sep <- paste0(" ", .pm, " ")
     prepend[cond] <- "("
     append[cond] <- ")"
   }
