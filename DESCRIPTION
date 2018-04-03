@@ -3,7 +3,8 @@ Type: Package
 Title: Uncertainty Propagation for R Vectors
 Version: 0.2.1.9000
 Authors@R: c(
-    person("Iñaki", "Ucar", email="i.ucar86@gmail.com", role=c("aut", "cph", "cre")))
+    person("Iñaki", "Ucar", email="i.ucar86@gmail.com", 
+      role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")))
 Description: Support for measurement errors in R vectors, matrices and arrays: 
   automatic uncertainty propagation and reporting.
 License: MIT + file LICENSE
