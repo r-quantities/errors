@@ -1,3 +1,9 @@
+# errors 0.2.1.9000
+
+## Minor changes and fixes:
+
+* Fix encoding issues for the plus-minus symbol (#24).
+
 # errors 0.2.1
 
 ## New features

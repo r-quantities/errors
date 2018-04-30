@@ -1,4 +1,4 @@
-.pm <- intToUtf8(177)
+.pm <- enc2native(intToUtf8(177))
 
 .onLoad <- function(libname, pkgname) {
   types <- c("bool", "coercion", "matmult")
