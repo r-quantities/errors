@@ -165,8 +165,9 @@ pillar_shaft.errors <- function(x, ...) {
 
   not <- getOption("errors.notation")
   sep <- ifelse(is.null(not) || not == "parenthesis", "(", " ")
-  out <- strsplit(out, "[[:space:]|\\(]")[[1]]
-  out <- paste0(out[1], pillar::style_subtle(paste0(sep, out[-1], collapse="")))
+  out <- sapply(strsplit(out, "[[:space:]|\\(]"), function(x) {
+    paste0(x[1], pillar::style_subtle(paste0(sep, x[-1], collapse="")))
+  })
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
 }
 
