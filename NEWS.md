@@ -3,6 +3,7 @@
 ## Minor changes and fixes:
 
 * Fix encoding issues for the plus-minus symbol (#24).
+* Fix `pillar` representation (14df89b).
 
 # errors 0.2.1
 
