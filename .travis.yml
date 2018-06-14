@@ -1,6 +1,5 @@
 language: R
 sudo: false
-latex: false
 cache: packages
 r:
   - oldrel
@@ -13,7 +12,7 @@ git:
 warnings_are_errors: true
 
 r_github_packages:
-  - r-lib/covr
+  - r-lib/covr@v3.0.1
 
 after_success:
   - Rscript -e 'covr::codecov()'
