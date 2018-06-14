@@ -35,7 +35,7 @@ Ops.errors <- function(e1, e2) {
         fun = "Ops",
         type = "coercion"
       )
-      switch(coercion, e1=set_errors(e1), e2=set_errors(e2))
+      switch(coercion, e1<-set_errors(e1), e2<-set_errors(e2))
     }
   }
 
