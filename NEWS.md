@@ -4,6 +4,7 @@
 
 * Fix encoding issues for the plus-minus symbol (#24).
 * Fix `pillar` representation (14df89b).
+* Fix coercion issues (0e04519).
 
 # errors 0.2.1
 
