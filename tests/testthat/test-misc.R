@@ -46,7 +46,7 @@ test_that("matrix methods work properly", {
   expect_equal(errors(xt), errors(t(xm)))
 })
 
-test_that("errors are correctly coerced to data frame", {
+test_that("errors are correctly coerced to a data frame", {
   a <- 1:10
   b <- set_errors(a, a)
 
@@ -70,6 +70,13 @@ test_that("errors are correctly coerced to data frame", {
   expect_equal(x[[2]], c(b, 2, set_errors(1, 1)))
   expect_equal(x[[3]], c(a, 3, 1))
   expect_equal(x[[4]], c(b, 4, set_errors(1, 1)))
+})
+
+test_that("errors are correctly coerced to a list", {
+  x <- set_errors(1:10, 10:1)
+  y <- as.list(x)
+  expect_is(y, "list")
+  expect_true(all(sapply(seq_along(y), function(i) all.equal(y[[i]], x[i]))))
 })
 
 test_that("bind methods work properly", {

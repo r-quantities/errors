@@ -141,35 +141,19 @@ as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
   value
 }
 
-#' Methods for Tidy \code{tibble} Printing
+#' Coerce to a List
 #'
-#' S3 methods for \code{errors} objects.
+#' S3 method for \code{errors} objects (see \code{\link{as.list}}).
 #'
-#' @param x object of class errors.
-#' @param ... see \link[pillar]{pillar_shaft}.
+#' @inheritParams base::as.list
 #'
-#' @name tibble
-#' @export type_sum.errors
-type_sum.errors <- function(x) {
-  not <- getOption("errors.notation")
-  out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm, "err"))
-  paste0("[", out, "]")
-}
-
-#' @name tibble
-#' @export pillar_shaft.errors
-pillar_shaft.errors <- function(x, ...) {
-  out <- format(x)
-  if (!requireNamespace("pillar", quietly = TRUE))
-    return(out)
-
-  not <- getOption("errors.notation")
-  sep <- ifelse(is.null(not) || not == "parenthesis", "(", " ")
-  out <- sapply(strsplit(out, "[[:space:]|\\(]"), function(x) {
-    paste0(x[1], pillar::style_subtle(paste0(sep, x[-1], collapse="")))
-  })
-  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
-}
+#' @examples
+#' x <- set_errors(1:3, 0.1)
+#' as.list(x)
+#'
+#' @export
+as.list.errors <- function(x, ...)
+  mapply(set_errors, unclass(x), errors(x), SIMPLIFY=FALSE)
 
 #' Coerce to a Matrix
 #'
@@ -243,3 +227,33 @@ cbind.errors <- function(..., deparse.level = 1) {
 #' @rdname cbind.errors
 #' @export
 rbind.errors <- cbind.errors
+
+#' Methods for Tidy \code{tibble} Printing
+#'
+#' S3 methods for \code{errors} objects.
+#'
+#' @param x object of class errors.
+#' @param ... see \link[pillar]{pillar_shaft}.
+#'
+#' @name tibble
+#' @export type_sum.errors
+type_sum.errors <- function(x) {
+  not <- getOption("errors.notation")
+  out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm, "err"))
+  paste0("[", out, "]")
+}
+
+#' @name tibble
+#' @export pillar_shaft.errors
+pillar_shaft.errors <- function(x, ...) {
+  out <- format(x)
+  if (!requireNamespace("pillar", quietly = TRUE))
+    return(out)
+
+  not <- getOption("errors.notation")
+  sep <- ifelse(is.null(not) || not == "parenthesis", "(", " ")
+  out <- sapply(strsplit(out, "[[:space:]|\\(]"), function(x) {
+    paste0(x[1], pillar::style_subtle(paste0(sep, x[-1], collapse="")))
+  })
+  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
+}
