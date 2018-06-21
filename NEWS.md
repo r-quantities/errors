@@ -1,5 +1,9 @@
 # errors 0.2.1.9000
 
+## New features
+
+* Implement `as.list` for `errors` objects (7aff546).
+
 ## Minor changes and fixes:
 
 * Fix encoding issues for the plus-minus symbol (#24).
