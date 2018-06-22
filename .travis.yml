@@ -29,11 +29,14 @@ script:
   - R CMD check errors_*.tar.gz --as-cran --no-manual
   - echo -en 'travis_fold:end:script.2\\r'
 
-  - echo '\033[1;33mChecking quantities\033[0m' && echo -en 'travis_fold:start:script.3\\r'
+  - echo '\033[1;33mCloning quantities\033[0m' && echo -en 'travis_fold:start:script.3\\r'
   - git clone https://github.com/r-quantities/quantities.git
   - cd quantities && Rscript -e 'devtools::install_deps(dependencies=TRUE)'
-  - R CMD build . && R CMD check --as-cran quantities_*.tar.gz && cd ..
   - echo -en 'travis_fold:end:script.3\\r'
+
+  - echo '\033[1;33mChecking quantities\033[0m' && echo -en 'travis_fold:start:script.4\\r'
+  - R CMD build . && R CMD check --as-cran quantities_*.tar.gz && cd ..
+  - echo -en 'travis_fold:end:script.4\\r'
 
 after_success:
   - Rscript -e 'covr::codecov()'
