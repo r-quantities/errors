@@ -21,12 +21,14 @@ r_github_packages:
   - r-quantities/units
 
 script:
-  - echo '\033[0;31mBuilding package\033[0m' && echo -en 'travis_fold:start:script.1\\r'
-  - R CMD build . && R CMD install "${PKG_TARBALL}"
+  - echo '\033[1;33mBuilding package\033[0m' && echo -en 'travis_fold:start:script.1\\r'
+  - R CMD build . && R CMD install errors_*.tar.gz
   - echo -en 'travis_fold:end:script.1\\r'
+
   - echo '\033[1;33mChecking package\033[0m' && echo -en 'travis_fold:start:script.2\\r'
-  - R CMD check "${PKG_TARBALL}" --as-cran --no-manual
+  - R CMD check errors_*.tar.gz --as-cran --no-manual
   - echo -en 'travis_fold:end:script.2\\r'
+
   - echo '\033[1;33mChecking quantities\033[0m' && echo -en 'travis_fold:start:script.3\\r'
   - git clone https://github.com/r-quantities/quantities.git
   - cd quantities && Rscript -e 'devtools::install_deps(dependencies=TRUE)'
