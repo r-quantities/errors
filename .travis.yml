@@ -23,8 +23,8 @@ r_github_packages:
 
 before_script:
   - git clone https://github.com/r-quantities/quantities.git
-  - cd quantities && R CMD build .
-  - R CMD check --as-cran quantities_*.tar.gz
+  - cd quantities && Rscript -e 'devtools::install_deps()'
+  - R CMD build . && R CMD check --as-cran quantities_*.tar.gz
   - cd .. && rm -rf quantities
 
 after_success:
