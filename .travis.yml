@@ -21,7 +21,7 @@ r_github_packages:
   - r-quantities/units
 
 script:
-  - ./check_with_quantities.sh
+  - bash check_with_quantities.sh
 
 after_success:
   - Rscript -e 'covr::codecov()'
