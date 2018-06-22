@@ -11,6 +11,11 @@ git:
 
 warnings_are_errors: true
 
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
+
 r_github_packages:
   - r-lib/covr@v3.0.1
   - r-quantities/units
