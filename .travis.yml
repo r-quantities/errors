@@ -19,13 +19,19 @@ addons:
 r_github_packages:
   - r-lib/covr@v3.0.1
   - r-quantities/units
-  - r-quantities/errors
 
-before_script:
+script:
+  - echo 'Building package' && echo -en 'travis_fold:start:script.1\\r'
+  - R CMD build . && R CMD install "${PKG_TARBALL}"
+  - echo -en 'travis_fold:end:script.1\\r'
+  - echo 'Checking package' && echo -en 'travis_fold:start:script.2\\r'
+  - R CMD check "${PKG_TARBALL}" --as-cran --no-manual
+  - echo -en 'travis_fold:end:script.2\\r'
+  - echo 'Checking quantities' && echo -en 'travis_fold:start:script.3\\r'
   - git clone https://github.com/r-quantities/quantities.git
-  - cd quantities && Rscript -e 'devtools::install_deps()'
-  - R CMD build . && R CMD check --as-cran quantities_*.tar.gz
-  - cd .. && rm -rf quantities
+  - cd quantities && Rscript -e 'devtools::install_deps(dependencies=TRUE)'
+  - R CMD build . && R CMD check --as-cran quantities_*.tar.gz && cd ..
+  - echo -en 'travis_fold:end:script.3\\r'
 
 after_success:
   - Rscript -e 'covr::codecov()'
