@@ -13,6 +13,11 @@ warnings_are_errors: true
 
 r_github_packages:
   - r-lib/covr@v3.0.1
+  - r-quantities/units
+
+after_script:
+  - git clone https://github.com/r-quantities/quantities.git; cd quantities
+  - Rscript -e 'devtools::check()'; cd ..; rm -rf quantities
 
 after_success:
   - Rscript -e 'covr::codecov()'
