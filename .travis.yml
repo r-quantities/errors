@@ -21,21 +21,21 @@ r_github_packages:
   - r-quantities/units
 
 script:
-  - echo -en 'travis_fold:start:script.R-build\\r'
   - echo -e '\033[1;33mBuilding package\033[0m'
+  - echo -en 'travis_fold:start:script.R-build\\r'
   - R CMD build . && R CMD INSTALL errors_*.tar.gz
   - echo -en 'travis_fold:end:script.R-build\\r'
-  - echo -en 'travis_fold:start:script.R-check\\r'
   - echo -e '\033[1;33mChecking package\033[0m'
+  - echo -en 'travis_fold:start:script.R-check\\r'
   - R CMD check errors_*.tar.gz --as-cran --no-manual
   - echo -en 'travis_fold:end:script.R-check\\r'
-  - echo -en 'travis_fold:start:script.revdep-clone\\r'
   - echo -e '\033[1;33mCloning quantities\033[0m'
+  - echo -en 'travis_fold:start:script.revdep-clone\\r'
   - git clone https://github.com/r-quantities/quantities.git
   - cd quantities && Rscript -e 'devtools::install_deps(dependencies=TRUE)'
   - echo -en 'travis_fold:end:script.revdep-clone\\r'
-  - echo -en 'travis_fold:start:script.revdep-check\\r'
   - echo -e '\033[1;33mChecking quantities\033[0m'
+  - echo -en 'travis_fold:start:script.revdep-check\\r'
   - R CMD build . && R CMD check --as-cran quantities_*.tar.gz && cd ..
   - echo -en 'travis_fold:end:script.revdep-check\\r'
 
