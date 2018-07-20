@@ -84,13 +84,12 @@ format.errors = function(x,
 #' @export
 print.errors <- function(x, ...) {
   if (is.array(x) || length(x) > 1L) {
-    err <- attr(x, "errors")
+    err <- errors(x)
     e <- paste(format(err[1:min(5, length(err))]), collapse=" ")
     if (length(err) > 5L)
       e <- paste(e, "...")
     cat("Errors: ", e, "\n", sep = "")
-    x <- unclass(x)
-    attr(x, "errors") <- NULL
+    x <- drop_errors(x)
     NextMethod()
   } else {
     cat(format(x, ...), "\n", sep="")
