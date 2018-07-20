@@ -1,18 +1,18 @@
 #' S3 Group Generic Functions
 #'
 #' \code{Math}, \code{Ops} and \code{Summary} group generic methods for
-#' \code{errors} objects with support for automatic error propagation (see
+#' \code{errors} objects with support for automatic uncertainty propagation (see
 #' \code{\link[base]{groupGeneric}} for a comprehensive list of available methods).
 #'
 #' @inheritParams base::groupGeneric
 #' @name groupGeneric.errors
 #'
 #' @details \subsection{\code{Math}}{
-#' The \code{sign} method returns a numeric value without error. \code{floor},
+#' The \code{sign} method returns a numeric value without uncertainty. \code{floor},
 #' \code{ceiling}, \code{trunc}, \code{round} and \code{signif} add the rounding
-#' error to the original error. \code{lgamma}, \code{gamma}, \code{digamma} and
+#' error to the original uncertainty. \code{lgamma}, \code{gamma}, \code{digamma} and
 #' \code{trigamma} are not implemented. The rest of the methods propagate the
-#' error as expected from the first-order Taylor series method.}
+#' uncertainty as expected from the first-order Taylor series method.}
 #'
 #' @examples
 #' x <- set_errors(1:3, 0.1)

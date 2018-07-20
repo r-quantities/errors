@@ -3,7 +3,7 @@
 \name{cbind.errors}
 \alias{cbind.errors}
 \alias{rbind.errors}
-\title{Combine R Objects by Rows or Columns}
+\title{Combine \R Objects by Rows or Columns}
 \usage{
 \method{cbind}{errors}(..., deparse.level = 1)
 

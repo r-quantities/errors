@@ -3,8 +3,8 @@
 #' @details \subsection{\code{Summary}}{
 #' The methods \code{all} and \code{any} are not supported for \code{errors}
 #' objects and fail with an informative message. \code{min}, \code{max} (and
-#' \code{range}) return the minimum or (and) maximum value minus/plus its error.
-#' \code{sum} and \code{prod} propagate the error as expected from the first-order
+#' \code{range}) return the minimum or (and) maximum value minus/plus its uncertainty.
+#' \code{sum} and \code{prod} propagate the uncertainty as expected from the first-order
 #' Taylor series method.}
 #'
 #' @examples
@@ -40,10 +40,10 @@ Summary.errors <- function(..., na.rm = FALSE) {
 #' @param ... further arguments passed to of from other methods.
 #'
 #'
-#' @details The \code{mean} and \code{weighted.mean} methods set the error as
-#' the maximum of the standard error of the mean and the (weighted) mean of the errors.
+#' @details The \code{mean} and \code{weighted.mean} methods set the uncertainty as
+#' the maximum of the standard deviation of the mean and the (weighted) mean of the uncertainty.
 #'
-#' The \code{median} method sets the error as \code{1.253 * errors(mean(x))},
+#' The \code{median} method sets the uncertainty as \code{1.253 * errors(mean(x))},
 #' which is derived from the asymptotic variance formula of the median. Note that
 #' this value is valid only if the sample is big enough.
 #'

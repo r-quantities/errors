@@ -10,8 +10,8 @@
 \arguments{
 \item{x}{an \code{errors} object.}
 
-\item{digits}{how many significant digits are to be used for errors. The default,
-\code{NULL}, uses \code{getOption("errors.digits", 1)}.}
+\item{digits}{how many significant digits are to be used for uncertainties.
+The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.}
 
 \item{scientific}{logical specifying whether the elements should be
 encoded in scientific format.}

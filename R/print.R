@@ -3,8 +3,8 @@
 #' Format an \code{errors} object for pretty printing.
 #'
 #' @param x an \code{errors} object.
-#' @param digits how many significant digits are to be used for errors. The default,
-#' \code{NULL}, uses \code{getOption("errors.digits", 1)}.
+#' @param digits how many significant digits are to be used for uncertainties.
+#' The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
 #' @param scientific logical specifying whether the elements should be
 #' encoded in scientific format.
 #' @param notation error notation; \code{"parenthesis"} and \code{"plus-minus"}

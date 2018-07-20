@@ -1,13 +1,15 @@
 #' \pkg{errors}: Uncertainty Propagation for R Vectors
 #'
-#' Support for measurement errors in R vectors, matrices and arrays: automatic
-#' uncertainty propagation and reporting.
-#' Errors are automatically propagated when you operate with \code{errors}
-#' objects, or with \code{errors} and numeric objects (then numeric values are
-#' automatically coerced to errors with zero error).
+#' Every measurement has an unknown error associated. Uncertainty is the
+#' acknowledgement of that error: we are aware that our representation of reality
+#' may differ from reality itself. This package provides support for measurement
+#' errors in \R vectors, matrices and arrays. Uncertainty metadata is associated
+#' to quantity values, and this uncertainty is automatically propagated when you
+#' operate with \code{errors} objects, or with \code{errors} and numeric objects
+#' (then numeric values are automatically coerced to \code{errors} with no uncertainty).
 #'
-#' This package treats errors as coming from Gaussian, linear and independent
-#' sources, and propagates them using the first-order Taylor series method for
+#' This package treats uncertainty as coming from Gaussian and linear sources,
+#' and propagates them using the first-order Taylor series method for
 #' propagation of uncertainty. Although the above assumptions are valid in a wide
 #' range of applications in science and engineering, the practitioner should
 #' evaluate whether they apply for each particular case.
@@ -19,16 +21,16 @@
 #' @name errors-package
 NULL
 
-#' Set Measurement Errors on a Numeric Vector
+#' Set Uncertainty on a Numeric Vector
 #'
-#' Set/retrieve measurement errors to/from numeric vectors.
+#' Set/retrieve uncertainty to/from numeric vectors.
 #'
 #' @param x a numeric object, or object of class \code{errors}.
 #'
-#' @details \code{errors} returns a vector of errors. \code{errors_max}
-#' (\code{errors_min}) returns the values plus (minus) the errors.
+#' @details \code{errors} returns a vector of uncertainty. \code{errors_max}
+#' (\code{errors_min}) returns the values plus (minus) the uncertainty.
 #'
-#' \code{`errors<-`} sets the error values (and converts \code{x} into an object
+#' \code{`errors<-`} sets the uncertainty values (and converts \code{x} into an object
 #' of class \code{errors}). \code{set_errors} is a pipe-friendly version of
 #' \code{`errors<-`} and returns an object of class \code{errors}. \code{as.errors}
 #' is an alias for \code{set_errors}.
@@ -134,7 +136,7 @@ as.errors <- function(x, value = 0) UseMethod("as.errors")
 #' @export
 as.errors.default <- function(x, value = 0) set_errors(x, value)
 
-#' Drop Errors
+#' Drop Uncertainty
 #'
 #' @param x an \code{errors} object.
 #'

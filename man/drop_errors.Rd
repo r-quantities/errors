@@ -2,7 +2,7 @@
 % Please edit documentation in R/errors.R
 \name{drop_errors}
 \alias{drop_errors}
-\title{Drop Errors}
+\title{Drop Uncertainty}
 \usage{
 drop_errors(x)
 }
@@ -14,7 +14,7 @@ the numeric without any \code{errors} attributes, while preserving other
   attributes like dimensions or other classes.
 }
 \description{
-Drop Errors
+Drop Uncertainty
 }
 \note{
 Equivalent to \code{errors(x) <- NULL} or \code{set_errors(x, NULL)}.

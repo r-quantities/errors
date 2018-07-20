@@ -22,7 +22,7 @@ propagate <- function(..., method=getOption("errors.propagation", "taylor-first-
   if (method == "taylor-first-order")
     sqrt(colSums(rbind(...)^2))
   else { # nocov start
-    warning("error propagation '", method, "' not supported, falling back to 'taylor-first-order'")
+    warning("uncertainty propagation '", method, "' not supported, falling back to 'taylor-first-order'")
     options(errors.propagation = "taylor-first-order")
     propagate(...)
   } # nocov end

@@ -12,7 +12,7 @@
 \alias{set_errors}
 \alias{errors}
 \alias{as.errors}
-\title{Set Measurement Errors on a Numeric Vector}
+\title{Set Uncertainty on a Numeric Vector}
 \usage{
 errors(x)
 
@@ -32,13 +32,13 @@ as.errors(x, value = 0)
 \item{value}{a numeric vector of length 1 or the same length as \code{x}.}
 }
 \description{
-Set/retrieve measurement errors to/from numeric vectors.
+Set/retrieve uncertainty to/from numeric vectors.
 }
 \details{
-\code{errors} returns a vector of errors. \code{errors_max}
-(\code{errors_min}) returns the values plus (minus) the errors.
+\code{errors} returns a vector of uncertainty. \code{errors_max}
+(\code{errors_min}) returns the values plus (minus) the uncertainty.
 
-\code{`errors<-`} sets the error values (and converts \code{x} into an object
+\code{`errors<-`} sets the uncertainty values (and converts \code{x} into an object
 of class \code{errors}). \code{set_errors} is a pipe-friendly version of
 \code{`errors<-`} and returns an object of class \code{errors}. \code{as.errors}
 is an alias for \code{set_errors}.

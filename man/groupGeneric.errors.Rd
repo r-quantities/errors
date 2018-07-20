@@ -26,28 +26,28 @@
 }
 \description{
 \code{Math}, \code{Ops} and \code{Summary} group generic methods for
-\code{errors} objects with support for automatic error propagation (see
+\code{errors} objects with support for automatic uncertainty propagation (see
 \code{\link[base]{groupGeneric}} for a comprehensive list of available methods).
 }
 \details{
 \subsection{\code{Math}}{
-The \code{sign} method returns a numeric value without error. \code{floor},
+The \code{sign} method returns a numeric value without uncertainty. \code{floor},
 \code{ceiling}, \code{trunc}, \code{round} and \code{signif} add the rounding
-error to the original error. \code{lgamma}, \code{gamma}, \code{digamma} and
+error to the original uncertainty. \code{lgamma}, \code{gamma}, \code{digamma} and
 \code{trigamma} are not implemented. The rest of the methods propagate the
-error as expected from the first-order Taylor series method.}
+uncertainty as expected from the first-order Taylor series method.}
 
 \subsection{\code{Ops}}{
-Boolean operators drop the errors (showing a warning once) and operate on the
-numeric values. The rest of the operators propagate the error as expected from
+Boolean operators drop the uncertainty (showing a warning once) and operate on the
+numeric values. The rest of the operators propagate the uncertainty as expected from
 the first-order Taylor series method. Any numeric operand is automatically
-coerced to \code{errors} (showing a warning once) with zero error.}
+coerced to \code{errors} (showing a warning once) with no uncertainty.}
 
 \subsection{\code{Summary}}{
 The methods \code{all} and \code{any} are not supported for \code{errors}
 objects and fail with an informative message. \code{min}, \code{max} (and
-\code{range}) return the minimum or (and) maximum value minus/plus its error.
-\code{sum} and \code{prod} propagate the error as expected from the first-order
+\code{range}) return the minimum or (and) maximum value minus/plus its uncertainty.
+\code{sum} and \code{prod} propagate the uncertainty as expected from the first-order
 Taylor series method.}
 }
 \examples{
@@ -63,7 +63,7 @@ x / sqrt(y) + y * sin(x)
 # numeric values are automatically coerced to errors
 x^2
 
-# boolean operators drop errors
+# boolean operators drop uncertainty
 y > x
 
 c(min(x), max(x))

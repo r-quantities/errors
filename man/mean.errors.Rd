@@ -26,10 +26,10 @@ An \code{errors} object.
 S3 methods for \code{errors} objects.
 }
 \details{
-The \code{mean} and \code{weighted.mean} methods set the error as
-the maximum of the standard error of the mean and the (weighted) mean of the errors.
+The \code{mean} and \code{weighted.mean} methods set the uncertainty as
+the maximum of the standard deviation of the mean and the (weighted) mean of the uncertainty.
 
-The \code{median} method sets the error as \code{1.253 * errors(mean(x))},
+The \code{median} method sets the uncertainty as \code{1.253 * errors(mean(x))},
 which is derived from the asymptotic variance formula of the median. Note that
 this value is valid only if the sample is big enough.
 }

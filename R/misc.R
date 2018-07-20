@@ -186,7 +186,7 @@ t.errors <- function(x) {
   structure(NextMethod(), "errors" = as.numeric(t(e)), class = "errors")
 }
 
-#' Combine R Objects by Rows or Columns
+#' Combine \R Objects by Rows or Columns
 #'
 #' S3 methods for \code{errors} objects (see \code{\link[base]{cbind}}).
 #'
