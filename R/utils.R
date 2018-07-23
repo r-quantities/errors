@@ -38,3 +38,11 @@ cond2int <- function(...) {
   args <- c(...)
   sum(2^(seq_along(args) - 1) * args)
 }
+
+new_id <- (function() {
+  i <- 0L
+  function() {
+    i <<- i + 1L
+    as.character(i)
+  }
+})()

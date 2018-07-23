@@ -55,7 +55,7 @@ Ops.errors <- function(e1, e2) {
       propagate(errors(e1) * .v(e1)^(.v(e2)-1) * .v(e2),
                 errors(e2) * .v(e1)^.v(e2) * log(abs(.v(e1))))
   )
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), e)
 }
 
 #' #' Matrix Multiplication

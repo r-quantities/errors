@@ -69,11 +69,7 @@ errors.errors <- function(x) {
 errors_max <- function(x) UseMethod("errors_max")
 
 #' @export
-errors_max.numeric <- function(x) {
-  y <- unclass(x)
-  attr(y, "errors") <- NULL
-  y + errors(x)
-}
+errors_max.numeric <- function(x) drop_errors(x) + errors(x)
 
 #' @export
 errors_max.errors <- errors_max.numeric
@@ -83,11 +79,7 @@ errors_max.errors <- errors_max.numeric
 errors_min <- function(x) UseMethod("errors_min")
 
 #' @export
-errors_min.numeric <- function(x) {
-  y <- unclass(x)
-  attr(y, "errors") <- NULL
-  y - errors(x)
-}
+errors_min.numeric <- function(x) drop_errors(x) - errors(x)
 
 #' @export
 errors_min.errors <- errors_min.numeric
@@ -113,6 +105,7 @@ errors_min.errors <- errors_min.numeric
 #' @export
 `errors<-.numeric` <- function(x, value) {
   if(is.null(value)) return(x)
+  attr(x, "id") <- new_id()
   `errors<-.errors`(x, value)
 }
 
@@ -127,7 +120,8 @@ set_errors.numeric <- function(x, value=0) {
 }
 
 #' @export
-set_errors.errors <- set_errors.numeric
+set_errors.errors <- function(x, value=0)
+  set_errors.numeric(drop_errors(x), value)
 
 #' @name errors
 #' @export
@@ -152,5 +146,6 @@ drop_errors <- function(x) UseMethod("drop_errors")
 drop_errors.errors <- function(x) {
   class(x) <- setdiff(class(x), "errors")
   attr(x, "errors") <- NULL
+  attr(x, "id") <- NULL
   x
 }

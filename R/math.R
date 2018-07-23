@@ -25,13 +25,12 @@
 Math.errors <- function(x, ...) {
   switch(
     .Generic,
-    "abs" = NextMethod(),
-    "sign" = as.numeric(NextMethod()),
+    "abs" = set_errors(unclass(NextMethod()), errors(x)),
+    "sign" = drop_errors(NextMethod()),
     "sqrt" = x^set_errors(0.5),
     "floor" = , "ceiling" = , "trunc" = , "round" = , "signif" = {
-      values <- .v(NextMethod())
-      e <- errors(x) + abs(.v(x) - values)
-      structure(values, "errors" = e, class = "errors")
+      xx <- drop_errors(NextMethod())
+      set_errors(xx, errors(x) + abs(.v(x) - xx))
     },
     {
       e <- switch(
@@ -56,19 +55,19 @@ Math.errors <- function(x, ...) {
         "atanh" = abs(errors(x) / (1 - .v(x)^2)),
         "cumsum" = propagate(cummatrix(errors(x)))
       )
-      structure(NextMethod(), "errors" = e, class = "errors")
+      set_errors(unclass(NextMethod()), e)
     },
     "cumprod" = {
-      values <- NextMethod()
-      e <- propagate(cummatrix(errors(x)) * t(values / t(cummatrix(.v(x), fill=1))))
-      structure(values, "errors" = e, class = "errors")
+      xx <- NextMethod()
+      e <- propagate(cummatrix(errors(x)) * t(xx / t(cummatrix(.v(x), fill=1))))
+      set_errors(unclass(xx), e)
     },
     "cummax" = , "cummin" = {
-      values <- NextMethod()
-      indexes <- which(values == .v(x))
+      xx <- NextMethod()
+      indexes <- which(xx == .v(x))
       reps <- diff(c(indexes, length(x)+1))
       e <- rep(errors(x)[indexes], times=reps)
-      structure(values, "errors" = e, class = "errors")
+      set_errors(unclass(xx), e)
     },
     "lgamma" = , "gamma" = , "digamma" = , "trigamma" =
       stop("method '", .Generic, "' not supported for 'errors' objects")
@@ -87,5 +86,5 @@ log2.errors <- function(x) log(x, 2)
 # atan2.errors <- function(x, y) {
 #   z <- y/x
 #   e <- errors(z) / (1 + .v(z)^2)
-#   structure(NextMethod(), "errors" = e, class = "errors")
+#   set_errors(unclass(NextMethod()), e)
 # }
