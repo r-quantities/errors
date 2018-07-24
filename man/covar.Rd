@@ -5,18 +5,26 @@
 \alias{covar}
 \alias{covar<-}
 \alias{covar}
+\alias{set_covar}
+\alias{covar}
 \alias{correl}
 \alias{covar}
 \alias{correl<-}
+\alias{covar}
+\alias{set_correl}
 \title{Handle Correlations Between \code{errors} Objects}
 \usage{
 covar(x, y)
 
 covar(x, y) <- value
 
+set_covar(x, y, value)
+
 correl(x, y)
 
 correl(x, y) <- value
+
+set_correl(x, y, value)
 }
 \arguments{
 \item{x}{an object of class \code{errors}.}
@@ -28,6 +36,8 @@ correl(x, y) <- value
 \value{
 \code{covar} and \code{correl} return a vector of covariances and
 correlations respectively (or \code{NULL}).
+\code{set_covar} and \code{set_correl}, which are pipe-friendly versions of
+the setters, return the \code{x} object.
 }
 \description{
 Set or retrieve covariances or correlations between \code{errors} objects.

@@ -1,8 +1,8 @@
 covars <- new.env(parent = emptyenv())
 
-get_covar <- function(idx, idy) covars[[idx]][[idy]]
+ids_covar <- function(idx, idy) covars[[idx]][[idy]]
 
-set_covar <- function(idx, idy, value) {
+`ids_covar<-` <- function(idx, idy, value) {
   if (is.null(covars[[idx]]))
     covars[[idx]] <- new.env(parent = emptyenv())
   if (is.null(covars[[idy]]))
@@ -10,6 +10,7 @@ set_covar <- function(idx, idy, value) {
 
   covars[[idx]][[idy]] <- value
   covars[[idy]][[idx]] <- covars[[idx]][[idy]]
+  idx
 }
 
 #' Handle Correlations Between \code{errors} Objects
@@ -23,6 +24,8 @@ set_covar <- function(idx, idy, value) {
 #'
 #' @return \code{covar} and \code{correl} return a vector of covariances and
 #' correlations respectively (or \code{NULL}).
+#' \code{set_covar} and \code{set_correl}, which are pipe-friendly versions of
+#' the setters, return the \code{x} object.
 #'
 #' @details The uncertainties associated to \code{errors} objects are supposed
 #' to be independent by default. If there is some known correlation, it can be
@@ -54,7 +57,7 @@ covar.errors <- function(x, y) {
   stopifnot(length(x) == length(y))
   stopifnot(attr(x, "id") != attr(y, "id"))
 
-  get_covar(attr(x, "id"), attr(y, "id"))
+  ids_covar(attr(x, "id"), attr(y, "id"))
 }
 
 #' @name covar
@@ -71,7 +74,17 @@ covar.errors <- function(x, y) {
   if (length(value) == 1)
     value <- rep(value, length(x))
   value[!is.finite(x)] <- x[!is.finite(x)]
-  set_covar(attr(x, "id"), attr(y, "id"), abs(value))
+  ids_covar(attr(x, "id"), attr(y, "id")) <- abs(value)
+  x
+}
+
+#' @name covar
+#' @export
+set_covar <- function(x, y, value) UseMethod("set_covar")
+
+#' @export
+set_covar.errors <- function(x, y, value) {
+  covar(x, y) <- value
   x
 }
 
@@ -94,5 +107,15 @@ correl.errors <- function(x, y) {
 `correl<-.errors` <- function(x, y, value) {
   stopifnot(value >= -1, value <= 1)
   covar(x, y) <- value * errors(x) * errors(y)
+  x
+}
+
+#' @name covar
+#' @export
+set_correl <- function(x, y, value) UseMethod("set_correl")
+
+#' @export
+set_correl.errors <- function(x, y, value) {
+  correl(x, y) <- value
   x
 }
