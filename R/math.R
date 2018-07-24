@@ -33,30 +33,32 @@ Math.errors <- function(x, ...) {
       set_errors(xx, errors(x) + abs(.v(x) - xx))
     },
     {
-      e <- switch(
+      deriv <- switch(
         .Generic,
-        "exp" = abs(errors(x) * exp(.v(x))),
-        "log" = abs(errors(x) / .v(x) / log(if (missing(...)) exp(1) else c(...)[1])),
-        "expm1" = abs(errors(x) * exp(.v(x))),
-        "log1p" = abs(errors(set_errors(1)+x) / .v(set_errors(1)+x)),
-        "cos" = abs(errors(x) * sin(.v(x))),
-        "sin" = abs(errors(x) * cos(.v(x))),
-        "tan" = errors(x) / cos(.v(x))^2,
-        "cospi" = abs(errors(x) * pi * sin(pi * .v(x))),
-        "sinpi" = abs(errors(x) * pi * cos(pi * .v(x))),
-        "tanpi" = errors(x) * pi / cos(pi * .v(x))^2,
-        "acos" = , "asin" = errors(x) / sqrt(1 - .v(x)^2),
-        "atan" = errors(x) / (1 + .v(x)^2),
-        "cosh" = abs(errors(x) * sinh(.v(x))),
-        "sinh" = abs(errors(x) * cosh(.v(x))),
-        "tanh" = errors(x) / cosh(.v(x))^2,
-        "acosh" = errors(x) / sqrt(.v(x) - 1) / sqrt(.v(x) + 1),
-        "asinh" = errors(x) / sqrt(1 + .v(x)^2),
-        "atanh" = abs(errors(x) / (1 - .v(x)^2)),
-        "cumsum" = propagate(cummatrix(errors(x)))
+        "exp" = , "expm1" = exp(.v(x)),
+        "log" = 1 / .v(x) / log(if (missing(...)) exp(1) else c(...)[1]),
+        "log1p" = 1 / .v(set_errors(1)+x),
+        "cos" = sin(.v(x)),
+        "sin" = cos(.v(x)),
+        "tan" = 1 / cos(.v(x))^2,
+        "cospi" = pi * sin(pi * .v(x)),
+        "sinpi" = pi * cos(pi * .v(x)),
+        "tanpi" = pi / cos(pi * .v(x))^2,
+        "acos" = , "asin" = 1 / sqrt(1 - .v(x)^2),
+        "atan" = 1 / (1 + .v(x)^2),
+        "cosh" = sinh(.v(x)),
+        "sinh" = cosh(.v(x)),
+        "tanh" = 1 / cosh(.v(x))^2,
+        "acosh" = 1 / sqrt(.v(x) - 1) / sqrt(.v(x) + 1),
+        "asinh" = 1 / sqrt(1 + .v(x)^2),
+        "atanh" = 1 / (1 - .v(x)^2)
       )
-      set_errors(unclass(NextMethod()), e)
+      xx <- set_errors(unclass(NextMethod()), abs(errors(x) * deriv))
+      for (id in ids(attr(x, "id")))
+        ids_covar(attr(xx, "id"), id) <- ids_covar(attr(x, "id"), id) * deriv
+      xx
     },
+    "cumsum" = set_errors(unclass(NextMethod()), propagate(cummatrix(errors(x)))),
     "cumprod" = {
       xx <- NextMethod()
       e <- propagate(cummatrix(errors(x)) * t(xx / t(cummatrix(.v(x), fill=1))))

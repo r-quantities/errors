@@ -35,6 +35,11 @@ ids_covar <- function(idx, idy) covars[[idx]][[idy]]
   idx
 }
 
+ids <- function(id) {
+  if (id %in% ls(covars)) ls(covars[[id]])
+  else NULL
+}
+
 #' Handle Correlations Between \code{errors} Objects
 #'
 #' Set or retrieve covariances or correlations between \code{errors} objects.
