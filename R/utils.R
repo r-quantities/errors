@@ -38,6 +38,3 @@ cond2int <- function(...) {
   args <- c(...)
   sum(2^(seq_along(args) - 1) * args)
 }
-
-#' @importFrom uuid UUIDgenerate
-new_id <- UUIDgenerate

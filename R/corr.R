@@ -1,7 +1,29 @@
+# Hash table of covariances
 covars <- new.env(parent = emptyenv())
 
+#' @importFrom uuid UUIDgenerate
+# Each UUID carries an associated environment with a finalizer registered.
+# This environment acts as a reference counter: when all copies are removed,
+# the finalizer is called by the GC and the correlations are cleaned up.
+new_id <- function() {
+  id <- UUIDgenerate()
+  env <- new.env(parent = emptyenv())
+  env[["id"]] <- id
+  reg.finalizer(env, function(x) {
+    if (x[["id"]] %in% ls(covars)) {
+      for (var in ls(covars[[x[["id"]]]]))
+        rm(list = x[["id"]], pos = covars[[var]])
+      rm(list = x[["id"]], pos = covars)
+    }
+  })
+  environment(id) <- env
+  id
+}
+
+# Get a covariance; covars[[idy]][[idx]] would return the same result.
 ids_covar <- function(idx, idy) covars[[idx]][[idy]]
 
+# Store a covariance in the hash table.
 `ids_covar<-` <- function(idx, idy, value) {
   if (is.null(covars[[idx]]))
     covars[[idx]] <- new.env(parent = emptyenv())
