@@ -12,7 +12,7 @@
 \alias{set_errors}
 \alias{errors}
 \alias{as.errors}
-\title{Set Uncertainty on a Numeric Vector}
+\title{Handle Uncertainty on a Numeric Vector}
 \usage{
 errors(x)
 
@@ -31,17 +31,20 @@ as.errors(x, value = 0)
 
 \item{value}{a numeric vector of length 1 or the same length as \code{x}.}
 }
-\description{
-Set/retrieve uncertainty to/from numeric vectors.
-}
-\details{
+\value{
 \code{errors} returns a vector of uncertainty. \code{errors_max}
 (\code{errors_min}) returns the values plus (minus) the uncertainty.
+}
+\description{
+Set or retrieve uncertainty to/from numeric vectors.
+}
+\details{
+\code{`errors<-`} sets the uncertainty values (and converts \code{x}
+into an object of class \code{errors}). \code{set_errors} is a pipe-friendly
+version of \code{`errors<-`} and returns an object of class \code{errors}.
+\code{as.errors} is an alias for \code{set_errors}.
 
-\code{`errors<-`} sets the uncertainty values (and converts \code{x} into an object
-of class \code{errors}). \code{set_errors} is a pipe-friendly version of
-\code{`errors<-`} and returns an object of class \code{errors}. \code{as.errors}
-is an alias for \code{set_errors}.
+See \code{\link{covar}} on how to handle correlations between pairs of variables.
 }
 \examples{
 x = 1:3
@@ -57,8 +60,8 @@ errors_min(x)
 
 }
 \seealso{
-\code{\link{groupGeneric.errors}}, \code{\link{mean.errors}}.
-\code{\link{Extract.errors}}, \code{\link{c}}, \code{\link{rep}}, \code{\link{cbind.errors}}.
-\code{\link{format.errors}}, \code{\link{print.errors}}, \code{\link{plot.errors}}.
+\code{\link{groupGeneric.errors}}, \code{\link{mean.errors}},
+\code{\link{Extract.errors}}, \code{\link{c}}, \code{\link{rep}}, \code{\link{cbind.errors}},
+\code{\link{format.errors}}, \code{\link{print.errors}}, \code{\link{plot.errors}},
 \code{\link{as.data.frame.errors}}, \code{\link{as.matrix.errors}}, \code{\link{t}}.
 }
