@@ -20,10 +20,10 @@ Summary.errors <- function(..., na.rm = FALSE) {
     .Generic,
     "all" = , "any" =
       stop("method not supported for `errors` objects"),
-    "sum" = set_errors(unclass(NextMethod()), propagate(cbind(errors(x)))),
+    "sum" = set_errors(unclass(NextMethod()), sqrt(colSums(cbind(errors(x))^2))),
     "prod" = {
       xx <- NextMethod()
-      set_errors(xx, propagate(cbind(errors(x) * xx / .v(x))))
+      set_errors(xx, sqrt(colSums(cbind(errors(x) * xx / .v(x))^2)))
     },
     "max" = NextMethod() + errors(x)[which.max(x)],
     "min" = NextMethod() - errors(x)[which.min(x)],

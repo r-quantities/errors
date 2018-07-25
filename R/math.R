@@ -53,15 +53,12 @@ Math.errors <- function(x, ...) {
         "asinh" = 1 / sqrt(1 + .v(x)^2),
         "atanh" = 1 / (1 - .v(x)^2)
       )
-      xx <- set_errors(unclass(NextMethod()), abs(errors(x) * deriv))
-      for (id in ids(attr(x, "id")))
-        ids_covar(attr(xx, "id"), id) <- ids_covar(attr(x, "id"), id) * deriv
-      xx
+      propagate(unclass(NextMethod()), x, NA, deriv, NA)
     },
-    "cumsum" = set_errors(unclass(NextMethod()), propagate(cummatrix(errors(x)))),
+    "cumsum" = set_errors(unclass(NextMethod()), sqrt(colSums(cummatrix(errors(x))^2))),
     "cumprod" = {
       xx <- NextMethod()
-      e <- propagate(cummatrix(errors(x)) * t(xx / t(cummatrix(.v(x), fill=1))))
+      e <- sqrt(colSums((cummatrix(errors(x)) * t(xx / t(cummatrix(.v(x), fill=1))))^2))
       set_errors(unclass(xx), e)
     },
     "cummax" = , "cummin" = {
