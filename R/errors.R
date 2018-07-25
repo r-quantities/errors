@@ -1,18 +1,32 @@
 #' \pkg{errors}: Uncertainty Propagation for R Vectors
 #'
+#' Support for measurement errors in R vectors, matrices and arrays: automatic
+#' uncertainty propagation and reporting.
+#'
 #' Every measurement has an unknown error associated. Uncertainty is the
 #' acknowledgement of that error: we are aware that our representation of reality
 #' may differ from reality itself. This package provides support for measurement
 #' errors in \R vectors, matrices and arrays. Uncertainty metadata is associated
-#' to quantity values, and this uncertainty is automatically propagated when you
-#' operate with \code{errors} objects, or with \code{errors} and numeric objects
-#' (then numeric values are automatically coerced to \code{errors} with no uncertainty).
+#' to quantity values (see \code{\link{errors}}), and this uncertainty is
+#' automatically propagated when you operate with \code{errors} objects (see
+#' \code{\link{groupGeneric.errors}}), or with \code{errors} and numeric objects
+#' (then numeric values are automatically coerced to \code{errors} objects with
+#' no uncertainty).
 #'
-#' This package treats uncertainty as coming from Gaussian and linear sources,
-#' and propagates them using the first-order Taylor series method for
-#' propagation of uncertainty. Although the above assumptions are valid in a wide
-#' range of applications in science and engineering, the practitioner should
-#' evaluate whether they apply for each particular case.
+#' Correlations between measurements are also supported. In particular, any
+#' operation (e.g., \code{z <- x + y}) results in a correlation between output
+#' and input variables (i.e., \code{z} is correlated to \code{x} and \code{y},
+#' even if there was no correlation between \code{x} and \code{y}). And in
+#' general, the user can establish correlations between any pair of variables
+#' (see \code{\link{correl}}).
+#'
+#' This package treats uncertainty as coming from Gaussian and linear sources
+#' (note that, even for non-Gaussian non-linear sources, this is a reasonable
+#' assumption for averages of many measurements), and propagates them using the
+#' first-order Taylor series method for propagation of uncertainty. Although the
+#' above assumptions are valid in a wide range of applications in science and
+#' engineering, the practitioner should evaluate whether they apply for each
+#' particular case.
 #'
 #' @author Iñaki Ucar
 #'
