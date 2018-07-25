@@ -40,9 +40,9 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
         ids_covar(attr(xx, "id"), id) <-
           colSums(rbind(ids_covar(idx, id) * dx, ids_covar(idy, id) * dy), na.rm = TRUE)
       ids_covar(attr(xx, "id"), idx) <-
-        colSums(rbind(4 * errors(x)^2 * dx, 2 * ids_covar(idx, idy) * dy), na.rm = TRUE)
+        colSums(rbind(errors(x)^2 * dx, ids_covar(idx, idy) * dy), na.rm = TRUE)
       ids_covar(attr(xx, "id"), idy) <-
-        colSums(rbind(4 * errors(y)^2 * dy, 2 * ids_covar(idx, idy) * dx), na.rm = TRUE)
+        colSums(rbind(errors(y)^2 * dy, ids_covar(idx, idy) * dx), na.rm = TRUE)
 
       # return the object
       xx
