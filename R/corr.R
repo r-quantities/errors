@@ -75,6 +75,23 @@ ids <- function(id) {
 #' arithmetic operations propagate correlations, where appropriate, following
 #' the Taylor series method.
 #'
+#' @examples
+#' V   <- with(GUM.H.2, set_errors(mean(V),   sd(V)   /sqrt(length(V))))
+#' I   <- with(GUM.H.2, set_errors(mean(I),   sd(I)   /sqrt(length(I))))
+#' phi <- with(GUM.H.2, set_errors(mean(phi), sd(phi) /sqrt(length(phi))))
+#'
+#' correl(V, I)   <- with(GUM.H.2, cor(V, I))
+#' correl(V, phi) <- with(GUM.H.2, cor(V, phi))
+#' correl(I, phi) <- with(GUM.H.2, cor(I, phi))
+#'
+#' (R <- (V / I) * cos(phi))
+#' (X <- (V / I) * sin(phi))
+#' (Z <- (V / I))
+#'
+#' correl(R, X)
+#' correl(R, Z)
+#' correl(X, Z)
+#'
 #' @export
 covar <- function(x, y) UseMethod("covar")
 
