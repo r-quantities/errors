@@ -36,13 +36,13 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
       # propagate covariances for new object
       idx <- attr(x, "id")
       idy <- attr(y, "id")
-      for (id in union(ids(idx), ids(idy))) ids_covar(attr(xx, "id"), id) <-
-        if (id == idx)
-          colSums(rbind(4 * errors(x)^2 * dx, 2 * ids_covar(idx, idy) * dy), na.rm = TRUE)
-      else if (id == idy)
+      for (id in setdiff(union(ids(idx), ids(idy)), c(idx, idy)))
+        ids_covar(attr(xx, "id"), id) <-
+          colSums(rbind(ids_covar(idx, id) * dx, ids_covar(idy, id) * dy), na.rm = TRUE)
+      ids_covar(attr(xx, "id"), idx) <-
+        colSums(rbind(4 * errors(x)^2 * dx, 2 * ids_covar(idx, idy) * dy), na.rm = TRUE)
+      ids_covar(attr(xx, "id"), idy) <-
         colSums(rbind(4 * errors(y)^2 * dy, 2 * ids_covar(idx, idy) * dx), na.rm = TRUE)
-      else
-        colSums(rbind(ids_covar(idx, id) * dx, ids_covar(idy, id) * dy), na.rm = TRUE)
 
       # return the object
       xx
