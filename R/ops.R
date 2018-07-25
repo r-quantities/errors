@@ -48,7 +48,7 @@ Ops.errors <- function(e1, e2) {
       }
       else list(1, do.call(.Generic, list(1))),
     "*" = list(.v(e2), .v(e1)),
-    "/" = , "%%" = , "%/%" = list(1 / .v(e2), .v(e1) / .v(e2)^2),
+    "/" = , "%%" = , "%/%" = list(1 / .v(e2), -.v(e1) / .v(e2)^2),
     "^" = list(.v(e1)^(.v(e2)-1) * .v(e2), .v(e1)^.v(e2) * log(abs(.v(e1))))
   )
   propagate(unclass(NextMethod()), e1, e2, deriv[[1]], deriv[[2]])
