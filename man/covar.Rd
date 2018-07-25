@@ -66,9 +66,9 @@ arithmetic operations propagate correlations, where appropriate, following
 the Taylor series method.
 }
 \examples{
-V   <- with(GUM.H.2, set_errors(mean(V),   sd(V)   /sqrt(length(V))))
-I   <- with(GUM.H.2, set_errors(mean(I),   sd(I)   /sqrt(length(I))))
-phi <- with(GUM.H.2, set_errors(mean(phi), sd(phi) /sqrt(length(phi))))
+V   <- with(GUM.H.2, set_errors(mean(V),   sd(V)   / sqrt(length(V))))
+I   <- with(GUM.H.2, set_errors(mean(I),   sd(I)   / sqrt(length(I))))
+phi <- with(GUM.H.2, set_errors(mean(phi), sd(phi) / sqrt(length(phi))))
 
 correl(V, I)   <- with(GUM.H.2, cor(V, I))
 correl(V, phi) <- with(GUM.H.2, cor(V, phi))
