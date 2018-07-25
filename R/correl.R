@@ -1,5 +1,5 @@
 # Hash table of covariances
-covars <- new.env(parent = emptyenv())
+ht <- new.env(parent = emptyenv())
 
 #' @importFrom uuid UUIDgenerate
 # Each UUID carries an associated environment with a finalizer registered.
@@ -10,48 +10,48 @@ new_id <- function() {
   env <- new.env(parent = emptyenv())
   env[["id"]] <- id
   reg.finalizer(env, function(x) {
-    if (x[["id"]] %in% ls(covars)) {
-      for (var in ls(covars[[x[["id"]]]]))
-        rm(list = x[["id"]], pos = covars[[var]])
-      rm(list = x[["id"]], pos = covars)
+    if (x[["id"]] %in% ls(ht)) {
+      for (var in ls(ht[[x[["id"]]]]))
+        rm(list = x[["id"]], pos = ht[[var]])
+      rm(list = x[["id"]], pos = ht)
     }
   })
   environment(id) <- env
   id
 }
 
-# Get a covariance; covars[[idy]][[idx]] would return the same result.
-ids_covar <- function(idx, idy) covars[[idx]][[idy]]
+# Get a covariance; ht[[idy]][[idx]] would return the same result.
+.covar <- function(idx, idy) ht[[idx]][[idy]]
 
 # Store a covariance in the hash table.
-`ids_covar<-` <- function(idx, idy, value) {
-  if (is.null(covars[[idx]]))
-    covars[[idx]] <- new.env(parent = emptyenv())
-  if (is.null(covars[[idy]]))
-    covars[[idy]] <- new.env(parent = emptyenv())
+`.covar<-` <- function(idx, idy, value) {
+  if (is.null(ht[[idx]]))
+    ht[[idx]] <- new.env(parent = emptyenv())
+  if (is.null(ht[[idy]]))
+    ht[[idy]] <- new.env(parent = emptyenv())
 
-  covars[[idx]][[idy]] <- value
-  covars[[idy]][[idx]] <- covars[[idx]][[idy]]
+  ht[[idx]][[idy]] <- value
+  ht[[idy]][[idx]] <- ht[[idx]][[idy]]
   idx
 }
 
 ids <- function(id) {
-  if (id %in% ls(covars)) ls(covars[[id]])
+  if (id %in% ls(ht)) ls(ht[[id]])
   else NULL
 }
 
 #' Handle Correlations Between \code{errors} Objects
 #'
-#' Set or retrieve covariances or correlations between \code{errors} objects.
+#' Set or retrieve correlations or covariances between \code{errors} objects.
 #' See the details section below.
 #'
 #' @param x an object of class \code{errors}.
 #' @param y an object of class \code{errors}.
 #' @inheritParams errors
 #'
-#' @return \code{covar} and \code{correl} return a vector of covariances and
-#' correlations respectively (or \code{NULL}).
-#' \code{set_covar} and \code{set_correl}, which are pipe-friendly versions of
+#' @return \code{correl} and \code{covar} return a vector of correlations and
+#' covariances respectively (or \code{NULL}).
+#' \code{set_correl} and \code{set_covar}, which are pipe-friendly versions of
 #' the setters, return the \code{x} object.
 #'
 #' @details The uncertainties associated to \code{errors} objects are supposed
@@ -93,44 +93,6 @@ ids <- function(id) {
 #' correl(X, Z)
 #'
 #' @export
-covar <- function(x, y) UseMethod("covar")
-
-#' @export
-covar.errors <- function(x, y) {
-  stopifnot(inherits(y, "errors"))
-  ids_covar(attr(x, "id"), attr(y, "id"))
-}
-
-#' @name covar
-#' @export
-`covar<-` <- function(x, y, value) UseMethod("covar<-")
-
-#' @export
-`covar<-.errors` <- function(x, y, value) {
-  stopifnot(inherits(y, "errors"))
-  stopifnot(length(x) == length(y))
-  stopifnot(attr(x, "id") != attr(y, "id"))
-  stopifnot(length(value) == length(x) || length(value) == 1L)
-
-  if (length(value) == 1)
-    value <- rep(value, length(x))
-  value[!is.finite(x)] <- x[!is.finite(x)]
-  ids_covar(attr(x, "id"), attr(y, "id")) <- value
-  x
-}
-
-#' @name covar
-#' @export
-set_covar <- function(x, y, value) UseMethod("set_covar")
-
-#' @export
-set_covar.errors <- function(x, y, value) {
-  covar(x, y) <- value
-  x
-}
-
-#' @name covar
-#' @export
 correl <- function(x, y) UseMethod("correl")
 
 #' @export
@@ -140,7 +102,7 @@ correl.errors <- function(x, y) {
   else xx / errors(x) / errors(y)
 }
 
-#' @name covar
+#' @name correl
 #' @export
 `correl<-` <- function(x, y, value) UseMethod("correl<-")
 
@@ -151,12 +113,51 @@ correl.errors <- function(x, y) {
   x
 }
 
-#' @name covar
+#' @name correl
 #' @export
 set_correl <- function(x, y, value) UseMethod("set_correl")
 
 #' @export
 set_correl.errors <- function(x, y, value) {
   correl(x, y) <- value
+  x
+}
+
+#' @name correl
+#' @export
+covar <- function(x, y) UseMethod("covar")
+
+#' @export
+covar.errors <- function(x, y) {
+  stopifnot(inherits(y, "errors"))
+  .covar(attr(x, "id"), attr(y, "id"))
+}
+
+#' @name correl
+#' @export
+`covar<-` <- function(x, y, value) UseMethod("covar<-")
+
+#' @export
+`covar<-.errors` <- function(x, y, value) {
+  stopifnot(inherits(y, "errors"))
+  stopifnot(length(x) == length(y))
+  stopifnot(attr(x, "id") != attr(y, "id"))
+  stopifnot(length(value) == length(x) || length(value) == 1L)
+  stopifnot(value / errors(x) / errors(y) >= -1,
+            value / errors(x) / errors(y) <= 1)
+
+  if (length(value) == 1)
+    value <- rep(value, length(x))
+  .covar(attr(x, "id"), attr(y, "id")) <- value
+  x
+}
+
+#' @name correl
+#' @export
+set_covar <- function(x, y, value) UseMethod("set_covar")
+
+#' @export
+set_covar.errors <- function(x, y, value) {
+  covar(x, y) <- value
   x
 }

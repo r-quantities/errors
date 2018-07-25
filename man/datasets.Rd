@@ -27,6 +27,6 @@ GUM.H.2
 Datasets found in Annex H of the GUM (see reference below).
 }
 \seealso{
-See \code{\link{covar}} for examples.
+See \code{\link{correl}} for examples.
 }
 \keyword{datasets}

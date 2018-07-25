@@ -44,7 +44,7 @@ into an object of class \code{errors}). \code{set_errors} is a pipe-friendly
 version of \code{`errors<-`} and returns an object of class \code{errors}.
 \code{as.errors} is an alias for \code{set_errors}.
 
-See \code{\link{covar}} on how to handle correlations between pairs of variables.
+See \code{\link{correl}} on how to handle correlations between pairs of variables.
 }
 \examples{
 x = 1:3

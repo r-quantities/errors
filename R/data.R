@@ -11,7 +11,7 @@
 #'   \item{phi}{Phase-shift angle of the voltage relative to the current, in radians.}
 #' }
 #'
-#' @seealso See \code{\link{covar}} for examples.
+#' @seealso See \code{\link{correl}} for examples.
 #'
 #' @source BIPM, IEC, IFCC, ILAC, IUPAC, IUPAP, ISO, and OIML (2008).
 #' Evaluation of Measurement Data -- Guide to the Expression of Uncertainty in

@@ -37,12 +37,12 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
       idx <- attr(x, "id")
       idy <- attr(y, "id")
       for (id in setdiff(union(ids(idx), ids(idy)), c(idx, idy)))
-        ids_covar(attr(xx, "id"), id) <-
-          colSums(rbind(ids_covar(idx, id) * dx, ids_covar(idy, id) * dy), na.rm = TRUE)
-      ids_covar(attr(xx, "id"), idx) <-
-        colSums(rbind(errors(x)^2 * dx, ids_covar(idx, idy) * dy), na.rm = TRUE)
-      ids_covar(attr(xx, "id"), idy) <-
-        colSums(rbind(errors(y)^2 * dy, ids_covar(idx, idy) * dx), na.rm = TRUE)
+        .covar(attr(xx, "id"), id) <-
+          colSums(rbind(.covar(idx, id) * dx, .covar(idy, id) * dy), na.rm = TRUE)
+      .covar(attr(xx, "id"), idx) <-
+        colSums(rbind(errors(x)^2 * dx, .covar(idx, idy) * dy), na.rm = TRUE)
+      .covar(attr(xx, "id"), idy) <-
+        colSums(rbind(errors(y)^2 * dy, .covar(idx, idy) * dx), na.rm = TRUE)
 
       # return the object
       xx

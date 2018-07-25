@@ -49,7 +49,7 @@ NULL
 #' version of \code{`errors<-`} and returns an object of class \code{errors}.
 #' \code{as.errors} is an alias for \code{set_errors}.
 #'
-#' See \code{\link{covar}} on how to handle correlations between pairs of variables.
+#' See \code{\link{correl}} on how to handle correlations between pairs of variables.
 #'
 #' @seealso
 #' \code{\link{groupGeneric.errors}}, \code{\link{mean.errors}},
