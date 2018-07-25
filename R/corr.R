@@ -98,7 +98,7 @@ covar.errors <- function(x, y) {
   if (length(value) == 1)
     value <- rep(value, length(x))
   value[!is.finite(x)] <- x[!is.finite(x)]
-  ids_covar(attr(x, "id"), attr(y, "id")) <- abs(value)
+  ids_covar(attr(x, "id"), attr(y, "id")) <- value
   x
 }
 
