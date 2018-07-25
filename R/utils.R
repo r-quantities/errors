@@ -27,11 +27,11 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
     method,
     "taylor-first-order" = {
       # propagate variance to new object
-      xx <- set_errors(xx, sqrt(colSums(rbind(
-        errors(x)^2 * dx^2,
-        errors(y)^2 * dy^2,
-        2 * covar(x, y) * dx * dy
-      ), na.rm = TRUE)))
+      var <- colSums(rbind(
+        errors(x)^2 * dx^2, errors(y)^2 * dy^2, 2 * covar(x, y) * dx * dy
+      ), na.rm = TRUE)
+      var[var < 0] <- 0
+      xx <- set_errors(xx, sqrt(var))
 
       # propagate covariances for new object
       idx <- attr(x, "id")
