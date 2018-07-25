@@ -81,9 +81,6 @@ covar <- function(x, y) UseMethod("covar")
 #' @export
 covar.errors <- function(x, y) {
   stopifnot(inherits(y, "errors"))
-  stopifnot(length(x) == length(y))
-  stopifnot(attr(x, "id") != attr(y, "id"))
-
   ids_covar(attr(x, "id"), attr(y, "id"))
 }
 
