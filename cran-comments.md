@@ -1,11 +1,12 @@
-## Maintenance release
+## Minor release
 
-Several bug fixes and improvements.
+* Added support for correlations between variables.
+* Minor bug fixes and improvements.
 
 ## Test environments
 
-* Fedora 27 + GCC + clang (local), R 3.4.3
-* Ubuntu 14.04 + GCC (on travis-ci), R 3.3.3, 3.4.3, devel
+* Fedora 28 + GCC + clang (local), R 3.5.0
+* Ubuntu 14.04 + GCC (on travis-ci), R 3.4.4, 3.5.0, devel
 * win-builder, R devel
 
 ## R CMD check results

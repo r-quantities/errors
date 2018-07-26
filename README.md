@@ -1,14 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> errors: Uncertainty Propagation for R Vectors
-====================================================================================================================
 
-[![Build Status](https://travis-ci.org/r-quantities/errors.svg?branch=master)](https://travis-ci.org/r-quantities/errors) [![Coverage Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/r-quantities/errors) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors) [![Downloads](https://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
+# <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> errors: Uncertainty Propagation for R Vectors
 
-The **errors** package provides support for easurement errors in R vectors, matrices and arrays: automatic uncertainty propagation and reporting.
+[![Build
+Status](https://travis-ci.org/r-quantities/errors.svg?branch=master)](https://travis-ci.org/r-quantities/errors)
+[![Coverage
+Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/r-quantities/errors)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors)
+[![Downloads](https://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
 
-Installation
-------------
+The **errors** package provides support for easurement errors in R
+vectors, matrices and arrays: automatic uncertainty propagation and
+reporting.
+
+## Installation
 
 Install the release version from CRAN:
 
@@ -16,15 +22,15 @@ Install the release version from CRAN:
 install.packages("errors")
 ```
 
-The installation from GitHub requires the [remotes](https://cran.r-project.org/package=remotes) package.
+The installation from GitHub requires the
+[remotes](https://cran.r-project.org/package=remotes) package.
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("r-quantities/errors")
 ```
 
-Example
--------
+## Example
 
 ``` r
 library(errors)
@@ -41,7 +47,7 @@ x
 
 (df <- data.frame(x, 3*x, x^2, sin(x), cumsum(x)))
 #> Warning: In 'Ops' : non-'errors' operand automatically coerced to an
-#> 'errors' object with zero error
+#> 'errors' object with no uncertainty
 #>          x  X3...x     x.2   sin.x. cumsum.x.
 #> 1  1.00(5)  3.0(2)  1.0(1)  0.84(3)   1.00(5)
 #> 2   2.0(1)  6.0(3)  4.0(4)  0.91(4)    3.0(1)
