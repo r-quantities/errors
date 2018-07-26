@@ -29,7 +29,7 @@ Math.errors <- function(x, ...) {
     "sign" = drop_errors(NextMethod()),
     "sqrt" = x^set_errors(0.5),
     "floor" = , "ceiling" = , "trunc" = , "round" = , "signif" = {
-      xx <- drop_errors(NextMethod())
+      xx <- .v(NextMethod())
       set_errors(xx, errors(x) + abs(.v(x) - xx))
     },
     {
