@@ -39,7 +39,7 @@ test_that("error formatting works properly", {
 
   x <- set_errors(10, 1)
   expect_equal(format(x - set_errors(10)), "0(1)")
-  expect_equal(format(x - x), "0(1)")
+  expect_equal(format(x - x), "0(0)")
 
   x <- set_errors(c(0.4, NA, NaN, Inf))
   expect_equal(format(x[1]), "0.4(0)")

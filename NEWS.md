@@ -1,14 +1,18 @@
-# errors 0.2.1.9000
+# errors 0.3.0
 
 ## New features
 
 * Implement `as.list` for `errors` objects (7aff546).
+* Implement support for correlations between variables (#26). The `correl` and `covar` methods set and retrieve pairwise correlations or covariances, respectively, between `errors` objects, thereby completing the full first-order Taylor series method of propagation of uncertainty.
+* Add a new dataset from the Annex H of the *Guide to the Expression of Uncertainty in Measurement* (GUM) (as part of #26; see `?GUM.H.2` and examples under `?correl`).
+* Implement `all.equal` for `errors` objects (as part of #26), which returns `TRUE` for *different* (different internal identifier) objects with the same quantity values and uncertainty. To compare whether two variables are exactly the *same* object, `identical` should be used instead.
 
 ## Minor changes and fixes:
 
 * Fix encoding issues for the plus-minus symbol (#24).
 * Fix `pillar` representation (14df89b).
 * Fix coercion issues (0e04519).
+* Improve documentation (as part of #26).
 
 # errors 0.2.1
 

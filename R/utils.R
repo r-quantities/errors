@@ -18,14 +18,41 @@ warn_once <- function(message, fun, type) {
 
 get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)
 
-propagate <- function(..., method=getOption("errors.propagation", "taylor-first-order")) {
-  if (method == "taylor-first-order")
-    sqrt(colSums(rbind(...)^2))
-  else { # nocov start
-    warning("uncertainty propagation '", method, "' not supported, falling back to 'taylor-first-order'")
-    options(errors.propagation = "taylor-first-order")
-    propagate(...)
-  } # nocov end
+propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "taylor-first-order")) {
+  # if y not defined, use a vector of NAs
+  if (length(y) == 1 && is.na(y))
+    y <- set_errors(rep(NA_real_, length(x)))
+
+  switch(
+    method,
+    "taylor-first-order" = {
+      # propagate variance to new object
+      var <- rowSums(cbind(
+        errors(x)^2 * dx^2, errors(y)^2 * dy^2, 2 * covar(x, y) * dx * dy
+      ), na.rm = TRUE)
+      var[var < 0] <- 0
+      xx <- set_errors(xx, sqrt(var))
+
+      # propagate covariances for new object
+      idx <- attr(x, "id")
+      idy <- attr(y, "id")
+      for (id in setdiff(union(ids(idx), ids(idy)), c(idx, idy)))
+        .covar(attr(xx, "id"), id) <-
+          rowSums(cbind(.covar(idx, id) * dx, .covar(idy, id) * dy), na.rm = TRUE)
+      .covar(attr(xx, "id"), idx) <-
+        rowSums(cbind(errors(x)^2 * dx, .covar(idx, idy) * dy), na.rm = TRUE)
+      .covar(attr(xx, "id"), idy) <-
+        rowSums(cbind(errors(y)^2 * dy, .covar(idx, idy) * dx), na.rm = TRUE)
+
+      # return the object
+      xx
+    },
+    { # nocov start
+      warning("uncertainty propagation '", method, "' not supported, falling back to 'taylor-first-order'")
+      options(errors.propagation = "taylor-first-order")
+      propagate(xx, x, y, dx, dy)
+    } # nocov end
+  )
 }
 
 cummatrix <- function(x, fill=0) {

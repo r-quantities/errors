@@ -1,5 +1,25 @@
 context("misc")
 
+test_that("equality testing checks IDs", {
+  x <- set_errors(1:10, 0.1)
+  y <- set_errors(unclass(x), errors(x))
+  z <- x
+
+  expect_false(is.null(attr(x, "id")))
+  expect_false(is.null(attr(y, "id")))
+  expect_false(is.null(attr(z, "id")))
+  expect_true(attr(x, "id") != attr(y, "id"))
+  expect_true(attr(y, "id") != attr(z, "id"))
+  expect_true(attr(z, "id") == attr(x, "id"))
+
+  expect_equal(x, y)
+  expect_equal(y, z)
+  expect_error(expect_equal(z, x))
+  expect_error(expect_identical(x, y))
+  expect_error(expect_identical(y, z))
+  expect_identical(z, x)
+})
+
 test_that("subsetting methods work properly", {
   xval <- 1.1:10.1
   xerr <- seq(0.005, 0.05, 0.005)

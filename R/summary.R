@@ -20,11 +20,10 @@ Summary.errors <- function(..., na.rm = FALSE) {
     .Generic,
     "all" = , "any" =
       stop("method not supported for `errors` objects"),
-    "sum" = structure(NextMethod(), "errors" = propagate(cbind(errors(x))), class = "errors"),
+    "sum" = set_errors(unclass(NextMethod()), sqrt(colSums(cbind(errors(x))^2))),
     "prod" = {
-      value <- NextMethod()
-      e <- propagate(cbind(errors(x) * value / .v(x)))
-      structure(value, "errors" = e, class = "errors")
+      xx <- NextMethod()
+      set_errors(xx, sqrt(colSums(cbind(errors(x) * xx / .v(x))^2)))
     },
     "max" = NextMethod() + errors(x)[which.max(x)],
     "min" = NextMethod() - errors(x)[which.min(x)],
@@ -52,21 +51,21 @@ Summary.errors <- function(..., na.rm = FALSE) {
 #' @export
 mean.errors <- function(x, ...) {
   e <- max(mean(errors(x)), sd(.v(x))/sqrt(length(x)))
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), e)
 }
 
 #' @name mean.errors
 #' @export
 weighted.mean.errors <- function(x, ...) {
   e <- max(weighted.mean(errors(x), ...), sd(.v(x))/sqrt(length(x)))
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), e)
 }
 
 #' @name mean.errors
 #' @export
 median.errors = function(x, ...) {
   e <- 1.253 * errors(mean(x))
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), e)
 }
 
 #' @export

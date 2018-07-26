@@ -20,8 +20,7 @@
 `[.errors` <- function(x, ...) {
   e <- errors(x)
   dim(e) <- dim(x)
-  e <- as.numeric(e[...])
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), as.numeric(e[...]))
 }
 
 #' @rdname Extract.errors
@@ -29,8 +28,7 @@
 `[[.errors` <- function(x, ...) {
   e <- errors(x)
   dim(e) <- dim(x)
-  e <- as.numeric(e[...])
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), as.numeric(e[[...]]))
 }
 
 #' @rdname Extract.errors
@@ -39,8 +37,7 @@
   e <- errors(x)
   dim(e) <- dim(x)
   e[...] <- errors(value)
-  e <- as.numeric(e)
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), as.numeric(e))
 }
 
 #' @rdname Extract.errors
@@ -49,8 +46,7 @@
   e <- errors(x)
   dim(e) <- dim(x)
   e[[...]] <- errors(value)
-  e <- as.numeric(e)
-  structure(NextMethod(), "errors" = e, class = "errors")
+  set_errors(unclass(NextMethod()), as.numeric(e))
 }
 
 #' Replicate Elements of Vectors and Lists
@@ -63,10 +59,8 @@
 #' rep(set_errors(1, 0.1), 4)
 #'
 #' @export
-rep.errors <- function(x, ...) {
-  e <- rep(errors(x), ...)
-  structure(NextMethod(), "errors" = e, class = "errors")
-}
+rep.errors <- function(x, ...)
+  set_errors(unclass(NextMethod()), rep(errors(x), ...))
 
 #' Combine Values into a Vector or List
 #'
@@ -78,10 +72,8 @@ rep.errors <- function(x, ...) {
 #' c(set_errors(1, 0.2), set_errors(7:9, 0.1), 3)
 #'
 #' @export
-c.errors <- function(..., recursive = FALSE) {
-  e <- c(unlist(sapply(list(...), errors)))
-  structure(NextMethod(), "errors" = e, class = "errors")
-}
+c.errors <- function(..., recursive = FALSE)
+  set_errors(unclass(NextMethod()), c(unlist(sapply(list(...), errors))))
 
 #' Lagged Differences
 #'
@@ -133,12 +125,12 @@ as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
   e <- errors(x)
   dim(e) <- dim(x)
   e <- as.data.frame(e)
-  value <- as.data.frame(unclass(x), row.names, optional, ...)
-  if (!optional && ncol(value) == 1)
-    colnames(value) <- deparse(substitute(x))
-  for (i in seq_len(ncol(value)))
-    errors(value[[i]]) <- e[[i]]
-  value
+  xx <- as.data.frame(unclass(x), row.names, optional, ...)
+  if (!optional && ncol(xx) == 1)
+    colnames(xx) <- deparse(substitute(x))
+  for (i in seq_len(ncol(xx)))
+    errors(xx[[i]]) <- e[[i]]
+  xx
 }
 
 #' Coerce to a List
@@ -166,7 +158,7 @@ as.list.errors <- function(x, ...)
 #'
 #' @export
 as.matrix.errors <- function(x, ...)
-  structure(NextMethod(), "errors" = errors(x), class = "errors")
+  set_errors(unclass(NextMethod()), errors(x))
 
 #' Matrix Transpose
 #'
@@ -183,7 +175,7 @@ as.matrix.errors <- function(x, ...)
 t.errors <- function(x) {
   e <- errors(x)
   dim(e) <- dim(x)
-  structure(NextMethod(), "errors" = as.numeric(t(e)), class = "errors")
+  set_errors(unclass(NextMethod()), as.numeric(t(e)))
 }
 
 #' Combine \R Objects by Rows or Columns
@@ -217,16 +209,28 @@ cbind.errors <- function(..., deparse.level = 1) {
     dim(e) <- dim(x)
     e
   })
-  structure(
+  set_errors(
     do.call(call, c(allargs, deparse.level=deparse.level)),
-    errors = as.numeric(do.call(call, allerrs)),
-    class = "errors"
+    as.numeric(do.call(call, allerrs))
   )
 }
 
 #' @rdname cbind.errors
 #' @export
 rbind.errors <- cbind.errors
+
+#' @export
+all.equal.errors <- function(target, current, ...) {
+  msg <- if (isTRUE(attr(target, "id") == attr(current, "id")))
+    "id: target and current must have different IDs, otherwise, use 'identical'"
+  attr(target, "id") <- attr(current, "id") <- NULL
+  res <- NextMethod()
+  if (isTRUE(res) && is.null(msg))
+    TRUE
+  else if (!isTRUE(res))
+    c(msg, res)
+  else msg
+}
 
 #' Methods for Tidy \code{tibble} Printing
 #'
