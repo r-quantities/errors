@@ -27,7 +27,7 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
     method,
     "taylor-first-order" = {
       # propagate variance to new object
-      var <- colSums(rbind(
+      var <- rowSums(cbind(
         errors(x)^2 * dx^2, errors(y)^2 * dy^2, 2 * covar(x, y) * dx * dy
       ), na.rm = TRUE)
       var[var < 0] <- 0
@@ -38,11 +38,11 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
       idy <- attr(y, "id")
       for (id in setdiff(union(ids(idx), ids(idy)), c(idx, idy)))
         .covar(attr(xx, "id"), id) <-
-          colSums(rbind(.covar(idx, id) * dx, .covar(idy, id) * dy), na.rm = TRUE)
+          rowSums(cbind(.covar(idx, id) * dx, .covar(idy, id) * dy), na.rm = TRUE)
       .covar(attr(xx, "id"), idx) <-
-        colSums(rbind(errors(x)^2 * dx, .covar(idx, idy) * dy), na.rm = TRUE)
+        rowSums(cbind(errors(x)^2 * dx, .covar(idx, idy) * dy), na.rm = TRUE)
       .covar(attr(xx, "id"), idy) <-
-        colSums(rbind(errors(y)^2 * dy, .covar(idx, idy) * dx), na.rm = TRUE)
+        rowSums(cbind(errors(y)^2 * dy, .covar(idx, idy) * dx), na.rm = TRUE)
 
       # return the object
       xx
