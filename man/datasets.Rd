@@ -39,6 +39,6 @@ GUM.H.3
 Datasets found in Annex H of the GUM (see reference below).
 }
 \seealso{
-See \code{\link{correl}} for examples.
+See \code{\link{errors-package}} for examples.
 }
 \keyword{datasets}

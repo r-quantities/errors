@@ -19,7 +19,7 @@
 #'   \item{bk}{Observed correction, in Celsius degrees.}
 #' }
 #'
-#' @seealso See \code{\link{correl}} for examples.
+#' @seealso See \code{\link{errors-package}} for examples.
 #'
 #' @source BIPM, IEC, IFCC, ILAC, IUPAC, IUPAP, ISO, and OIML (2008).
 #' Evaluation of Measurement Data -- Guide to the Expression of Uncertainty in

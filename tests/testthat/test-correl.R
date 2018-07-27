@@ -94,7 +94,7 @@ test_that("pipe-friendly versions work as expected", {
 })
 
 test_that("GUM examples give the correct results", {
-  expect_output(example("correl"))
+  expect_output(example("errors-package"))
 
   expect_equal(as.numeric(R), 127.732, tolerance=0.001)
   expect_equal(errors(R), 0.071, tolerance=0.001)
