@@ -1,3 +1,13 @@
+# errors 0.3.0.9000
+
+## New features
+
+* Add a new dataset from the Annex H of the *Guide to the Expression of Uncertainty in Measurement* (GUM) and associated example (f6e5461, see `?GUM.H.3`).
+
+## Minor changes and fixes
+
+* Move GUM examples to ``?`errors-package` `` and provide new examples for `?correl` (aed40eb).
+
 # errors 0.3.0
 
 ## New features
