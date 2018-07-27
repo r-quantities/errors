@@ -76,9 +76,9 @@ ids <- function(id) {
 #' the Taylor series method.
 #'
 #' @examples
-#' V   <- with(GUM.H.2, set_errors(mean(V),   sd(V)   / sqrt(length(V))))
-#' I   <- with(GUM.H.2, set_errors(mean(I),   sd(I)   / sqrt(length(I))))
-#' phi <- with(GUM.H.2, set_errors(mean(phi), sd(phi) / sqrt(length(phi))))
+#' V   <- mean(set_errors(GUM.H.2$V))
+#' I   <- mean(set_errors(GUM.H.2$I))
+#' phi <- mean(set_errors(GUM.H.2$phi))
 #'
 #' correl(V, I)   <- with(GUM.H.2, cor(V, I))
 #' correl(V, phi) <- with(GUM.H.2, cor(V, phi))
