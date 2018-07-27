@@ -93,7 +93,7 @@ test_that("pipe-friendly versions work as expected", {
   expect_equal(correl(x, y), 0.0035 / errors(x) / errors(y))
 })
 
-test_that("GUM.H.2 example gives the correct results", {
+test_that("GUM examples give the correct results", {
   expect_output(example("correl"))
 
   expect_equal(as.numeric(R), 127.732, tolerance=0.001)
@@ -106,4 +106,8 @@ test_that("GUM.H.2 example gives the correct results", {
   expect_equal(correl(R, X), -0.588, tolerance=0.001)
   expect_equal(correl(R, Z), -0.485, tolerance=0.001)
   expect_equal(correl(X, Z), 0.993, tolerance=0.001)
+
+  expect_equal(as.numeric(y1), -0.1712, tolerance=0.0001)
+  expect_equal(as.numeric(y2), 0.00218, tolerance=0.00001)
+  expect_equal(as.numeric(b.30), -0.1494, tolerance=0.0001)
 })
