@@ -7,6 +7,7 @@
 ## Minor changes and fixes
 
 * Move GUM examples to ``?`errors-package` `` and provide new examples for `?correl` (aed40eb).
+* Simplify object ID handling (#27).
 
 # errors 0.3.0
 
