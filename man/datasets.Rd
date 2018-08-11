@@ -4,7 +4,6 @@
 \name{datasets}
 \alias{datasets}
 \alias{GUM.H.2}
-\alias{datasets}
 \alias{GUM.H.3}
 \title{Datasets from the Guide to the Expression of Uncertainty in Measurement (GUM)}
 \format{\code{GUM.H.2}, from Section 2 of Annex H (Table H.2), provides

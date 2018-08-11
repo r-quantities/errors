@@ -2,9 +2,7 @@
 % Please edit documentation in R/summary.R
 \name{mean.errors}
 \alias{mean.errors}
-\alias{mean.errors}
 \alias{weighted.mean.errors}
-\alias{mean.errors}
 \alias{median.errors}
 \title{Arithmetic Mean and Median Value}
 \usage{

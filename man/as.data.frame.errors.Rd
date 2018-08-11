@@ -4,7 +4,8 @@
 \alias{as.data.frame.errors}
 \title{Coerce to a Data Frame}
 \usage{
-\method{as.data.frame}{errors}(x, row.names = NULL, optional = FALSE, ...)
+\method{as.data.frame}{errors}(x, row.names = NULL, optional = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{any \R object.}

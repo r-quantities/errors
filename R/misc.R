@@ -221,7 +221,7 @@ rbind.errors <- cbind.errors
 
 #' @export
 all.equal.errors <- function(target, current, ...) {
-  msg <- if (isTRUE(attr(target, "id") == attr(current, "id")))
+  msg <- if (identical(attr(target, "id"), attr(current, "id")))
     "id: target and current must have different IDs, otherwise, use 'identical'"
   attr(target, "id") <- attr(current, "id") <- NULL
   res <- NextMethod()
