@@ -35,9 +35,11 @@ new_id <- function() {
   idx
 }
 
-ids <- function(id) {
-  if (id %in% ls(ht)) ls(ht[[id]])
-  else NULL
+ids <- function(...) {
+  do.call(union, lapply(list(...), function(id) {
+    if (id %in% ls(ht)) ls(ht[[id]])
+    else NULL
+  }))
 }
 
 #' Handle Correlations Between \code{errors} Objects
