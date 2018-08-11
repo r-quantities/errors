@@ -3,7 +3,6 @@
 \name{tibble}
 \alias{tibble}
 \alias{type_sum.errors}
-\alias{tibble}
 \alias{pillar_shaft.errors}
 \title{Methods for Tidy \code{tibble} Printing}
 \usage{

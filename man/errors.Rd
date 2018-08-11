@@ -2,15 +2,10 @@
 % Please edit documentation in R/errors.R
 \name{errors}
 \alias{errors}
-\alias{errors}
 \alias{errors_max}
-\alias{errors}
 \alias{errors_min}
-\alias{errors}
 \alias{errors<-}
-\alias{errors}
 \alias{set_errors}
-\alias{errors}
 \alias{as.errors}
 \title{Handle Uncertainty on a Numeric Vector}
 \usage{

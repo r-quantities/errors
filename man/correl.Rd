@@ -2,15 +2,10 @@
 % Please edit documentation in R/correl.R
 \name{correl}
 \alias{correl}
-\alias{correl}
 \alias{correl<-}
-\alias{correl}
 \alias{set_correl}
-\alias{correl}
 \alias{covar}
-\alias{correl}
 \alias{covar<-}
-\alias{correl}
 \alias{set_covar}
 \title{Handle Correlations Between \code{errors} Objects}
 \usage{
