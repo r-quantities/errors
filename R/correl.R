@@ -1,30 +1,37 @@
 # Hash table of covariances
 ht <- new.env(parent = emptyenv())
 
-#' @importFrom uuid UUIDgenerate
-# Each UUID carries an associated environment with a finalizer registered.
-# This environment acts as a reference counter: when all copies are removed,
-# the finalizer is called by the GC and the correlations are cleaned up.
-new_id <- function() {
-  id <- UUIDgenerate()
-  env <- new.env(parent = emptyenv())
-  env[["id"]] <- id
-  reg.finalizer(env, function(x) {
-    if (x[["id"]] %in% ls(ht)) {
-      for (var in ls(ht[[x[["id"]]]]))
-        rm(list = x[["id"]], pos = ht[[var]])
-      rm(list = x[["id"]], pos = ht)
-    }
-  })
-  environment(id) <- env
+.id <- function(id) {
+  if (is.environment(id))
+    id <- format(id)
   id
 }
 
+# Each ID is a new empty environment with a finalizer registered.
+# This environment acts as a reference counter: when all copies are removed,
+# the finalizer is called by the GC and the correlations are cleaned up.
+new_id <- function() {
+  env <- new.env(parent = emptyenv())
+  reg.finalizer(env, function(x) {
+    id <- .id(x)
+    if (id %in% ls(ht)) {
+      for (var in ls(ht[[id]]))
+        rm(list = id, pos = ht[[var]])
+      rm(list = id, pos = ht)
+    }
+  })
+  env
+}
+
 # Get a covariance; ht[[idy]][[idx]] would return the same result.
-.covar <- function(idx, idy) ht[[idx]][[idy]]
+.covar <- function(idx, idy) ht[[.id(idx)]][[.id(idy)]]
 
 # Store a covariance in the hash table.
 `.covar<-` <- function(idx, idy, value) {
+  ret <- idx
+  idx <- .id(idx)
+  idy <- .id(idy)
+
   if (is.null(ht[[idx]]))
     ht[[idx]] <- new.env(parent = emptyenv())
   if (is.null(ht[[idy]]))
@@ -32,14 +39,14 @@ new_id <- function() {
 
   ht[[idx]][[idy]] <- value
   ht[[idy]][[idx]] <- ht[[idx]][[idy]]
-  idx
+
+  ret
 }
 
-ids <- function(...) {
-  do.call(union, lapply(list(...), function(id) {
-    if (id %in% ls(ht)) ls(ht[[id]])
-    else NULL
-  }))
+ids <- function(id) {
+  id <- .id(id)
+  if (id %in% ls(ht)) ls(ht[[id]])
+  else NULL
 }
 
 #' Handle Correlations Between \code{errors} Objects
@@ -143,7 +150,7 @@ covar.errors <- function(x, y) {
 `covar<-.errors` <- function(x, y, value) {
   stopifnot(inherits(y, "errors"))
   stopifnot(length(x) == length(y))
-  stopifnot(attr(x, "id") != attr(y, "id"))
+  stopifnot(!identical(attr(x, "id"), attr(y, "id")))
   stopifnot(length(value) == length(x) || length(value) == 1L)
   stopifnot(value / errors(x) / errors(y) >= -1,
             value / errors(x) / errors(y) <= 1)

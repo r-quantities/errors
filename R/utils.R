@@ -36,7 +36,7 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
       # propagate covariances for new object
       idx <- attr(x, "id")
       idy <- attr(y, "id")
-      for (id in ids(idx, idy)) .covar(attr(xx, "id"), id) <-
+      for (id in union(ids(idx), ids(idy))) .covar(attr(xx, "id"), id) <-
         rowSums(cbind(.covar(idx, id) * dx, .covar(idy, id) * dy), na.rm = TRUE)
 
       # return the object

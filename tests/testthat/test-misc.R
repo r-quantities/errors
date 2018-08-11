@@ -8,9 +8,9 @@ test_that("equality testing checks IDs", {
   expect_false(is.null(attr(x, "id")))
   expect_false(is.null(attr(y, "id")))
   expect_false(is.null(attr(z, "id")))
-  expect_true(attr(x, "id") != attr(y, "id"))
-  expect_true(attr(y, "id") != attr(z, "id"))
-  expect_true(attr(z, "id") == attr(x, "id"))
+  expect_false(identical(attr(x, "id"), attr(y, "id")))
+  expect_false(identical(attr(y, "id"), attr(z, "id")))
+  expect_identical(attr(z, "id"), attr(x, "id"))
 
   expect_equal(x, y)
   expect_equal(y, z)
