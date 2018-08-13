@@ -1,7 +1,7 @@
-## Minor release
+## Patch release
 
-* Added support for correlations between variables.
-* Minor bug fixes and improvements.
+The maintainer's address has changed. It is the same account, just a different
+alias. I'm sending confirmation from the previous address to CRAN-submissions.
 
 ## Test environments
 
