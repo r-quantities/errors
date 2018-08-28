@@ -3,11 +3,13 @@
 ## New features
 
 * Add a new dataset from the Annex H of the *Guide to the Expression of Uncertainty in Measurement* (GUM) and associated example (f6e5461, see `?GUM.H.3`).
+* Provide methods for logical values to automatically reinterpret `NA` as `NA_real_` (#30).
 
 ## Minor changes and fixes
 
 * Move GUM examples to ``?`errors-package` `` and provide new examples for `?correl` (aed40eb).
 * Simplify object ID handling (#27).
+* Fix formatting in presence of missing values (as part of #30).
 
 # errors 0.3.0
 

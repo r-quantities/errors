@@ -116,6 +116,13 @@ errors <- function(x) UseMethod("errors")
 errors.numeric <- function(x) rep(0, length(x))
 
 #' @export
+errors.logical <- function(x) {
+  if (!all(is.na(x)))
+    stop("x must be numeric, non-NA logical not supported")
+  rep(NA_real_, length(x))
+}
+
+#' @export
 errors.errors <- function(x) {
   attr(x, "errors")
 }
@@ -166,6 +173,15 @@ errors_min.errors <- errors_min.numeric
   `errors<-.errors`(x, value)
 }
 
+#' @export
+`errors<-.logical` <- function(x, value) {
+  if (!all(is.na(x)))
+    stop("x must be numeric, non-NA logical not supported")
+  x <- as.numeric(x)
+  errors(x) <- value
+  x
+}
+
 #' @name errors
 #' @export
 set_errors <- function(x, value=0) UseMethod("set_errors")
@@ -175,6 +191,9 @@ set_errors.numeric <- function(x, value=0) {
   errors(x) <- value
   x
 }
+
+#' @export
+set_errors.logical <- set_errors.numeric
 
 #' @export
 set_errors.errors <- function(x, value=0)

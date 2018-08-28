@@ -46,7 +46,7 @@ format.errors = function(x,
   if (notation == "parenthesis") {
     sep <- "("
     append[] <- ")"
-    e[is.finite(e)] <- e[is.finite(e)] * 10^(pmax(0, value_digits-1))
+    e[is.finite(e)] <- (e * 10^(pmax(0, value_digits-1)))[is.finite(e)]
   } else {
     sep <- paste0(" ", .pm, " ")
     prepend[cond] <- "("

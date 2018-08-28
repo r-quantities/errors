@@ -34,6 +34,18 @@ test_that("errors can be defined as integers", {
   expect_equal(errors(x), 1:3)
 })
 
+test_that("NA values are reintepreted as NA_real_", {
+  xval <- NA
+  expect_equal(errors(xval), NA_real_)
+  x <- set_errors(xval)
+  expect_equal(as.numeric(x), NA_real_)
+  expect_equal(errors(x), NA_real_)
+  x <- xval
+  errors(x) <- 0
+  expect_equal(as.numeric(x), NA_real_)
+  expect_equal(errors(x), NA_real_)
+})
+
 test_that("type_sum is available for errors objects", {
   skip_if_not_installed("tibble")
   library(tibble)
