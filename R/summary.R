@@ -15,7 +15,9 @@
 #'
 #' @export
 Summary.errors <- function(..., na.rm = FALSE) {
-  x <- c(...)
+  dots <- list(...)
+  dots[names(dots) != ""] <- NULL # unnamed only
+  x <- do.call(c, dots)
   switch(
     .Generic,
     "all" = , "any" =
@@ -27,7 +29,7 @@ Summary.errors <- function(..., na.rm = FALSE) {
     },
     "max" = NextMethod() + errors(x)[which.max(x)],
     "min" = NextMethod() - errors(x)[which.min(x)],
-    "range" = c(min(x), max(x))
+    "range" = c(min(...), max(...))
   )
 }
 
