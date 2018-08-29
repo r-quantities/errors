@@ -10,6 +10,7 @@
 * Move GUM examples to ``?`errors-package` `` and provide new examples for `?correl` (aed40eb).
 * Simplify object ID handling (#27).
 * Fix formatting in presence of missing values (as part of #30).
+* Fix `Summary.errors` to deal with named arguments (dd4607b).
 
 # errors 0.3.0
 
