@@ -240,7 +240,13 @@ all.equal.errors <- function(target, current, ...) {
 #' @param ... see \link[pillar]{pillar_shaft}.
 #'
 #' @name tibble
-#' @export type_sum.errors
+#' @rawNamespace if(getRversion() >= "3.6.0") {
+#'   S3method(pillar::type_sum, errors)
+#'   S3method(pillar::pillar_shaft, errors)
+#' } else {
+#'   export(type_sum.errors)
+#'   export(pillar_shaft.errors)
+#' }
 type_sum.errors <- function(x) {
   not <- getOption("errors.notation")
   out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm, "err"))
@@ -248,7 +254,6 @@ type_sum.errors <- function(x) {
 }
 
 #' @name tibble
-#' @export pillar_shaft.errors
 pillar_shaft.errors <- function(x, ...) {
   out <- format(x)
   if (!requireNamespace("pillar", quietly = TRUE))

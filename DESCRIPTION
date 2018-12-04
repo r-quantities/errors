@@ -15,4 +15,4 @@ LazyData: true
 Depends: R (>= 3.0.0)
 Suggests: tibble, pillar, testthat
 ByteCompile: yes
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
