@@ -1,9 +1,10 @@
-# errors 0.3.0.9000
+# errors 0.3.1
 
 ## New features
 
 * Add a new dataset from the Annex H of the *Guide to the Expression of Uncertainty in Measurement* (GUM) and associated example (f6e5461, see `?GUM.H.3`).
 * Provide methods for logical values to automatically reinterpret `NA` as `NA_real_` (#30).
+* Add delayed S3 registration mechanism for R >= 3.6.0 (955e7ad).
 
 ## Minor changes and fixes
 
