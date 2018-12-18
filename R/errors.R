@@ -30,6 +30,10 @@
 #'
 #' @author Iñaki Ucar
 #'
+#' @references Iñaki Ucar, Edzer Pebesma and Arturo Azcorra (2018).
+#' Measurement Errors in \R. \emph{The R Journal}.
+#' URL: \url{https://journal.r-project.org/archive/2018/RJ-2018-075/index.html}
+#'
 #' @docType package
 #' @import stats
 #' @name errors-package

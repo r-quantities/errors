@@ -1,0 +1,11 @@
+bibentry(
+  header  = "To cite 'errors' in publications use:",
+  bibtype = "Article",
+  title   = "Measurement Errors in {R}",
+  author  = c(person("Iñaki", "Ucar"),
+              person("Edzer", "Pebesma"),
+              person("Arturo", "Azcorra")),
+  year    = "2018",
+  journal = "R Journal",
+  doi     = "10.32614/RJ-2018-075"
+)

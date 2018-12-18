@@ -1,3 +1,9 @@
+# errors 0.3.2
+
+## Minor changes and fixes
+
+- Add CITATION for the *R Journal* paper.
+
 # errors 0.3.1
 
 ## New features
