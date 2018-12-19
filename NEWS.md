@@ -3,6 +3,7 @@
 ## Minor changes and fixes
 
 - Add CITATION for the *R Journal* paper.
+- Add the paper as a vignette.
 
 # errors 0.3.1
 

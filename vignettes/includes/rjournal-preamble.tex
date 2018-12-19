@@ -1,0 +1,16 @@
+\usepackage{booktabs}
+\usepackage{subfig}
+\newcommand{\CRANpkg}[1]{\href{https://CRAN.R-project.org/package=#1}{\pkg{#1}}}%
+\newcommand{\dfn}[1]{{\normalfont\textsl{#1}}}
+\newcommand{\strong}[1]{\texorpdfstring%
+{{\normalfont\fontseries{b}\selectfont #1}}%
+{#1}}
+\let\pkg=\strong
+\makeatletter
+\DeclareRobustCommand\code{\bgroup\@noligs\@codex}
+\def\@codex#1{\texorpdfstring%
+	{{\normalfont\ttfamily\hyphenchar\font=-1 #1}}%
+	{#1}\egroup}
+\newcommand{\E}{%
+  \mathop{\operator@font I\hspace{-1.5pt}E\hspace{.13pt}}}
+\makeatother
