@@ -4,7 +4,6 @@
 
 - Add CITATION for the *R Journal* paper.
 - Add the paper as a vignette.
-- Fix `stopifnot` condition lengths (#31).
 
 # errors 0.3.1
 
