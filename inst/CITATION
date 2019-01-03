@@ -7,5 +7,6 @@ bibentry(
               person("Arturo", "Azcorra")),
   year    = "2018",
   journal = "R Journal",
-  doi     = "10.32614/RJ-2018-075"
+  doi     = "10.32614/RJ-2018-075",
+  url     = "https://journal.r-project.org/archive/2018/RJ-2018-075/index.html"
 )
