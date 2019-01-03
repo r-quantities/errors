@@ -159,7 +159,7 @@ errors_min.errors <- errors_min.numeric
 #' @export
 `errors<-.errors` <- function(x, value) {
   if(is.null(value)) return(drop_errors(x))
-  stopifnot(length(value) == length(x) || length(value) == 1L)
+  stopifnot(any(length(value) == c(length(x), 1L)))
 
   if (length(value) == 1)
     value <- rep(value, length(x))
