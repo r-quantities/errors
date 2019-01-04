@@ -6,7 +6,6 @@ abstract: >
 bibliography: rjournal.bib
 output:
   rmarkdown::pdf_document:
-    keep_tex: true
     citation_package: natbib
     number_sections: true
     includes:
