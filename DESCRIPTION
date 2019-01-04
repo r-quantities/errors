@@ -14,6 +14,5 @@ BugReports: https://github.com/r-quantities/errors/issues
 LazyData: true
 Depends: R (>= 3.0.0)
 Suggests: tibble, pillar, testthat, knitr, rmarkdown
-ByteCompile: yes
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
