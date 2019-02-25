@@ -15,7 +15,7 @@ See [the initial blog post](https://www.enchufa2.es/archives/errors-0-0-1.html).
 The package includes a vignette that is an up-to-date version of the following
 R Journal publication, which should be used for citations:
 
-- Iñaki Ucar, Edzer Pebesma and Arturo Azcorra (2018). "[Measurement Errors in R](https://journal.r-project.org/archive/2018/RJ-2018-075/index.html)." _The R Journal_.
+- Iñaki Ucar, Edzer Pebesma and Arturo Azcorra (2018). "Measurement Errors in R." _The R Journal_, 10 (2), 549--557. DOI: [10.32614/RJ-2018-075](https://doi.org/10.32614/RJ-2018-075)
 
 ## Installation
 
