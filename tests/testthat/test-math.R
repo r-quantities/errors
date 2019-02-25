@@ -1,23 +1,30 @@
 context("math")
 
-test_that("rounding methods work properly", {
-  x <- set_errors(c(-2, 0, 2), 0.1)
-  expect_equal(sign(x), c(-1, 0, 1))
+test_that("sign methods work properly", {
+  xval <- c(-2, 0, 1)
+  xerr <- c(.1, .2, .3)
+  x <- set_errors(xval, xerr)
 
+  expect_equal(as.numeric(abs(x)), abs(xval))
+  expect_equal(errors(abs(x)), xerr)
+  expect_equal(sign(x), sign(xval))
+})
+
+test_that("rounding methods work properly", {
   xval <- 1.1:10.1
   xerr <- seq(0.005, 0.05, 0.005)
   x <- set_errors(xval, xerr)
 
-  expect_equal(as.numeric(floor(x)), floor(as.numeric(x)))
-  expect_equal(errors(floor(x)), errors(x) + abs(as.numeric(x) - floor(as.numeric(x))))
-  expect_equal(as.numeric(ceiling(x)), ceiling(as.numeric(x)))
-  expect_equal(errors(ceiling(x)), errors(x) + abs(as.numeric(x) - ceiling(as.numeric(x))))
-  expect_equal(as.numeric(trunc(x)), trunc(as.numeric(x)))
-  expect_equal(errors(trunc(x)), errors(x) + abs(as.numeric(x) - trunc(as.numeric(x))))
-  expect_equal(as.numeric(round(x)), round(as.numeric(x)))
-  expect_equal(errors(round(x)), errors(x) + abs(as.numeric(x) - round(as.numeric(x))))
-  expect_equal(as.numeric(signif(x)), signif(as.numeric(x)))
-  expect_equal(errors(signif(x)), errors(x) + abs(as.numeric(x) - signif(as.numeric(x))))
+  expect_equal(as.numeric(floor(x)), floor(xval))
+  expect_equal(errors(floor(x)), xerr + abs(xval - floor(xval)))
+  expect_equal(as.numeric(ceiling(x)), ceiling(xval))
+  expect_equal(errors(ceiling(x)), xerr + abs(xval - ceiling(xval)))
+  expect_equal(as.numeric(trunc(x)), trunc(xval))
+  expect_equal(errors(trunc(x)), xerr + abs(xval - trunc(xval)))
+  expect_equal(as.numeric(round(x)), round(xval))
+  expect_equal(errors(round(x)), xerr + abs(xval - round(xval)))
+  expect_equal(as.numeric(signif(x)), signif(xval))
+  expect_equal(errors(signif(x)), xerr + abs(xval - signif(xval)))
 })
 
 test_that("math methods work properly", {

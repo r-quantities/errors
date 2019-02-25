@@ -117,7 +117,7 @@ correl.errors <- function(x, y) {
 
 #' @export
 `correl<-.errors` <- function(x, y, value) {
-  stopifnot(value >= -1, value <= 1)
+  stopifnot(abs(value) <= 1)
   covar(x, y) <- value * errors(x) * errors(y)
   x
 }
@@ -148,12 +148,9 @@ covar.errors <- function(x, y) {
 
 #' @export
 `covar<-.errors` <- function(x, y, value) {
-  stopifnot(inherits(y, "errors"))
-  stopifnot(length(x) == length(y))
-  stopifnot(!identical(attr(x, "id"), attr(y, "id")))
-  stopifnot(length(value) == length(x) || length(value) == 1L)
-  stopifnot(value / errors(x) / errors(y) >= -1,
-            value / errors(x) / errors(y) <= 1)
+  stopifnot(inherits(y, "errors"), !identical(attr(x, "id"), attr(y, "id")))
+  stopifnot(length(x) == length(y), any(length(value) == c(length(x), 1L)))
+  stopifnot(abs(value / errors(x) / errors(y)) <= 1)
 
   if (length(value) == 1)
     value <- rep(value, length(x))
