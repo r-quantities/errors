@@ -73,8 +73,8 @@ covar(y1, y2) <- vcov(fit)[1, 2]
 }
 \references{
 Iñaki Ucar, Edzer Pebesma and Arturo Azcorra (2018).
-Measurement Errors in \R. \emph{The R Journal}.
-URL: \url{https://journal.r-project.org/archive/2018/RJ-2018-075/index.html}
+Measurement Errors in \R. \emph{The R Journal}, 10(2), 549-557.
+\doi{10.32614/RJ-2018-075}
 }
 \seealso{
 \code{\link{datasets}} for a description of the datasets used in the
