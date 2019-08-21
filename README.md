@@ -4,6 +4,7 @@
 [![Coverage Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/r-quantities/errors)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors)
 [![Downloads](https://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
+[![DOI](https://img.shields.io/badge/doi-10.32614/RJ--2018--075-informational.svg)](https://doi.org/10.32614/RJ-2018-075)
 
 The **errors** package provides support for easurement errors in R
 vectors, matrices and arrays: automatic uncertainty propagation and
