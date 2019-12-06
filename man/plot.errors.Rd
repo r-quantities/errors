@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot.errors}
 \alias{plot.errors}
-\title{Generic X-Y Plotting}
+\title{Scatterplot with Error Bars}
 \usage{
 \method{plot}{errors}(x, y, ...)
 }

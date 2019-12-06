@@ -4,8 +4,13 @@
 \alias{format.errors}
 \title{Encode \code{errors}}
 \usage{
-\method{format}{errors}(x, digits = NULL, scientific = FALSE,
-  notation = getOption("errors.notation", "parenthesis"), ...)
+\method{format}{errors}(
+  x,
+  digits = NULL,
+  scientific = FALSE,
+  notation = getOption("errors.notation", "parenthesis"),
+  ...
+)
 }
 \arguments{
 \item{x}{an \code{errors} object.}
