@@ -1,4 +1,4 @@
-#' Generic X-Y Plotting
+#' Scatterplot with Error Bars
 #'
 #' S3 method for \code{errors} objects which automatically prints the error bars.
 #'
@@ -13,17 +13,38 @@
 #' @export
 # nocov start
 plot.errors <- function(x, y, ...) {
+  call <- match.call()
+  lcall <- length(call)
+  dots <- list(...)
+
   if (missing(y)) {
-    y <- x
-    x <- seq_along(x)
+    if (!exists("ylim", dots))
+      call$ylim <- substitute(range(x[is.finite(x)]))
+    if (!exists("ylab", dots))
+      call$ylab <- deparse(substitute(x))
+  } else {
+    if (!exists("xlim", dots))
+      call$xlim <- substitute(range(x[is.finite(x)]))
+    if (!exists("xlab", dots))
+      call$xlab <- deparse(substitute(x))
+    if (!exists("ylim", dots))
+      call$ylim <- substitute(range(y[is.finite(y)]))
+    if (!exists("ylab", dots))
+      call$ylab <- deparse(substitute(y))
   }
 
-  NextMethod(xlim=range(x), ylim=range(y))
+  if (lcall < length(call)) {
+    call[[1]] <- as.name("plot")
+    return(eval(call, envir=parent.frame()))
+  }
 
-  if (inherits(x, "errors"))
+  NextMethod()
+
+  if (missing(y)) {
+    graphics::segments(x, errors_min(x), x, errors_max(x))
+  } else {
     graphics::segments(errors_min(x), y, errors_max(x), y)
-
-  if (inherits(y, "errors"))
     graphics::segments(x, errors_min(y), x, errors_max(y))
+  }
 }
 # nocov end
