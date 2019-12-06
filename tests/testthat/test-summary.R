@@ -30,3 +30,16 @@ test_that("summary methods work properly", {
   expect_equal(quantile(x), quantile(xval))
   expect_equal(summary(x), summary(xval))
 })
+
+test_that("na.rm is propagated", {
+  xval <- 1.1:10.1
+  xerr <- seq(0.005, 0.05, 0.005)
+  x <- set_errors(xval, xerr)
+  x[2] <- NA
+
+  expect_equal(max(x, na.rm=TRUE), xval[length(x)] + xerr[length(x)])
+  expect_equal(min(x, na.rm=TRUE), xval[1] - xerr[1])
+
+  expect_equal(range(x, na.rm=TRUE)[1], min(x, na.rm=TRUE))
+  expect_equal(range(x, na.rm=TRUE)[2], max(x, na.rm=TRUE))
+})

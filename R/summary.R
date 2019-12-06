@@ -29,7 +29,7 @@ Summary.errors <- function(..., na.rm = FALSE) {
     },
     "max" = NextMethod() + errors(x)[which.max(x)],
     "min" = NextMethod() - errors(x)[which.min(x)],
-    "range" = c(min(...), max(...))
+    "range" = c(min(..., na.rm=na.rm), max(..., na.rm=na.rm))
   )
 }
 
