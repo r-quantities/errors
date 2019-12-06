@@ -2,7 +2,9 @@ context("summary")
 
 test_that("summary methods work properly", {
   xval <- 1.1:10.1
-  xerr <- seq(0.005, 0.05, 0.005)
+  xerr <- rep(0.05, 10)
+  xval[c(2, 9)] <- c(1.102, 10.098)
+  xerr[c(2, 9)] <- 0.1
   x <- set_errors(xval, xerr)
 
   y <- 0
@@ -13,8 +15,8 @@ test_that("summary methods work properly", {
   for (i in 1:length(x)) y <- y * x[i]
   expect_equal(prod(x), y)
 
-  expect_equal(max(x), xval[length(x)] + xerr[length(x)])
-  expect_equal(min(x), xval[1] - xerr[1])
+  expect_equal(max(x), max(xval + xerr))
+  expect_equal(min(x), min(xval - xerr))
 
   expect_equal(range(x)[1], min(x))
   expect_equal(range(x)[2], max(x))
@@ -33,12 +35,14 @@ test_that("summary methods work properly", {
 
 test_that("na.rm is propagated", {
   xval <- 1.1:10.1
-  xerr <- seq(0.005, 0.05, 0.005)
+  xerr <- rep(0.05, 10)
+  xval[c(2, 9)] <- c(1.102, 10.098)
+  xerr[c(2, 9)] <- 0.1
   x <- set_errors(xval, xerr)
-  x[2] <- NA
+  x[3] <- NA
 
-  expect_equal(max(x, na.rm=TRUE), xval[length(x)] + xerr[length(x)])
-  expect_equal(min(x, na.rm=TRUE), xval[1] - xerr[1])
+  expect_equal(max(x, na.rm=TRUE), max(xval + xerr))
+  expect_equal(min(x, na.rm=TRUE), min(xval - xerr))
 
   expect_equal(range(x, na.rm=TRUE)[1], min(x, na.rm=TRUE))
   expect_equal(range(x, na.rm=TRUE)[2], max(x, na.rm=TRUE))

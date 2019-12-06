@@ -2,7 +2,7 @@
 
 ## Minor changes and fixes
 
-- Fix `na.rm` propagation for `min`, `max` and `range` (#35).
+- Fix `min`, `max` and `range` (#35).
 
 # errors 0.3.2
 

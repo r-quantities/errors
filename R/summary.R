@@ -27,9 +27,9 @@ Summary.errors <- function(..., na.rm = FALSE) {
       xx <- NextMethod()
       set_errors(xx, sqrt(colSums(cbind(errors(x) * xx / .v(x))^2)))
     },
-    "max" = NextMethod() + errors(x)[which.max(x)],
-    "min" = NextMethod() - errors(x)[which.min(x)],
-    "range" = c(min(..., na.rm=na.rm), max(..., na.rm=na.rm))
+    "max" = max(errors_max(x), na.rm=na.rm),
+    "min" = min(errors_min(x), na.rm=na.rm),
+    "range" = range(errors_min(x), errors_max(x), na.rm=na.rm)
   )
 }
 
