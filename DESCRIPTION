@@ -18,4 +18,5 @@ LazyData: true
 Depends: R (>= 3.0.0)
 Suggests: tibble, pillar, testthat, knitr, rmarkdown
 RoxygenNote: 7.0.2
+Roxygen: list(old_usage = TRUE)
 VignetteBuilder: knitr
