@@ -1,13 +1,9 @@
-# errors 0.3.2.9000
-
-## Minor changes and fixes
+# errors 0.3.3
 
 - Fix `min`, `max` and `range` (#35).
 - Rewrite `plot` to fix issues with limits and labels (#35).
 
 # errors 0.3.2
-
-## Minor changes and fixes
 
 - Add CITATION for the *R Journal* paper.
 - Add the paper as a vignette.

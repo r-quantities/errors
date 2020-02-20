@@ -1,11 +1,11 @@
 ## Patch release
 
-Adds a reference to the R Journal and includes the paper as a vignette.
+Minor bug fixes.
 
 ## Test environments
 
-* Fedora 30 + GCC + clang (local), R 3.5.3
-* Ubuntu 14.04 + GCC (on travis-ci), R 3.4.4, 3.5.2, devel
+* Fedora 31 + GCC + clang (local), R 3.6.2
+* Ubuntu 16.04 + GCC (on Travis-CI), R 3.5.3, 3.6.1, devel
 * win-builder, R devel
 
 ## R CMD check results
