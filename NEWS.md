@@ -1,3 +1,7 @@
+# errors 0.3.4
+
+- Implement prettier `str` print (#36).
+
 # errors 0.3.3
 
 - Fix `min`, `max` and `range` (#35).

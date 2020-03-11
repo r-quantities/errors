@@ -266,3 +266,16 @@ pillar_shaft.errors <- function(x, ...) {
   })
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
 }
+
+#' @export
+str.errors <- function(object, ...) {
+  rval <- NULL
+  file <- textConnection("rval", "w", local = TRUE)
+  sink(file)
+  on.exit({ sink(); close(file)})
+  NextMethod(give.attr=FALSE)
+  on.exit()
+  sink()
+  close(file)
+  cat(" Errors:", sub(" 'errors' ", "", rval), "\n")
+}
