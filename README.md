@@ -1,6 +1,6 @@
 # <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> errors: Uncertainty Propagation for R Vectors
 
-[![Build Status](https://travis-ci.org/r-quantities/errors.svg?branch=master)](https://travis-ci.org/r-quantities/errors)
+[![Build Status](https://github.com/r-quantities/errors/workflows/build/badge.svg)](https://github.com/r-quantities/errors/actions)
 [![Coverage Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://codecov.io/gh/r-quantities/errors)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/errors)](https://cran.r-project.org/package=errors)
 [![Downloads](https://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
