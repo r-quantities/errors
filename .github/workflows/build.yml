@@ -33,6 +33,7 @@ jobs:
       with:
         r-version: ${{ matrix.config.r }}
     - uses: r-lib/actions/setup-pandoc@master
+    - uses: r-lib/actions/setup-tinytex@v1
 
     - name: Query dependencies
       run: |
