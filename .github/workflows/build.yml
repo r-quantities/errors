@@ -34,7 +34,7 @@ jobs:
         r-version: ${{ matrix.config.r }}
     - uses: r-lib/actions/setup-pandoc@master
     - uses: r-lib/actions/setup-tinytex@v1
-      if: ${{ runner.os == 'Windows' || matrix.config.r != 'oldrel' }}
+      if: ${{ runner.os != 'Windows' && matrix.config.r != 'oldrel' }}
 
     - name: Query dependencies
       run: |
