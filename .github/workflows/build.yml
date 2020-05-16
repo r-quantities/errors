@@ -14,7 +14,7 @@ jobs:
         config:
         - {os: macOS-latest, r: 'devel'}
         - {os: macOS-latest, r: 'release'}
-        - {os: windows-latest, r: 'release', args: ', --ignore-vignettes'}
+        - {os: windows-latest, r: 'release'}
         - {os: ubuntu-16.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
         - {os: ubuntu-16.04, r: 'oldrel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
@@ -34,7 +34,7 @@ jobs:
         r-version: ${{ matrix.config.r }}
     - uses: r-lib/actions/setup-pandoc@master
     - uses: r-lib/actions/setup-tinytex@v1
-      if: runner.os != 'Windows'
+      if: ${{ runner.os == 'Windows' && matrix.config.r != "oldrel" }}
 
     - name: Query dependencies
       run: |
@@ -66,8 +66,11 @@ jobs:
 
     - name: Check
       run: |
-        rcmdcheck::rcmdcheck(args=c("--no-manual", "--as-cran"${{ matrix.config.args }}),
-          build_args="--compact-vignettes=both", error_on="warning", check_dir="check")
+        args <- c("--no-manual", "--as-cran")
+        build_args <- "--compact-vignettes=both"
+        if (!requireNamespace("tinytex", quietly=TRUE))
+          args <- c(args, "--ignore-vignettes")
+        rcmdcheck::rcmdcheck(args=args, build_args=build_args, error_on="warning", check_dir="check")
       shell: Rscript {0}
 
     - name: Upload check results
