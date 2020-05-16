@@ -34,7 +34,7 @@ jobs:
         r-version: ${{ matrix.config.r }}
     - uses: r-lib/actions/setup-pandoc@master
     - uses: r-lib/actions/setup-tinytex@v1
-      if: ${{ runner.os != 'Windows' && matrix.config.r != 'oldrel' }}
+      if: ${{ runner.os != 'Windows' }}
 
     - name: Query dependencies
       run: |
@@ -64,13 +64,10 @@ jobs:
         remotes::install_cran(c("rcmdcheck", "covr"))
       shell: Rscript {0}
 
-    - name: Check
+    - name: Check ignoring vignettes
       run: |
-        args <- c("--no-manual", "--as-cran")
-        build_args <- "--compact-vignettes=both"
-        if (!requireNamespace("tinytex", quietly=TRUE))
-          args <- c(args, "--ignore-vignettes")
-        rcmdcheck::rcmdcheck(args=args, build_args=build_args, error_on="warning", check_dir="check")
+        rcmdcheck::rcmdcheck(args=c("--no-manual", "--as-cran", "--ignore-vignettes"),
+          build_args="--no-build-vignettes", error_on="warning", check_dir="check")
       shell: Rscript {0}
 
     - name: Upload check results
@@ -86,7 +83,7 @@ jobs:
       shell: Rscript {0}
 
     - name: Dispatch quantities
-      if: ${{ success() && runner.os == 'Linux' && matrix.config.r == 'release' }}
+      if: ${{ success() && github.ref == 'master' && runner.os == 'Linux' && matrix.config.r == 'release' }}
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.QUANTITIES_TOKEN }}
