@@ -65,9 +65,17 @@ jobs:
       shell: Rscript {0}
 
     - name: Check ignoring vignettes
+      if: ${{ runner.os == 'Windows' }}
       run: |
         rcmdcheck::rcmdcheck(args=c("--no-manual", "--as-cran", "--ignore-vignettes"),
           build_args="--no-build-vignettes", error_on="warning", check_dir="check")
+      shell: Rscript {0}
+
+    - name: Check
+      if: ${{ runner.os != 'Windows' }}
+      run: |
+        rcmdcheck::rcmdcheck(args=c("--no-manual", "--as-cran"),
+          build_args="--compact-vignettes=both", error_on="warning", check_dir="check")
       shell: Rscript {0}
 
     - name: Upload check results
