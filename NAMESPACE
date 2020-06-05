@@ -62,11 +62,4 @@ export(errors_min)
 export(set_correl)
 export(set_covar)
 export(set_errors)
-if(getRversion() >= "3.6.0") {
-  S3method(pillar::type_sum, errors)
-  S3method(pillar::pillar_shaft, errors)
-} else {
-  export(type_sum.errors)
-  export(pillar_shaft.errors)
-}
 import(stats)

@@ -1,11 +1,5 @@
 .pm <- enc2native(intToUtf8(177))
 
-.onLoad <- function(libname, pkgname) {
-  types <- c("bool", "coercion", "matmult")
-  types <- paste0("errors.warn.", types)
-  options(as.list(setNames(rep.int(TRUE, length(types)), types)))
-}
-
 warn_once <- function(message, fun, type) {
   type <- paste0("errors.warn.", type)
   if (getOption(type)) {
