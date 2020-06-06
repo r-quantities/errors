@@ -70,4 +70,9 @@ test_that("errors are dropped", {
   expect_null(attr(x1, "errors"))
   expect_null(attr(x2, "errors"))
   expect_null(attr(x3, "errors"))
+
+  ox <- x <- data.frame(x=1:4, y=1:4)
+  errors(x[[1]]) <- 0.1
+  expect_s3_class(x[[1]], "errors")
+  expect_identical(drop_errors(x), ox)
 })
