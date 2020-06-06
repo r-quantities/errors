@@ -2,9 +2,12 @@
 % Please edit documentation in R/errors.R
 \name{drop_errors}
 \alias{drop_errors}
+\alias{drop_errors.data.frame}
 \title{Drop Uncertainty}
 \usage{
 drop_errors(x)
+
+\method{drop_errors}{data.frame}(x)
 }
 \arguments{
 \item{x}{an \code{errors} object.}

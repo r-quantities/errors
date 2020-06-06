@@ -229,3 +229,13 @@ drop_errors.errors <- function(x) {
   attr(x, "id") <- NULL
   x
 }
+
+#' @name drop_errors
+#' @export
+drop_errors.data.frame <- function(x) {
+  for (i in seq_along(x)) {
+    if (inherits(x[[i]], "errors"))
+      x[[i]] <- drop_errors(x[[i]])
+  }
+  x
+}

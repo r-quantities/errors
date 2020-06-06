@@ -1,6 +1,7 @@
 # errors 0.3.4
 
 - Implement prettier `str` print (#36).
+- Implement drop method for data frames.
 
 # errors 0.3.3
 
