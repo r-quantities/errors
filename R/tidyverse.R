@@ -38,6 +38,15 @@ vec_restore.errors <- function(x, ...) {
   set_errors(x$data, x$errors)
 }
 
+vec_proxy_equal.errors <- function(x, ...) {
+  warn_once_bool("vctrs::vec_proxy_equal")
+  x
+}
+# Currently necessary because of r-lib/vctrs/issues/1140
+vec_proxy_compare.errors <- function(x, ...) {
+  vec_proxy_equal.errors(x)
+}
+
 
 # vctrs coercion -----------------------------------------------------
 
@@ -109,6 +118,8 @@ register_all_s3_methods <- function() {
 
   register_s3_method("vctrs::vec_proxy", "errors")
   register_s3_method("vctrs::vec_restore", "errors")
+  register_s3_method("vctrs::vec_proxy_equal", "errors")
+  register_s3_method("vctrs::vec_proxy_compare", "errors")
 
   register_s3_method("vctrs::vec_ptype2", "errors.errors")
   register_s3_method("vctrs::vec_ptype2", "errors.integer")

@@ -67,3 +67,16 @@ test_that("can combine errors vectors with numeric vectors", {
   out <- vctrs::vec_c(x[1], 10.5, x[3])
   expect_errors(out, c(1, 10.5, 3), c(3, 0, 1))
 })
+
+test_that("can compare errors vectors", {
+  x <- errors::set_errors(1:3, 3:1)
+
+  out <- suppressWarnings(vctrs::vec_equal(x, 3:1))
+  expect_identical(out, c(FALSE, TRUE, FALSE))
+
+  out <- vctrs::vec_compare(x, 3:1)
+  expect_identical(out, c(-1L, 0L, 1L))
+
+  expect_identical(vctrs::vec_match(3, x), 3L)
+  expect_errors(vctrs::vec_sort(x[3:1]), 1:3, as.double(3:1))
+})

@@ -8,6 +8,14 @@ warn_once <- function(message, fun, type) {
   }
 }
 
+warn_once_bool <- function(fun) {
+  warn_once(
+    "boolean operators not defined for 'errors' objects, uncertainty dropped",
+    fun = fun,
+    type = "bool"
+  )
+}
+
 .v <- function(x) as.numeric(x)
 
 get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)
