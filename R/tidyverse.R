@@ -17,6 +17,9 @@ pillar_shaft.errors <- function(x, ...) {
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
 }
 
+
+# vctrs proxying and restoration -------------------------------------
+
 vec_proxy.errors <- function(x, ...) {
   data <- drop_errors.errors(x)
   errors <- attr(x, "errors")
@@ -35,6 +38,28 @@ vec_restore.errors <- function(x, ...) {
   set_errors(x$data, x$errors)
 }
 
+
+# vctrs coercion -----------------------------------------------------
+
+vec_ptype2.errors.errors <- function(x, y, ...) {
+  bare_x <- drop_errors.errors(x)
+  bare_y <- drop_errors.errors(y)
+
+  common <- vctrs::vec_ptype2(bare_x, bare_y, ...)
+
+  set_errors(common, double())
+}
+vec_cast.errors.errors <- function(x, to, ...) {
+  bare_x <- drop_errors.errors(x)
+  bare_to <- drop_errors.errors(to)
+
+  # Assumes the conversion doesn't change the scale of `x`. Is this reasonable?
+  out <- vctrs::vec_cast(bare_x, bare_to, ...)
+
+  set_errors(out, errors(x))
+}
+
+
 #nocov start
 register_all_s3_methods <- function() {
   register_s3_method("pillar::type_sum", "errors")
@@ -42,6 +67,9 @@ register_all_s3_methods <- function() {
 
   register_s3_method("vctrs::vec_proxy", "errors")
   register_s3_method("vctrs::vec_restore", "errors")
+
+  register_s3_method("vctrs::vec_ptype2", "errors.errors")
+  register_s3_method("vctrs::vec_cast", "errors.errors")
 }
 
 register_s3_method <- function(generic, class, fun=NULL) {
