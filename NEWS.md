@@ -1,5 +1,6 @@
 # errors 0.3.4
 
+- vctrs methods are now implemented for compatibility with dplyr 1.0.
 - Implement prettier `str` print (#36).
 
 # errors 0.3.3

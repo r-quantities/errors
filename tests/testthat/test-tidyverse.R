@@ -80,3 +80,41 @@ test_that("can compare errors vectors", {
   expect_identical(vctrs::vec_match(3, x), 3L)
   expect_errors(vctrs::vec_sort(x[3:1]), 1:3, as.double(3:1))
 })
+
+
+skip_if_not_installed("dplyr")
+
+`%>%` <- dplyr::`%>%`
+
+test_that("split-apply-combine with dplyr and base agree", {
+  iris2 <- iris
+  for (i in 1:4)
+    errors(iris2[,i]) <- iris2[,i] * 0.05
+
+  out <- iris2 %>%
+    dplyr::group_by(Species) %>%
+    dplyr::summarise(dplyr::across(where(is.numeric), mean))
+
+  # Transform to list of lists
+  out <- vctrs::vec_chop(out[2:5]) %>%
+    stats::setNames(out$Species) %>%
+    lapply(as.list)
+
+  exp <- lapply(split(iris2[1:4], iris2$Species), lapply, mean)
+  expect_equal(out, exp)
+})
+
+test_that("split-apply-combine with dplyr can combine integers and errors", {
+  df <- dplyr::tibble(
+    x = c(FALSE, TRUE, FALSE),
+    y = set_errors(1:3, 3:1),
+    g = 1:3
+  )
+
+  out <- df %>%
+    dplyr::group_by(g) %>%
+    dplyr::mutate(out = if (x) 0L else y) %>%
+    dplyr::pull()
+
+  expect_errors(out, c(1L, 0L, 3L), c(3, 0, 1))
+})
