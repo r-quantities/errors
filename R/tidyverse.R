@@ -41,7 +41,11 @@ vec_restore.errors <- function(x, ...) {
 
 # vctrs coercion -----------------------------------------------------
 
-vec_ptype2.errors.errors <- function(x, y, ...) {
+# Ideally this would be implemented as a higher order type, i.e. the
+# coercion hierarchy would be determined by the wrapped class rather
+# than by `errors` specific methods (r-lib/vctrs#1080).
+
+errors_ptype2 <- function(x, y, ...) {
   bare_x <- drop_errors.errors(x)
   bare_y <- drop_errors.errors(y)
 
@@ -49,7 +53,27 @@ vec_ptype2.errors.errors <- function(x, y, ...) {
 
   set_errors(common, double())
 }
-vec_cast.errors.errors <- function(x, to, ...) {
+
+vec_ptype2.errors.errors <- function(x, y, ...) {
+  errors_ptype2(x, y, ...)
+}
+
+vec_ptype2.errors.integer <- function(x, y, ...) {
+  errors_ptype2(x, y, ...)
+}
+vec_ptype2.integer.errors <- function(x, y, ...) {
+  errors_ptype2(x, y, ...)
+}
+
+vec_ptype2.errors.double <- function(x, y, ...) {
+  errors_ptype2(x, y, ...)
+}
+vec_ptype2.double.errors <- function(x, y, ...) {
+  errors_ptype2(x, y, ...)
+}
+
+
+errors_cast <- function(x, to, ...) {
   bare_x <- drop_errors.errors(x)
   bare_to <- drop_errors.errors(to)
 
@@ -57,6 +81,24 @@ vec_cast.errors.errors <- function(x, to, ...) {
   out <- vctrs::vec_cast(bare_x, bare_to, ...)
 
   set_errors(out, errors(x))
+}
+
+vec_cast.errors.errors <- function(x, to, ...) {
+  errors_cast(x, to, ...)
+}
+
+vec_cast.errors.integer <- function(x, to, ...) {
+  errors_cast(x, to, ...)
+}
+vec_cast.integer.errors <- function(x, to, ...) {
+  errors_cast(x, to, ...)
+}
+
+vec_cast.errors.double <- function(x, to, ...) {
+  errors_cast(x, to, ...)
+}
+vec_cast.double.errors <- function(x, to, ...) {
+  errors_cast(x, to, ...)
 }
 
 
@@ -69,7 +111,16 @@ register_all_s3_methods <- function() {
   register_s3_method("vctrs::vec_restore", "errors")
 
   register_s3_method("vctrs::vec_ptype2", "errors.errors")
+  register_s3_method("vctrs::vec_ptype2", "errors.integer")
+  register_s3_method("vctrs::vec_ptype2", "integer.errors")
+  register_s3_method("vctrs::vec_ptype2", "errors.double")
+  register_s3_method("vctrs::vec_ptype2", "double.errors")
+
   register_s3_method("vctrs::vec_cast", "errors.errors")
+  register_s3_method("vctrs::vec_cast", "errors.integer")
+  register_s3_method("vctrs::vec_cast", "integer.errors")
+  register_s3_method("vctrs::vec_cast", "errors.double")
+  register_s3_method("vctrs::vec_cast", "double.errors")
 }
 
 register_s3_method <- function(generic, class, fun=NULL) {

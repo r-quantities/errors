@@ -31,6 +31,20 @@ test_that("can coerce errors vectors", {
   expect_errors(out, 1:3, as.double(1:3))
 })
 
+test_that("can coerce errors vectors with numeric vectors", {
+  out <- vctrs::vec_ptype2(set_errors(1.5, 1.5), 0L)
+  expect_errors(out, double(), double())
+
+  out <- vctrs::vec_ptype2(set_errors(0L, 0L), 0L)
+  expect_errors(out, integer(), double())
+
+  out <- vctrs::vec_cast(set_errors(1:3, 1:3), 0.0)
+  expect_errors(out, as.double(1:3), as.double(1:3))
+
+  out <- vctrs::vec_cast(set_errors(as.double(1:3), 1:3), 0L)
+  expect_errors(out, 1:3, as.double(1:3))
+})
+
 test_that("can combine errors vectors", {
   x <- set_errors(1:3, 3:1)
 
@@ -42,4 +56,14 @@ test_that("can combine errors vectors", {
   df <- tibble::tibble(foo = tibble::tibble(x = x))
   out <- vctrs::vec_unchop(vctrs::vec_chop(df))
   expect_errors(out$foo$x, 1:3, as.double(3:1))
+})
+
+test_that("can combine errors vectors with numeric vectors", {
+  x <- set_errors(1:3, 3:1)
+
+  out <- vctrs::vec_c(x[1], 10L, x[3])
+  expect_errors(out, c(1L, 10L, 3L), c(3, 0, 1))
+
+  out <- vctrs::vec_c(x[1], 10.5, x[3])
+  expect_errors(out, c(1, 10.5, 3), c(3, 0, 1))
 })
