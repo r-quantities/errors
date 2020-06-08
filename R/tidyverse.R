@@ -82,7 +82,7 @@ vec_ptype2.double.errors <- function(x, y, ...) {
 }
 
 
-errors_cast <- function(x, to, ...) {
+errors_upcast <- function(x, to, ...) {
   bare_x <- drop_errors.errors(x)
   bare_to <- drop_errors.errors(to)
 
@@ -91,23 +91,27 @@ errors_cast <- function(x, to, ...) {
 
   set_errors(out, errors(x))
 }
+errors_downcast <- function(x, to, ...) {
+  bare_x <- drop_errors.errors(x)
+  vctrs::vec_cast(bare_x, to, ...)
+}
 
 vec_cast.errors.errors <- function(x, to, ...) {
-  errors_cast(x, to, ...)
+  errors_upcast(x, to, ...)
 }
 
 vec_cast.errors.integer <- function(x, to, ...) {
-  errors_cast(x, to, ...)
+  errors_upcast(x, to, ...)
 }
 vec_cast.integer.errors <- function(x, to, ...) {
-  errors_cast(x, to, ...)
+  errors_downcast(x, to, ...)
 }
 
 vec_cast.errors.double <- function(x, to, ...) {
-  errors_cast(x, to, ...)
+  errors_upcast(x, to, ...)
 }
 vec_cast.double.errors <- function(x, to, ...) {
-  errors_cast(x, to, ...)
+  errors_downcast(x, to, ...)
 }
 
 

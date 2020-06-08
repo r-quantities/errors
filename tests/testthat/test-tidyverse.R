@@ -39,10 +39,10 @@ test_that("can coerce errors vectors with numeric vectors", {
   expect_errors(out, integer(), double())
 
   out <- vctrs::vec_cast(set_errors(1:3, 1:3), 0.0)
-  expect_errors(out, as.double(1:3), as.double(1:3))
+  expect_identical(out, as.double(1:3))
 
   out <- vctrs::vec_cast(set_errors(as.double(1:3), 1:3), 0L)
-  expect_errors(out, 1:3, as.double(1:3))
+  expect_identical(out, 1:3)
 })
 
 test_that("can combine errors vectors", {
