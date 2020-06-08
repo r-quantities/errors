@@ -94,6 +94,8 @@ test_that("pipe-friendly versions work as expected", {
 })
 
 test_that("GUM examples give the correct results", {
+  skip_if(nzchar(Sys.getenv("NOT_CRAN")), "Can't test examples interactively")
+
   expect_output(example("errors-package"))
 
   expect_equal(as.numeric(R), 127.732, tolerance=0.001)

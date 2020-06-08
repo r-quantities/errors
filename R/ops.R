@@ -19,11 +19,7 @@
 #' @export
 Ops.errors <- function(e1, e2) {
   if (.Generic %in% c("&", "|", "!", "==", "!=", "<", ">", "<=", ">=")) {
-    warn_once(
-      "boolean operators not defined for 'errors' objects, uncertainty dropped",
-      fun = .Generic,
-      type = "bool"
-    )
+    warn_once_bool(.Generic)
     return(NextMethod())
   }
 

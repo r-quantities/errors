@@ -232,41 +232,6 @@ all.equal.errors <- function(target, current, ...) {
   else msg
 }
 
-#' Methods for Tidy \code{tibble} Printing
-#'
-#' S3 methods for \code{errors} objects.
-#'
-#' @param x object of class errors.
-#' @param ... see \link[pillar]{pillar_shaft}.
-#'
-#' @name tibble
-#' @rawNamespace if(getRversion() >= "3.6.0") {
-#'   S3method(pillar::type_sum, errors)
-#'   S3method(pillar::pillar_shaft, errors)
-#' } else {
-#'   export(type_sum.errors)
-#'   export(pillar_shaft.errors)
-#' }
-type_sum.errors <- function(x) {
-  not <- getOption("errors.notation")
-  out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm, "err"))
-  paste0("[", out, "]")
-}
-
-#' @name tibble
-pillar_shaft.errors <- function(x, ...) {
-  out <- format(x)
-  if (!requireNamespace("pillar", quietly = TRUE))
-    return(out)
-
-  not <- getOption("errors.notation")
-  sep <- ifelse(is.null(not) || not == "parenthesis", "(", " ")
-  out <- sapply(strsplit(out, "[[:space:]|\\(]"), function(x) {
-    paste0(x[1], pillar::style_subtle(paste0(sep, x[-1], collapse="")))
-  })
-  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
-}
-
 #' @export
 str.errors <- function(object, ...) {
   rval <- NULL

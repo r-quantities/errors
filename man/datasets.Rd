@@ -6,7 +6,8 @@
 \alias{GUM.H.2}
 \alias{GUM.H.3}
 \title{Datasets from the Guide to the Expression of Uncertainty in Measurement (GUM)}
-\format{\code{GUM.H.2}, from Section 2 of Annex H (Table H.2), provides
+\format{
+\code{GUM.H.2}, from Section 2 of Annex H (Table H.2), provides
 simultaneous resistance and reactance measurements. It is a data frame with 5
 rows and 3 variables:
 \describe{
@@ -21,7 +22,10 @@ curve for some reference temperature. It is a data frame with 11 rows and
 \describe{
   \item{tk}{Thermometer reading, in Celsius degrees.}
   \item{bk}{Observed correction, in Celsius degrees.}
-}}
+}
+
+An object of class \code{data.frame} with 11 rows and 2 columns.
+}
 \source{
 BIPM, IEC, IFCC, ILAC, IUPAC, IUPAP, ISO, and OIML (2008).
 Evaluation of Measurement Data -- Guide to the Expression of Uncertainty in
