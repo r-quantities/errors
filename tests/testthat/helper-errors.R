@@ -29,9 +29,3 @@ test_expr <- function(expr) {
   )
   expect_equal(object, expected)
 }
-
-# Work around `id` attribute
-expect_errors <- function(x, exp, exp_errors) {
-  expect_identical(drop_errors(x), exp)
-  expect_identical(errors(x), exp_errors)
-}
