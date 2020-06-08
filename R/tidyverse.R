@@ -17,13 +17,31 @@ pillar_shaft.errors <- function(x, ...) {
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
 }
 
+vec_proxy.errors <- function(x, ...) {
+  data <- drop_errors.errors(x)
+  errors <- attr(x, "errors")
 
+  # Simplifies coercion methods
+  errors <- as.double(x)
+
+  # The `errors` are a vectorised attribute, which requires a data
+  # frame proxy
+  vctrs::new_data_frame(
+    list(data = data, errors = errors),
+    n = length(data)
+  )
+}
+vec_restore.errors <- function(x, ...) {
+  set_errors(x$data, x$errors)
+}
 
 #nocov start
 register_all_s3_methods <- function() {
   register_s3_method("pillar::type_sum", "errors")
   register_s3_method("pillar::pillar_shaft", "errors")
 
+  register_s3_method("vctrs::vec_proxy", "errors")
+  register_s3_method("vctrs::vec_restore", "errors")
 }
 
 register_s3_method <- function(generic, class, fun=NULL) {
