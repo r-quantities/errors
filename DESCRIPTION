@@ -4,7 +4,9 @@ Title: Uncertainty Propagation for R Vectors
 Version: 0.3.3.9000
 Authors@R: c(
     person("Iñaki", "Ucar", email="iucar@fedoraproject.org",
-      role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")))
+      role=c("aut", "cph", "cre"), comment=c(ORCID="0000-0001-6403-5550")),
+    person("Lionel", "Henry", role = "ctb", email = "lionel@rstudio.com"),
+    person(given = "RStudio", role = "cph", comment = "Copyright for code written by RStudio employees."))
 Description: Support for measurement errors in R vectors, matrices and arrays:
     automatic uncertainty propagation and reporting.
     Documentation about 'errors' is provided in the paper by Ucar, Pebesma &
