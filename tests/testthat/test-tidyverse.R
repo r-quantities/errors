@@ -1,3 +1,12 @@
+context("tidyverse")
+
+test_that("pillar methods work for errors objects", {
+  skip_if_not_installed("pillar")
+
+  expect_equal(pillar::type_sum(set_errors(1, 0.1)), "[(err)]")
+  expect_equal(as.character(pillar::pillar_shaft(set_errors(1, 0.1))),
+               paste0("1.0", pillar::style_subtle("(1)")))
+})
 
 skip_if_not_installed("vctrs")
 
@@ -52,8 +61,8 @@ test_that("can combine errors vectors", {
   expect_equal(out, set_errors(1:3, as.double(3:1)))
 
   # Recursive case with df-cols
-  x <- errors::set_errors(1:3, 3:1)
-  df <- tibble::tibble(foo = tibble::tibble(x = x))
+  #df <- tibble::tibble(foo = tibble::tibble(x = x))
+  df <- list(foo=list(x=x))
   out <- vctrs::vec_unchop(vctrs::vec_chop(df))
   expect_equal(out$foo$x, set_errors(1:3, as.double(3:1)))
 })

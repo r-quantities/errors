@@ -5,15 +5,10 @@ type_sum.errors <- function(x) {
 }
 
 pillar_shaft.errors <- function(x, ...) {
-  out <- format(x)
-  if (!requireNamespace("pillar", quietly = TRUE))
-    return(out)
-
   not <- getOption("errors.notation")
   sep <- ifelse(is.null(not) || not == "parenthesis", "(", " ")
-  out <- sapply(strsplit(out, "[[:space:]|\\(]"), function(x) {
-    paste0(x[1], pillar::style_subtle(paste0(sep, x[-1], collapse="")))
-  })
+  out <- sapply(strsplit(format(x), "[[:space:]|\\(]"), function(x)
+    paste0(x[1], pillar::style_subtle(paste0(sep, x[-1], collapse=""))))
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
 }
 

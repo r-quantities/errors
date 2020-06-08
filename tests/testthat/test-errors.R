@@ -46,19 +46,6 @@ test_that("NA values are reintepreted as NA_real_", {
   expect_equal(errors(x), NA_real_)
 })
 
-test_that("type_sum is available for errors objects", {
-  skip_if_not_installed("tibble")
-  library(tibble)
-  expect_equal(type_sum(set_errors(1, 0.1)), "[(err)]")
-})
-
-test_that("pillar_shaft is available for errors objects", {
-  skip_if_not_installed("pillar")
-  library(pillar)
-  expect_equal(as.character(pillar_shaft(set_errors(1, 0.1))),
-               paste0("1.0", style_subtle("(1)")))
-})
-
 test_that("errors are dropped", {
   x1 <- set_errors(1:3, 0.1)
   x2 <- set_errors(x1, NULL)

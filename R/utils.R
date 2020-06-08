@@ -8,13 +8,17 @@ warn_once <- function(message, fun, type) {
   }
 }
 
-warn_once_bool <- function(fun) {
-  warn_once(
-    "boolean operators not defined for 'errors' objects, uncertainty dropped",
-    fun = fun,
-    type = "bool"
-  )
-}
+warn_once_bool <- function(fun) warn_once(
+  "boolean operators not defined for 'errors' objects, uncertainty dropped",
+  fun = fun,
+  type = "bool"
+)
+
+warn_once_coercion <- function(fun) warn_once(
+  "non-'errors' operand automatically coerced to an 'errors' object with no uncertainty",
+  fun = "Ops",
+  type = "coercion"
+)
 
 .v <- function(x) as.numeric(x)
 
