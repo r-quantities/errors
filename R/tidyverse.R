@@ -25,7 +25,7 @@ vec_proxy.errors <- function(x, ...) {
   errors <- attr(x, "errors")
 
   # Simplifies coercion methods
-  errors <- as.double(x)
+  errors <- as.double(errors)
 
   # The `errors` are a vectorised attribute, which requires a data
   # frame proxy

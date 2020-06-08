@@ -12,9 +12,9 @@ test_that("errors are proxied and restored", {
 })
 
 test_that("can slice errors vectors", {
-  x <- set_errors(1:3, 1:3)
+  x <- set_errors(1:3, 3:1)
   out <- vctrs::vec_slice(x, 2:3)
-  expect_errors(out, 2:3, as.double(2:3))
+  expect_errors(out, 2:3, as.double(2:1))
 })
 
 test_that("can coerce errors vectors", {
@@ -32,14 +32,14 @@ test_that("can coerce errors vectors", {
 })
 
 test_that("can combine errors vectors", {
-  x <- set_errors(1:3, 1:3)
+  x <- set_errors(1:3, 3:1)
 
   out <- vctrs::vec_unchop(vctrs::vec_chop(x))
-  expect_errors(out, 1:3, as.double(1:3))
+  expect_errors(out, 1:3, as.double(3:1))
 
   # Recursive case with df-cols
-  x <- errors::set_errors(1:3, 1:3)
+  x <- errors::set_errors(1:3, 3:1)
   df <- tibble::tibble(foo = tibble::tibble(x = x))
   out <- vctrs::vec_unchop(vctrs::vec_chop(df))
-  expect_errors(out$foo$x, 1:3, as.double(1:3))
+  expect_errors(out$foo$x, 1:3, as.double(3:1))
 })
