@@ -1,4 +1,6 @@
-## Patch release
+## Patch release (resubmission)
+
+Fixed link to base plot that triggered a warning in Debian builder.
 
 Fixes compatibility with dplyr 1.0 and vctrs + some minor improvements.
 

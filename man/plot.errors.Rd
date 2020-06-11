@@ -14,7 +14,7 @@
 \item{y}{the y coordinates of points in the plot, \emph{optional}
     if \code{x} is an appropriate structure.}
 
-\item{...}{additional arguments (see \code{\link[graphics]{plot}}).}
+\item{...}{additional arguments (see \code{\link{plot}}).}
 }
 \description{
 S3 method for \code{errors} objects which automatically prints the error bars.

@@ -3,7 +3,7 @@
 #' S3 method for \code{errors} objects which automatically prints the error bars.
 #'
 #' @inheritParams graphics::plot
-#' @param ... additional arguments (see \code{\link[graphics]{plot}}).
+#' @param ... additional arguments (see \code{\link{plot}}).
 #'
 #' @examples
 #' cars <- as.matrix(cars)
