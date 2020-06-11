@@ -141,3 +141,12 @@ test_that("bind methods work properly", {
   expect_equal(colnames(x), c("a", "a", "a"))
   expect_equal(colnames(y), c("b", "b", "b"))
 })
+
+test_that("str method works as expected", {
+  x <- set_errors(runif(5), 0.01)
+  out <- utils::capture.output(str(x))
+
+  header <- paste0(" Errors: num [1:", length(x), "] ")
+  vec <- paste(format(x), collapse=" ")
+  expect_equal(out, paste0(header, vec, " "))
+})
