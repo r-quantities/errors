@@ -1,11 +1,10 @@
 ## Patch release
 
-Minor bug fixes.
+Fixes compatibility with dplyr 1.0 and vctrs + some minor improvements.
 
 ## Test environments
 
-* Fedora 31 + GCC + clang (local), R 3.6.2
-* Ubuntu 16.04 + GCC (on Travis-CI), R 3.5.3, 3.6.1, devel
+* Ubuntu, Windows, MacOS (on GHA), R oldrel, release, devel
 * win-builder, R devel
 
 ## R CMD check results
@@ -15,4 +14,5 @@ There were no ERRORs, WARNINGs or NOTEs.
 ## Downstream dependencies
 
 There are two downstream dependencies, quantities and constants, for which I'm
-the maintainer too. No changes are required.
+the maintainer too. An update for quantities will be sent as soon as this one
+and units get accepted.
