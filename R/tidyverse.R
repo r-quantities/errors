@@ -1,7 +1,7 @@
 type_sum.errors <- function(x) {
   not <- getOption("errors.notation")
   out <- ifelse(is.null(not) || not == "parenthesis", "(err)", paste(.pm, "err"))
-  paste0("[", out, "]")
+  structure(out, class="type_sum_errors")
 }
 
 pillar_shaft.errors <- function(x, ...) {
@@ -10,6 +10,10 @@ pillar_shaft.errors <- function(x, ...) {
   out <- sapply(strsplit(format(x), "[[:space:]|\\(]"), function(x)
     paste0(x[1], pillar::style_subtle(paste0(sep, x[-1], collapse=""))))
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 8)
+}
+
+format_type_sum.type_sum_errors <- function(x, width, ...) {
+  pillar::style_subtle(x)
 }
 
 
@@ -114,6 +118,7 @@ vec_cast.double.errors <- function(x, to, ...) {
 register_all_s3_methods <- function() {
   register_s3_method("pillar::type_sum", "errors")
   register_s3_method("pillar::pillar_shaft", "errors")
+  register_s3_method("pillar::format_type_sum", "type_sum_errors")
 
   register_s3_method("vctrs::vec_proxy", "errors")
   register_s3_method("vctrs::vec_restore", "errors")
