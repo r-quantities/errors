@@ -6,7 +6,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -16,6 +16,9 @@ jobs:
         r-version: '3.6.3'
     - uses: r-lib/actions/setup-pandoc@master
     - uses: r-lib/actions/setup-tinytex@v1
+
+    - name: Install Linux dependencies
+      run: sudo apt-get install devscripts libcurl4-openssl-dev
 
     - name: Install dependencies
       run: |
