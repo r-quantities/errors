@@ -36,11 +36,11 @@ test_that("covariances are correctly stored, retrieved and removed", {
   z <- x
 
   gc()
-  expect_equal(length(ls(errors:::ht)), 2)
+  expect_equal(length(ls(errors:::ht)), 0)
   expect_false(identical(attr(x, "id"), attr(y, "id")))
   expect_true(identical(attr(x, "id"), attr(z, "id")))
-  expect_true(.id(attr(x, "id")) %in% ls(errors:::ht))
-  expect_true(.id(attr(y, "id")) %in% ls(errors:::ht))
+  expect_false(.id(attr(x, "id")) %in% ls(errors:::ht))
+  expect_false(.id(attr(y, "id")) %in% ls(errors:::ht))
   expect_equal(length(ids(attr(x, "id"))), 1)
   expect_true(.id(attr(x, "id")) %in% ids(attr(x, "id")))
   expect_equal(length(ids(attr(y, "id"))), 1)

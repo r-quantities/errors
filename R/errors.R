@@ -165,7 +165,6 @@ errors_min.errors <- errors_min.numeric
     value <- rep(value, length(x))
   value[!is.finite(x)] <- x[!is.finite(x)]
   attr(x, "errors") <- abs(value)
-  .covar(attr(x, "id"), attr(x, "id")) <- value^2
   class(x) <- "errors"
   x
 }

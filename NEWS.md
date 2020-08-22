@@ -1,3 +1,7 @@
+# errors 0.3.5
+
+- Internal performance improvements (#39).
+
 # errors 0.3.4
 
 - vctrs methods are now implemented for compatibility with dplyr 1.0 (#38).

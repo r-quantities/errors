@@ -7,12 +7,15 @@
 \method{plot}{errors}(x, y, ...)
 }
 \arguments{
-\item{x}{the coordinates of points in the plot. Alternatively, a
-      single plotting structure, function or \emph{any \R object with a
-        \code{plot} method} can be provided.}
+\item{x}{the \code{x} and \code{y} arguments provide the x and y
+    coordinates for the plot.  Any reasonable way of defining the
+    coordinates is acceptable.  See the function \code{\link{xy.coords}}
+    for details.  If supplied separately, they must be of the same length.}
 
-\item{y}{the y coordinates of points in the plot, \emph{optional}
-    if \code{x} is an appropriate structure.}
+\item{y}{the \code{x} and \code{y} arguments provide the x and y
+    coordinates for the plot.  Any reasonable way of defining the
+    coordinates is acceptable.  See the function \code{\link{xy.coords}}
+    for details.  If supplied separately, they must be of the same length.}
 
 \item{...}{additional arguments (see \code{\link{plot}}).}
 }

@@ -7,11 +7,20 @@ ht <- new.env(parent = emptyenv())
   id
 }
 
-# Each ID is a new empty environment with a finalizer registered.
-# This environment acts as a reference counter: when all copies are removed,
-# the finalizer is called by the GC and the correlations are cleaned up.
+# Each ID is a new empty environment.
 new_id <- function() {
   env <- new.env(parent = emptyenv())
+  env
+}
+
+# A finalizer registered once when a covariance is stored in the hash table.
+# The environment acts as a reference counter: when all copies are removed,
+# the finalizer is called by the GC and the correlations are cleaned up.
+reg_finalizer <- function(env) {
+  if (!is.environment(env) || isTRUE(env$finalizer))
+    return(NULL)
+
+  env$finalizer <- TRUE
   reg.finalizer(env, function(x) {
     id <- .id(x)
     if (id %in% ls(ht)) {
@@ -20,14 +29,15 @@ new_id <- function() {
       rm(list = id, pos = ht)
     }
   })
-  env
 }
 
 # Get a covariance; ht[[idy]][[idx]] would return the same result.
 .covar <- function(idx, idy) ht[[.id(idx)]][[.id(idy)]]
 
-# Store a covariance in the hash table.
+# Store a covariance in the hash table and register finalizers.
 `.covar<-` <- function(idx, idy, value) {
+  reg_finalizer(idx)
+  reg_finalizer(idy)
   ret <- idx
   idx <- .id(idx)
   idy <- .id(idy)
@@ -43,10 +53,12 @@ new_id <- function() {
   ret
 }
 
-ids <- function(id) {
-  id <- .id(id)
-  if (id %in% ls(ht)) ls(ht[[id]])
-  else NULL
+ids <- function(...) {
+  ids <- sapply(list(...), .id)
+  c(ids, unlist(lapply(ids, function(id) {
+    if (id %in% ls(ht)) ls(ht[[id]])
+    else NULL
+  })))
 }
 
 #' Handle Correlations Between \code{errors} Objects
@@ -106,9 +118,10 @@ correl <- function(x, y) UseMethod("correl")
 
 #' @export
 correl.errors <- function(x, y) {
-  xx <- covar(x, y)
-  if (is.null(xx)) xx
-  else xx / errors(x) / errors(y)
+  xy <- covar(x, y)
+  if (!is.null(xy))
+    xy <- xy / errors(x) / errors(y)
+  xy
 }
 
 #' @name correl
@@ -139,7 +152,11 @@ covar <- function(x, y) UseMethod("covar")
 #' @export
 covar.errors <- function(x, y) {
   stopifnot(inherits(y, "errors"))
-  .covar(attr(x, "id"), attr(y, "id"))
+  idx <- attr(x, "id")
+  idy <- attr(y, "id")
+  if (!identical(idx, idy))
+    .covar(idx, idy)
+  else errors(x)^2
 }
 
 #' @name correl
@@ -154,7 +171,10 @@ covar.errors <- function(x, y) {
 
   if (length(value) == 1)
     value <- rep(value, length(x))
-  .covar(attr(x, "id"), attr(y, "id")) <- value
+  idx <- attr(x, "id")
+  idy <- attr(y, "id")
+  if (!identical(idx, idy))
+    .covar(idx, idy) <- value
   x
 }
 
