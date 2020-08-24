@@ -1,8 +1,6 @@
-## Patch release (resubmission)
+## Patch release
 
-Fixed link to base plot that triggered a warning in Debian builder.
-
-Fixes compatibility with dplyr 1.0 and vctrs + some minor improvements.
+Performance improvements.
 
 ## Test environments
 
@@ -16,5 +14,4 @@ There were no ERRORs, WARNINGs or NOTEs.
 ## Downstream dependencies
 
 There are two downstream dependencies, quantities and constants, for which I'm
-the maintainer too. An update for quantities will be sent as soon as this one
-and units get accepted.
+the maintainer too. No changes.
