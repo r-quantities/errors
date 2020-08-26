@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errors</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -140,14 +140,17 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>the coordinates of points in the plot. Alternatively, a
-      single plotting structure, function or <em>any <span style="R">R</span> object with a
-        <code>plot</code> method</em> can be provided.</p></td>
+      <td><p>the <code>x</code> and <code>y</code> arguments provide the x and y
+    coordinates for the plot.  Any reasonable way of defining the
+    coordinates is acceptable.  See the function <code><a href='https://rdrr.io/r/grDevices/xy.coords.html'>xy.coords</a></code>
+    for details.  If supplied separately, they must be of the same length.</p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>the y coordinates of points in the plot, <em>optional</em>
-    if <code>x</code> is an appropriate structure.</p></td>
+      <td><p>the <code>x</code> and <code>y</code> arguments provide the x and y
+    coordinates for the plot.  Any reasonable way of defining the
+    coordinates is acceptable.  See the function <code><a href='https://rdrr.io/r/grDevices/xy.coords.html'>xy.coords</a></code>
+    for details.  If supplied separately, they must be of the same length.</p></td>
     </tr>
     <tr>
       <th>...</th>
