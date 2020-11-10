@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errors</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
@@ -165,14 +165,17 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='errors.html'>set_errors</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>0.1</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='errors.html'>set_errors</a></span>(<span class='fl'>4</span>:<span class='fl'>6</span>, <span class='fl'>0.2</span>)
-(<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='no'>x</span>, <span class='no'>y</span>))</div><div class='output co'>#&gt; Errors: 0.1 0.2 0.1 0.2 0.1 ...
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='errors.html'>set_errors</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>0.1</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='errors.html'>set_errors</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>0.2</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>z</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Errors: 0.1 0.2 0.1 0.2 0.1 ...
 #&gt;   [,1] [,2] [,3]
 #&gt; x    1    2    3
-#&gt; y    4    5    6</div><div class='input'><span class='no'>z</span>[<span class='fl'>2</span>, <span class='fl'>2</span>]</div><div class='output co'>#&gt; 5.0(2)</div><div class='input'><span class='no'>z</span>[<span class='fl'>2</span>, <span class='fl'>2</span>] <span class='kw'>&lt;-</span> -<span class='fl'>1</span>
-<span class='fu'><a href='errors.html'>errors</a></span>(<span class='no'>z</span><span class='kw'>[[</span><span class='fl'>1</span>, <span class='fl'>2</span>]]) <span class='kw'>&lt;-</span> <span class='fl'>0.8</span>
-<span class='no'>z</span>[, <span class='fl'>2</span>]</div><div class='output co'>#&gt; Errors: 0.8 0.0
+#&gt; y    4    5    6</div><div class='input'><span class='va'>z</span><span class='op'>[</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; 5.0(2)</div><div class='input'><span class='va'>z</span><span class='op'>[</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>1</span>
+<span class='fu'><a href='errors.html'>errors</a></span><span class='op'>(</span><span class='va'>z</span><span class='op'>[[</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fl'>0.8</span>
+<span class='va'>z</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; Errors: 0.8 0.0
 #&gt;  x  y 
 #&gt;  2 -1 </div><div class='input'>
 </div></pre>
@@ -191,7 +194,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

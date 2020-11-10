@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Encode <code>errors</code> — format.errors • errors</title>
+<title>Encode errors — format.errors • errors</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Encode <code>errors</code> — format.errors" />
+<meta property="og:title" content="Encode errors — format.errors" />
 <meta property="og:description" content="Format an errors object for pretty printing." />
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errors</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
@@ -133,8 +133,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for errors</span>
-<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scientific</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>notation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"errors.notation"</span>, <span class='st'>"parenthesis"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='cn'>NULL</span>, scientific <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  notation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"errors.notation"</span>, <span class='st'>"parenthesis"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,8 +166,12 @@ are supported through the <code>"errors.notation"</code> option.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='errors.html'>set_errors</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>*<span class='fl'>100</span>, <span class='fl'>1</span>:<span class='fl'>3</span>*<span class='fl'>100</span> * <span class='fl'>0.05</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "100(5)"  "200(10)" "300(20)"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] "100.0(50)" "200(10)"   "300(15)"  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>x</span>, <span class='kw'>scientific</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "1.00(5)e2" "2.0(1)e2"  "3.0(2)e2" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>x</span>, <span class='kw'>notation</span><span class='kw'>=</span><span class='st'>"plus-minus"</span>)</div><div class='output co'>#&gt; [1] "100 ± 5"  "200 ± 10" "300 ± 20"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='errors.html'>set_errors</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>*</span><span class='fl'>100</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>*</span><span class='fl'>100</span> <span class='op'>*</span> <span class='fl'>0.05</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "100(5)"  "200(10)" "300(20)"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "100.0(50)" "200(10)"   "300(15)"  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, scientific<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "1.00(5)e2" "2.0(1)e2"  "3.0(2)e2" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, notation<span class='op'>=</span><span class='st'>"plus-minus"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "100 ± 5"  "200 ± 10" "300 ± 20"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -184,7 +188,7 @@ are supported through the <code>"errors.notation"</code> option.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
