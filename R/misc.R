@@ -145,7 +145,7 @@ as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
 #'
 #' @export
 as.list.errors <- function(x, ...)
-  mapply(set_errors, unclass(x), errors(x), SIMPLIFY=FALSE)
+  Map(set_errors, unclass(x), errors(x))
 
 #' Coerce to a Matrix
 #'

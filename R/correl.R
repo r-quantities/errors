@@ -60,6 +60,10 @@ ids <- function(...) {
   })))
 }
 
+is_correlation <- function(x) {
+  abs(x) <= 1 | sapply(abs(x), function(i) isTRUE(all.equal(i, 1)))
+}
+
 #' Handle Correlations Between \code{errors} Objects
 #'
 #' Set or retrieve correlations or covariances between \code{errors} objects.
@@ -129,7 +133,7 @@ correl.errors <- function(x, y) {
 
 #' @export
 `correl<-.errors` <- function(x, y, value) {
-  stopifnot(abs(value) <= 1)
+  stopifnot(is_correlation(value))
   covar(x, y) <- value * errors(x) * errors(y)
   x
 }
@@ -166,7 +170,7 @@ covar.errors <- function(x, y) {
 `covar<-.errors` <- function(x, y, value) {
   stopifnot(inherits(y, "errors"), !identical(attr(x, "id"), attr(y, "id")))
   stopifnot(length(x) == length(y), any(length(value) == c(length(x), 1L)))
-  stopifnot(abs(value / errors(x) / errors(y)) <= 1)
+  stopifnot(is_correlation(value / errors(x) / errors(y)))
 
   if (length(value) == 1)
     value <- rep(value, length(x))

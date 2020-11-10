@@ -1,6 +1,6 @@
 ## Patch release
 
-Performance improvements.
+Minor fixes.
 
 ## Test environments
 

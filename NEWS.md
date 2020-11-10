@@ -1,3 +1,7 @@
+# errors 0.3.6
+
+- Fix check tolerance when correlations are approx. 1 (#42).
+
 # errors 0.3.5
 
 - Internal performance improvements (#39).

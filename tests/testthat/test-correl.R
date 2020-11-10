@@ -113,3 +113,9 @@ test_that("GUM examples give the correct results", {
   expect_equal(as.numeric(y2), 0.00218, tolerance=0.00001)
   expect_equal(as.numeric(b.30), -0.1494, tolerance=0.0001)
 })
+
+test_that("correlation checks have some tolerance", {
+  x <- set_errors(6.6446573357e-27, 2.0000000000000001e-36)
+  y <- set_errors(5.9719201914e-10, 1.8e-19)
+  expect_silent(correl(x, y) <- 1)
+})
