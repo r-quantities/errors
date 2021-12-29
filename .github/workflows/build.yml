@@ -55,7 +55,7 @@ jobs:
       run: covr::codecov()
       shell: Rscript {0}
 
-quantities:
+  quantities:
     needs: build
     runs-on: ${{ matrix.config.os }}
     name: quantities on ${{ matrix.config.os }} (${{ matrix.config.r }})
