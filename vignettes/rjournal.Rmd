@@ -184,7 +184,7 @@ head(iris.e, 3)
 ```
 
 ```{r, eval=FALSE}
-plot(iris.e[["Sepal.Length"]], iris.e[["Sepal.Width"]], col=iris.e[["Species"]])
+plot(Sepal.Width ~ Sepal.Length, iris.e, col=Species)
 legend(6.2, 4.4, unique(iris.e[["Species"]]), col=1:length(iris.e[["Species"]]), pch=1)
 
 library(ggplot2)

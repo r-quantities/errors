@@ -11,7 +11,6 @@
 #' plot(cars)
 #'
 #' @export
-# nocov start
 plot.errors <- function(x, y, ...) {
   call <- match.call()
   lcall <- length(call)
@@ -47,4 +46,3 @@ plot.errors <- function(x, y, ...) {
     graphics::segments(x, errors_min(y), x, errors_max(y))
   }
 }
-# nocov end

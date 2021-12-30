@@ -1126,15 +1126,18 @@
 <rect x='412.60' y='109.00' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='421.24' cy='117.64' r='1.95' style='stroke-width: 0.71; stroke: #F8766D; fill: #F8766D;' />
 <line x1='414.32' y1='117.64' x2='428.15' y2='117.64' style='stroke-width: 1.07; stroke: #F8766D; stroke-linecap: butt;' />
+<line x1='414.32' y1='117.64' x2='428.15' y2='117.64' style='stroke-width: 1.07; stroke: #F8766D; stroke-linecap: butt;' />
 <rect x='412.60' y='126.28' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='421.24' cy='134.92' r='1.95' style='stroke-width: 0.71; stroke: #00BA38; fill: #00BA38;' />
+<line x1='414.32' y1='134.92' x2='428.15' y2='134.92' style='stroke-width: 1.07; stroke: #00BA38; stroke-linecap: butt;' />
 <line x1='414.32' y1='134.92' x2='428.15' y2='134.92' style='stroke-width: 1.07; stroke: #00BA38; stroke-linecap: butt;' />
 <rect x='412.60' y='143.56' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='421.24' cy='152.20' r='1.95' style='stroke-width: 0.71; stroke: #619CFF; fill: #619CFF;' />
 <line x1='414.32' y1='152.20' x2='428.15' y2='152.20' style='stroke-width: 1.07; stroke: #619CFF; stroke-linecap: butt;' />
+<line x1='414.32' y1='152.20' x2='428.15' y2='152.20' style='stroke-width: 1.07; stroke: #619CFF; stroke-linecap: butt;' />
 <text x='435.36' y='120.66' style='font-size: 8.80px; font-family: sans;' textLength='25.94px' lengthAdjust='spacingAndGlyphs'>setosa</text>
 <text x='435.36' y='137.94' style='font-size: 8.80px; font-family: sans;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>versicolor</text>
 <text x='435.36' y='155.22' style='font-size: 8.80px; font-family: sans;' textLength='32.28px' lengthAdjust='spacingAndGlyphs'>virginica</text>
-<text x='35.24' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='64.56px' lengthAdjust='spacingAndGlyphs'>errorbars 2</text>
+<text x='35.24' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='87.33px' lengthAdjust='spacingAndGlyphs'>ggplot2 explicit</text>
 </g>
 </svg>
