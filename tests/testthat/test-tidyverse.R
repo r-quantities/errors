@@ -1,5 +1,3 @@
-context("tidyverse")
-
 test_that("pillar methods work for errors objects", {
   skip_if_not_installed("pillar")
 

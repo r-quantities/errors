@@ -1,5 +1,3 @@
-context("conversion")
-
 test_that("errors objects are correctly created", {
   xval <- c(-1, 0, 1)
   xerr <- c(0.2, 0.1, 0.18)

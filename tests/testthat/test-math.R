@@ -1,5 +1,3 @@
-context("math")
-
 test_that("sign methods work properly", {
   xval <- c(-2, 0, 1)
   xerr <- c(.1, .2, .3)

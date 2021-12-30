@@ -1,5 +1,3 @@
-context("summary")
-
 test_that("summary methods work properly", {
   xval <- 1.1:10.1
   xerr <- rep(0.05, 10)

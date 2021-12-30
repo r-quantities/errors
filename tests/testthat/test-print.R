@@ -1,5 +1,3 @@
-context("print")
-
 test_that("error formatting works properly", {
   x <- set_errors(rep(11111.22222, 8),
                   c(12345678, 1234.5678, 12.345678, 1.2345678,
