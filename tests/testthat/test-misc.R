@@ -1,5 +1,3 @@
-context("misc")
-
 test_that("equality testing checks IDs", {
   x <- set_errors(1:10, 0.1)
   y <- set_errors(unclass(x), errors(x))

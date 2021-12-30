@@ -1,5 +1,3 @@
-context("math")
-
 test_that("sign methods work properly", {
   xval <- c(-2, 0, 1)
   xerr <- c(.1, .2, .3)
@@ -32,7 +30,7 @@ test_that("math methods work properly", {
   xerr <- seq(0.005, 0.05, 0.005)/100
   x <- set_errors(xval, xerr)
 
-  test_expr(sqrt(x))
+  expect_warning(test_expr(sqrt(x)))
   test_expr(exp(x))
   test_expr(log(x))
   expect_equal(log(x, 10), log10(x))

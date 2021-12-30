@@ -11,7 +11,6 @@
 #' plot(cars)
 #'
 #' @export
-# nocov start
 plot.errors <- function(x, y, ...) {
   call <- match.call()
   lcall <- length(call)
@@ -40,11 +39,12 @@ plot.errors <- function(x, y, ...) {
 
   NextMethod()
 
+  col <- if (exists("col", dots)) dots$col else par("fg")
+
   if (missing(y)) {
-    graphics::segments(x, errors_min(x), x, errors_max(x))
+    graphics::segments(x, errors_min(x), x, errors_max(x), col=col)
   } else {
-    graphics::segments(errors_min(x), y, errors_max(x), y)
-    graphics::segments(x, errors_min(y), x, errors_max(y))
+    graphics::segments(errors_min(x), y, errors_max(x), y, col=col)
+    graphics::segments(x, errors_min(y), x, errors_max(y), col=col)
   }
 }
-# nocov end

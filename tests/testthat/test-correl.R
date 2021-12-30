@@ -1,5 +1,3 @@
-context("correl")
-
 test_that("wrong values fail", {
   xval <- -4.1:5.1
   xerr <- seq(0.005, 0.05, 0.005)

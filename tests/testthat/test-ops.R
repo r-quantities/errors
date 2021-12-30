@@ -1,5 +1,3 @@
-context("ops")
-
 .onLoad()
 
 test_that("bolean ops throw a warning once", {
