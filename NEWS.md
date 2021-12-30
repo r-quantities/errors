@@ -1,3 +1,8 @@
+# errors 0.3.6.1
+
+- Add new `geom_errors()` function to automatically add errorbars to `ggplot2`
+  plots for variables of class `errors` (#52).
+
 # errors 0.3.6
 
 - Fix check tolerance when correlations are approx. 1 (#42).
