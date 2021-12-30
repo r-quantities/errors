@@ -136,6 +136,8 @@ register_all_s3_methods <- function() {
   register_s3_method("vctrs::vec_cast", "integer.errors")
   register_s3_method("vctrs::vec_cast", "errors.double")
   register_s3_method("vctrs::vec_cast", "double.errors")
+
+  register_s3_method("ggplot2::scale_type", "errors")
 }
 
 register_s3_method <- function(generic, class, fun=NULL) {
