@@ -1,7 +1,8 @@
-# errors 0.3.6.1
+# errors 0.3.6.2
 
 - Add new `geom_errors()` function to automatically add errorbars to `ggplot2`
   plots for variables of class `errors` (#52).
+- Some fixes in `plot.errors`, improved `units` compatibility.
 
 # errors 0.3.6
 

@@ -25,6 +25,7 @@ S3 method for \code{errors} objects which automatically prints the error bars.
 \examples{
 cars <- as.matrix(cars)
 cars <- as.data.frame(set_errors(cars, cars * 0.05))
+plot(cars$speed)
 plot(cars)
 
 }
