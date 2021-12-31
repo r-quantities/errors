@@ -61,6 +61,15 @@ geom_errors <- function(mapping = NULL, data = NULL,
         data$y <- drop_errors(data$y)
       }
       data
+    },
+
+    compute_statistic = function(self, data, layout) {
+      data <- ggplot2::ggproto_parent(
+        layer_errors, self)$compute_statistic(data, layout)
+      compute_statistic <- getOption("errors.compute_statistic")
+      if (is.function(compute_statistic))
+        data <- compute_statistic(data, layout)
+      data
     }
   )
 }
