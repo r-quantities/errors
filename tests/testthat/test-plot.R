@@ -1,6 +1,6 @@
-skip_if_not_installed("vdiffr")
-
 test_that("base plots work as expected", suppressWarnings({
+  skip_if_not_installed("vdiffr")
+
   cars <- as.matrix(cars)
   cars <- as.data.frame(set_errors(cars, cars * 0.05))
   vdiffr::expect_doppelganger("plot x", plot(cars$speed))
@@ -16,9 +16,10 @@ test_that("base plots work as expected", suppressWarnings({
     iris.e, plot(Sepal.Length, Sepal.Width, col=Species)))
 }))
 
-skip_if_not_installed("ggplot2")
-
 test_that("ggplot2 plots work as expected", suppressWarnings({
+  skip_if_not_installed("vdiffr")
+  skip_if_not_installed("ggplot2")
+
   library(ggplot2)
 
   iris.e <- iris

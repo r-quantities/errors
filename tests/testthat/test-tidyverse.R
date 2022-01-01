@@ -9,10 +9,9 @@ test_that("pillar methods work for errors objects", {
                paste0("1.0", pillar::style_subtle("(1)")))
 })
 
-skip_if_not_installed("vctrs", "0.3.1")
-skip_if_not_installed("dplyr", "1.0.0")
-
 test_that("errors are proxied and restored", {
+  skip_if_not_installed("vctrs", "0.3.1")
+
   x <- set_errors(1:3, 1:3)
 
   proxy <- vctrs::vec_proxy(x)
@@ -23,12 +22,16 @@ test_that("errors are proxied and restored", {
 })
 
 test_that("can slice errors vectors", {
+  skip_if_not_installed("vctrs", "0.3.1")
+
   x <- set_errors(1:3, 3:1)
   out <- vctrs::vec_slice(x, 2:3)
   expect_equal(out, set_errors(2:3, as.double(2:1)))
 })
 
 test_that("can coerce errors vectors", {
+  skip_if_not_installed("vctrs", "0.3.1")
+
   out <- vctrs::vec_ptype2(set_errors(1.5, 1.5), set_errors(1L, 1L))
   expect_equal(out, set_errors(double(), double()))
 
@@ -43,6 +46,8 @@ test_that("can coerce errors vectors", {
 })
 
 test_that("can coerce errors vectors with numeric vectors", {
+  skip_if_not_installed("vctrs", "0.3.1")
+
   out <- vctrs::vec_ptype2(set_errors(1.5, 1.5), 0L)
   expect_equal(out, set_errors(double(), double()))
 
@@ -57,6 +62,9 @@ test_that("can coerce errors vectors with numeric vectors", {
 })
 
 test_that("can combine errors vectors", {
+  skip_if_not_installed("vctrs", "0.3.1")
+  skip_if_not_installed("dplyr", "1.0.0")
+
   x <- set_errors(1:3, 3:1)
 
   out <- vctrs::vec_unchop(vctrs::vec_chop(x))
@@ -69,6 +77,8 @@ test_that("can combine errors vectors", {
 })
 
 test_that("can combine errors vectors with numeric vectors", {
+  skip_if_not_installed("vctrs", "0.3.1")
+
   x <- set_errors(1:3, 3:1)
 
   out <- vctrs::vec_c(x[1], 10L, x[3])
@@ -79,6 +89,8 @@ test_that("can combine errors vectors with numeric vectors", {
 })
 
 test_that("can compare errors vectors", {
+  skip_if_not_installed("vctrs", "0.3.1")
+
   x <- errors::set_errors(1:3, 3:1)
 
   out <- suppressWarnings(vctrs::vec_equal(x, 3:1))
@@ -94,6 +106,9 @@ test_that("can compare errors vectors", {
 `%>%` <- dplyr::`%>%`
 
 test_that("split-apply-combine with dplyr and base agree", {
+  skip_if_not_installed("vctrs", "0.3.1")
+  skip_if_not_installed("dplyr", "1.0.0")
+
   iris2 <- iris
   for (i in 1:4)
     errors(iris2[,i]) <- iris2[,i] * 0.05
@@ -112,6 +127,8 @@ test_that("split-apply-combine with dplyr and base agree", {
 })
 
 test_that("split-apply-combine with dplyr can combine integers and errors", {
+  skip_if_not_installed("dplyr", "1.0.0")
+
   df <- dplyr::tibble(
     x = c(FALSE, TRUE, FALSE),
     y = set_errors(1:3, 3:1),
