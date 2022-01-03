@@ -1,11 +1,12 @@
 test_that("base plots work as expected", suppressWarnings({
   skip_if_not_installed("vdiffr")
+  fplot <- function(...) function() plot(...)
 
   cars <- as.matrix(cars)
   cars <- as.data.frame(set_errors(cars, cars * 0.05))
-  vdiffr::expect_doppelganger("plot x", plot(cars$speed))
-  vdiffr::expect_doppelganger("plot xy", plot(cars$speed, cars$dist))
-  vdiffr::expect_doppelganger("plot dataframe", plot(cars))
+  vdiffr::expect_doppelganger("plot x", fplot(cars$speed))
+  vdiffr::expect_doppelganger("plot xy", fplot(cars$speed, cars$dist))
+  vdiffr::expect_doppelganger("plot dataframe", fplot(cars))
 
   iris.e <- iris
   iris.e[1:4] <- lapply(iris.e[1:4], function(x) set_errors(x, x*0.02))
@@ -13,7 +14,7 @@ test_that("base plots work as expected", suppressWarnings({
   # vdiffr::expect_doppelganger("plot formula", plot(
   #   Sepal.Width ~ Sepal.Length, iris.e, col=Species))
   vdiffr::expect_doppelganger("plot formula", with(
-    iris.e, plot(Sepal.Length, Sepal.Width, col=Species)))
+    iris.e, fplot(Sepal.Length, Sepal.Width, col=Species)))
 }))
 
 test_that("ggplot2 plots work as expected", suppressWarnings({
