@@ -18,7 +18,7 @@
 #'
 #' @export
 `[.errors` <- function(x, ...) {
-  e <- errors(x)
+  e <- .e(x)
   dim(e) <- dim(x)
   set_errors(unclass(NextMethod()), as.numeric(e[...]))
 }
@@ -26,7 +26,7 @@
 #' @rdname Extract.errors
 #' @export
 `[[.errors` <- function(x, ...) {
-  e <- errors(x)
+  e <- .e(x)
   dim(e) <- dim(x)
   set_errors(unclass(NextMethod()), as.numeric(e[[...]]))
 }
@@ -34,18 +34,18 @@
 #' @rdname Extract.errors
 #' @export
 `[<-.errors` <- function(x, ..., value) {
-  e <- errors(x)
+  e <- .e(x)
   dim(e) <- dim(x)
-  e[...] <- errors(value)
+  e[...] <- .e(value)
   set_errors(unclass(NextMethod()), as.numeric(e))
 }
 
 #' @rdname Extract.errors
 #' @export
 `[[<-.errors` <- function(x, ..., value) {
-  e <- errors(x)
+  e <- .e(x)
   dim(e) <- dim(x)
-  e[[...]] <- errors(value)
+  e[[...]] <- .e(value)
   set_errors(unclass(NextMethod()), as.numeric(e))
 }
 
@@ -60,7 +60,7 @@
 #'
 #' @export
 rep.errors <- function(x, ...)
-  set_errors(unclass(NextMethod()), rep(errors(x), ...))
+  set_errors(unclass(NextMethod()), rep(.e(x), ...))
 
 #' Combine Values into a Vector or List
 #'
@@ -73,7 +73,7 @@ rep.errors <- function(x, ...)
 #'
 #' @export
 c.errors <- function(..., recursive = FALSE)
-  set_errors(unclass(NextMethod()), c(unlist(sapply(list(...), errors))))
+  set_errors(unclass(NextMethod()), c(unlist(sapply(list(...), .e))))
 
 #' Lagged Differences
 #'
@@ -122,7 +122,7 @@ diff.errors <- function(x, lag = 1L, differences = 1L, ...) {
 #'
 #' @export
 as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
-  e <- errors(x)
+  e <- .e(x)
   dim(e) <- dim(x)
   e <- as.data.frame(e)
   xx <- as.data.frame(unclass(x), row.names, optional, ...)
@@ -145,7 +145,7 @@ as.data.frame.errors <- function(x, row.names = NULL, optional = FALSE, ...) {
 #'
 #' @export
 as.list.errors <- function(x, ...)
-  Map(set_errors, unclass(x), errors(x))
+  Map(set_errors, unclass(x), .e(x))
 
 #' Coerce to a Matrix
 #'
@@ -158,7 +158,7 @@ as.list.errors <- function(x, ...)
 #'
 #' @export
 as.matrix.errors <- function(x, ...)
-  set_errors(unclass(NextMethod()), errors(x))
+  set_errors(unclass(NextMethod()), .e(x))
 
 #' Matrix Transpose
 #'
@@ -173,7 +173,7 @@ as.matrix.errors <- function(x, ...)
 #'
 #' @export
 t.errors <- function(x) {
-  e <- errors(x)
+  e <- .e(x)
   dim(e) <- dim(x)
   set_errors(unclass(NextMethod()), as.numeric(t(e)))
 }
@@ -205,7 +205,7 @@ cbind.errors <- function(..., deparse.level = 1) {
     names(allargs) <- sapply(substitute(list(...))[-1], deparse)
   else names(allargs) <- nm
   allerrs <- lapply(list(...), function(x) {
-    e <- errors(x)
+    e <- .e(x)
     dim(e) <- dim(x)
     e
   })

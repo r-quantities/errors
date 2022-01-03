@@ -20,7 +20,9 @@ warn_once_coercion <- function(fun) warn_once(
   type = "coercion"
 )
 
+# ensure it's numeric
 .v <- function(x) as.numeric(x)
+.e <- function(x) as.numeric(errors(x))
 
 get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)
 
@@ -34,7 +36,7 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
     "taylor-first-order" = {
       # propagate variance to new object
       var <- rowSums(cbind(
-        errors(x)^2 * dx^2, errors(y)^2 * dy^2, 2 * covar(x, y) * dx * dy
+        .e(x)^2 * dx^2, .e(y)^2 * dy^2, 2 * covar(x, y) * dx * dy
       ), na.rm = TRUE)
       var[var < 0] <- 0
       xx <- set_errors(xx, sqrt(var))
@@ -43,8 +45,8 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
       idx <- attr(x, "id")
       idy <- attr(y, "id")
       for (id in ids(idx, idy)) {
-        idxid <- if (.id(idx) != id) .covar(idx, id) else errors(x)^2
-        idyid <- if (.id(idy) != id) .covar(idy, id) else errors(y)^2
+        idxid <- if (.id(idx) != id) .covar(idx, id) else .e(x)^2
+        idyid <- if (.id(idy) != id) .covar(idy, id) else .e(y)^2
         .covar(attr(xx, "id"), id) <-
           rowSums(cbind(idxid * dx, idyid * dy), na.rm = TRUE)
       }

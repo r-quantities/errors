@@ -25,12 +25,12 @@
 Math.errors <- function(x, ...) {
   switch(
     .Generic,
-    "abs" = set_errors(unclass(NextMethod()), errors(x)),
+    "abs" = set_errors(unclass(NextMethod()), .e(x)),
     "sign" = drop_errors(NextMethod()),
     "sqrt" = x^set_errors(0.5),
     "floor" = , "ceiling" = , "trunc" = , "round" = , "signif" = {
       xx <- .v(NextMethod())
-      set_errors(xx, errors(x) + abs(.v(x) - xx))
+      set_errors(xx, .e(x) + abs(.v(x) - xx))
     },
     {
       deriv <- switch(
@@ -56,17 +56,17 @@ Math.errors <- function(x, ...) {
       )
       propagate(unclass(NextMethod()), x, NA, deriv, NA)
     },
-    "cumsum" = set_errors(unclass(NextMethod()), sqrt(colSums(cummatrix(errors(x))^2))),
+    "cumsum" = set_errors(unclass(NextMethod()), sqrt(colSums(cummatrix(.e(x))^2))),
     "cumprod" = {
       xx <- NextMethod()
-      e <- sqrt(colSums((cummatrix(errors(x)) * t(xx / t(cummatrix(.v(x), fill=1))))^2))
+      e <- sqrt(colSums((cummatrix(.e(x)) * t(xx / t(cummatrix(.v(x), fill=1))))^2))
       set_errors(unclass(xx), e)
     },
     "cummax" = , "cummin" = {
       xx <- NextMethod()
       indexes <- which(xx == .v(x))
       reps <- diff(c(indexes, length(x)+1))
-      e <- rep(errors(x)[indexes], times=reps)
+      e <- rep(.e(x)[indexes], times=reps)
       set_errors(unclass(xx), e)
     },
     "lgamma" = , "gamma" = , "digamma" = , "trigamma" =
@@ -85,6 +85,6 @@ log2.errors <- function(x) log(x, 2)
 # not a generic!
 # atan2.errors <- function(x, y) {
 #   z <- y/x
-#   e <- errors(z) / (1 + .v(z)^2)
+#   e <- .e(z) / (1 + .v(z)^2)
 #   set_errors(unclass(NextMethod()), e)
 # }

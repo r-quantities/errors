@@ -32,7 +32,7 @@ format.errors = function(x,
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
-  e <- signif(errors(x), digits)
+  e <- signif(.e(x), digits)
   exponent <- get_exponent(x)
   value_digits <- ifelse(e, digits - get_exponent(e), getOption("digits"))
   value <- ifelse(e, signif(.v(x), exponent + value_digits), .v(x))
@@ -84,7 +84,7 @@ format.errors = function(x,
 #' @export
 print.errors <- function(x, ...) {
   if (is.array(x) || length(x) > 1L) {
-    err <- errors(x)
+    err <- .e(x)
     e <- paste(format(err[1:min(5, length(err))]), collapse=" ")
     if (length(err) > 5L)
       e <- paste(e, "...")

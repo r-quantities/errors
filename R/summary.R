@@ -22,10 +22,10 @@ Summary.errors <- function(..., na.rm = FALSE) {
     .Generic,
     "all" = , "any" =
       stop("method not supported for `errors` objects"),
-    "sum" = set_errors(unclass(NextMethod()), sqrt(colSums(cbind(errors(x))^2))),
+    "sum" = set_errors(unclass(NextMethod()), sqrt(colSums(cbind(.e(x))^2))),
     "prod" = {
       xx <- NextMethod()
-      set_errors(xx, sqrt(colSums(cbind(errors(x) * xx / .v(x))^2)))
+      set_errors(xx, sqrt(colSums(cbind(.e(x) * xx / .v(x))^2)))
     },
     "max" = max(errors_max(x), na.rm=na.rm),
     "min" = min(errors_min(x), na.rm=na.rm),
@@ -52,21 +52,21 @@ Summary.errors <- function(..., na.rm = FALSE) {
 #'
 #' @export
 mean.errors <- function(x, ...) {
-  e <- max(mean(errors(x)), sd(.v(x))/sqrt(length(x)))
+  e <- max(mean(.e(x)), sd(.v(x))/sqrt(length(x)))
   set_errors(unclass(NextMethod()), e)
 }
 
 #' @name mean.errors
 #' @export
 weighted.mean.errors <- function(x, ...) {
-  e <- max(weighted.mean(errors(x), ...), sd(.v(x))/sqrt(length(x)))
+  e <- max(weighted.mean(.e(x), ...), sd(.v(x))/sqrt(length(x)))
   set_errors(unclass(NextMethod()), e)
 }
 
 #' @name mean.errors
 #' @export
 median.errors = function(x, ...) {
-  e <- 1.253 * errors(mean(x))
+  e <- 1.253 * .e(mean(x))
   set_errors(unclass(NextMethod()), e)
 }
 
