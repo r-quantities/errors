@@ -136,20 +136,20 @@ errors.errors <- function(x) {
 errors_max <- function(x) UseMethod("errors_max")
 
 #' @export
-errors_max.numeric <- function(x) x + errors(x)
+errors_max.numeric <- function(x) .v(x) + .e(x)
 
 #' @export
-errors_max.errors <- function(x) drop_errors(x) + errors(x)
+errors_max.errors <- errors_max.numeric
 
 #' @name errors
 #' @export
 errors_min <- function(x) UseMethod("errors_min")
 
 #' @export
-errors_min.numeric <- function(x) x - errors(x)
+errors_min.numeric <- function(x) .v(x) - .e(x)
 
 #' @export
-errors_min.errors <- function(x) drop_errors(x) - errors(x)
+errors_min.errors <- errors_min.numeric
 
 #' @name errors
 #' @param value a numeric vector of length 1 or the same length as \code{x}.
