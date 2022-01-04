@@ -61,7 +61,7 @@ ids <- function(...) {
 }
 
 is_correlation <- function(x) {
-  abs(x) <= 1 | sapply(abs(x), function(i) isTRUE(all.equal(i, 1)))
+  abs(.v(x)) <= 1 | sapply(abs(.v(x)), function(i) isTRUE(all.equal(i, 1)))
 }
 
 #' Handle Correlations Between \code{errors} Objects
