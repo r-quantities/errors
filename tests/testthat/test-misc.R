@@ -148,3 +148,37 @@ test_that("str method works as expected", {
   vec <- paste(format(x), collapse=" ")
   expect_equal(out, paste0(header, vec, " "))
 })
+
+test_that("duplicated-related methods work as expected", {
+  x <- set_errors(1:4, rep(c(0.1, 0.2), 2))
+  expect_equal(duplicated(x), duplicated(drop_errors(x)))
+  expect_equal(anyDuplicated(x), anyDuplicated(drop_errors(x)))
+  expect_equal(unique(x), x)
+
+  x <- set_errors(rep(c(1, 2), 2), seq(0.1, 0.4, 0.1))
+  expect_equal(duplicated(x), duplicated(errors(x)))
+  expect_equal(anyDuplicated(x), anyDuplicated(errors(x)))
+  expect_equal(unique(x), x)
+
+  x <- set_errors(rep(c(1, 2), 2), rep(c(0.1, 0.2), 2))
+  expect_equal(duplicated(x), duplicated(drop_errors(x)))
+  expect_equal(anyDuplicated(x), anyDuplicated(drop_errors(x)))
+  expect_equal(unique(x), x[1:2])
+
+  x <- set_errors(rep(c(1, 2), 2), c(0.1, 0.2, 0.1, 0.3))
+  expect_equal(duplicated(x), c(FALSE, FALSE, TRUE, FALSE))
+  expect_equal(duplicated(x, fromLast=TRUE), c(TRUE, FALSE, FALSE, FALSE))
+  expect_equal(anyDuplicated(x), 3)
+  expect_equal(anyDuplicated(x, fromLast=TRUE), 1)
+  expect_equal(unique(x), x[c(1, 2, 4)])
+
+  x <- set_errors(matrix(rep(c(1, 2), 2), 2, byrow=TRUE), rep(c(0.1, 0.2), each=2))
+  expect_equal(duplicated(x), duplicated(drop_errors(x)))
+  expect_equal(anyDuplicated(x), anyDuplicated(drop_errors(x)))
+  expect_equal(unique(x), x[1, , drop=FALSE])
+
+  x <- set_errors(matrix(rep(c(1, 2), 2), 2, byrow=TRUE), rep(c(0.1, 0.2), 2))
+  expect_equal(duplicated(x), array(c(FALSE, FALSE), 2))
+  expect_equal(anyDuplicated(x), 0)
+  expect_equal(unique(x), x)
+})

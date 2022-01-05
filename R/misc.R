@@ -244,3 +244,33 @@ str.errors <- function(object, ...) {
   close(file)
   cat(" Errors:", sub(" 'errors' ", "", rval), "\n")
 }
+
+#' @export
+duplicated.errors <- function(x, incomparables=FALSE, ...) {
+  dx <- dim(x)
+  dval <- if (is.null(dx))
+    NextMethod() else duplicated.array(x, incomparables, ...)
+  x <- .e(x)
+  dim(x) <- dx
+  derr <- if (is.null(dx))
+    NextMethod() else duplicated.array(x, incomparables, ...)
+  dval & derr
+}
+
+#' @export
+anyDuplicated.errors <- function(x, incomparables=FALSE, ...) {
+  if (any(dup <- duplicated(x, incomparables, ...)))
+    which(dup)[1] else 0
+}
+
+#' @export
+unique.errors <- function(x, incomparables=FALSE, MARGIN=1, ...) {
+  dup <- duplicated(x, incomparables, ...)
+  if (is.null(dim(x)))
+    return(x[!dup])
+  # for matrices and arrays
+  args <- rep(alist(a = ), length(dim(x)))
+  names(args) <- NULL
+  args[[MARGIN]] <- !dup
+  do.call("[", c(list(x), args, list(drop = FALSE)))
+}
