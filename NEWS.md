@@ -4,6 +4,7 @@
   plots for variables of class `errors` (#52).
 - Some fixes in `plot.errors`, improved `units` compatibility.
 - Implement errors methods for `duplicated`, `anyDuplicated` and `unique`.
+- Fix operators `%/%` and `%%` (#54).
 
 # errors 0.3.6
 
