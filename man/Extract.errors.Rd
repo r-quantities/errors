@@ -17,15 +17,12 @@
 \method{[[}{errors}(x, ...) <- value
 }
 \arguments{
-\item{x}{
-    object from which to extract element(s) or in which to replace element(s).
-  }
+\item{x}{object from which to extract element(s) or in which to replace element(s).}
 
 \item{...}{additional arguments to be passed to base methods
 (see \code{\link[base]{Extract}}).}
 
-\item{value}{typically an array-like \R object of a similar class as
-    \code{x}.}
+\item{value}{typically an array-like \R object of a similar class as \code{x}.}
 }
 \description{
 S3 operators to extract or replace parts of \code{errors} objects.

@@ -4,7 +4,9 @@
 #' \code{errors} objects with support for automatic uncertainty propagation (see
 #' \code{\link[base]{groupGeneric}} for a comprehensive list of available methods).
 #'
-#' @inheritParams base::groupGeneric
+#' @param x,e1,e2 objects.
+#' @param ... further arguments passed to methods.
+#' @param na.rm logical: should missing values be removed?
 #' @name groupGeneric.errors
 #'
 #' @details \subsection{\code{Math}}{

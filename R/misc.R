@@ -2,9 +2,10 @@
 #'
 #' S3 operators to extract or replace parts of \code{errors} objects.
 #'
-#' @inheritParams base::Extract
+#' @param x object from which to extract element(s) or in which to replace element(s).
 #' @param ... additional arguments to be passed to base methods
 #' (see \code{\link[base]{Extract}}).
+#' @param value typically an array-like \R object of a similar class as \code{x}.
 #' @name Extract.errors
 #'
 #' @examples

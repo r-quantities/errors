@@ -14,13 +14,9 @@
 \method{Summary}{errors}(..., na.rm = FALSE)
 }
 \arguments{
-\item{x}{objects.}
+\item{x, e1, e2}{objects.}
 
 \item{...}{further arguments passed to methods.}
-
-\item{e1}{objects.}
-
-\item{e2}{objects.}
 
 \item{na.rm}{logical: should missing values be removed?}
 }
