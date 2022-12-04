@@ -25,7 +25,7 @@
 #' Evaluation of Measurement Data -- Guide to the Expression of Uncertainty in
 #' Measurement, 1st edn. JCGM 100:2008.
 #' \emph{Joint Committee for Guides in Metrology.}
-#' \url{https://www.bipm.org/en/publications/guides/gum.html}
+#' \url{https://www.bipm.org/en/committees/jc/jcgm/publications}
 #'
 #' @name datasets
 "GUM.H.2"

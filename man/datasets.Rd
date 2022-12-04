@@ -31,7 +31,7 @@ BIPM, IEC, IFCC, ILAC, IUPAC, IUPAP, ISO, and OIML (2008).
 Evaluation of Measurement Data -- Guide to the Expression of Uncertainty in
 Measurement, 1st edn. JCGM 100:2008.
 \emph{Joint Committee for Guides in Metrology.}
-\url{https://www.bipm.org/en/publications/guides/gum.html}
+\url{https://www.bipm.org/en/committees/jc/jcgm/publications}
 }
 \usage{
 GUM.H.2
