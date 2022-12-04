@@ -1,4 +1,4 @@
-# <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> errors: Uncertainty Propagation for R Vectors
+# <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> Uncertainty Propagation for R Vectors
 
 [![Build Status](https://github.com/r-quantities/errors/workflows/build/badge.svg)](https://github.com/r-quantities/errors/actions)
 [![Coverage Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://app.codecov.io/gh/r-quantities/errors)
@@ -6,7 +6,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/errors)](https://cran.r-project.org/package=errors)
 [![DOI](https://img.shields.io/badge/doi-10.32614/RJ--2018--075-informational.svg)](https://doi.org/10.32614/RJ-2018-075)
 
-The **errors** package provides support for easurement errors in R
+The **errors** package provides support for measurement errors in R
 vectors, matrices and arrays: automatic uncertainty propagation and
 reporting.
 
