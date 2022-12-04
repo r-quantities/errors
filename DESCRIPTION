@@ -14,7 +14,7 @@ Description: Support for measurement errors in R vectors, matrices and arrays:
     vignette; see 'citation("errors")' for details.
 License: MIT + file LICENSE
 Encoding: UTF-8
-URL: https://github.com/r-quantities/errors
+URL: https://r-quantities.github.io/errors/, https://github.com/r-quantities/errors
 BugReports: https://github.com/r-quantities/errors/issues
 LazyData: true
 Depends: R (>= 3.0.0)
