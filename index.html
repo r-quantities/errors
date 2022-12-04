@@ -23,6 +23,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -35,23 +37,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">errors</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,8 +64,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/r-quantities/errors/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/r-quantities/errors/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -85,88 +81,93 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="-errors-uncertainty-propagation-for-r-vectors" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#-errors-uncertainty-propagation-for-r-vectors" class="anchor"></a><img src="https://avatars1.githubusercontent.com/u/32303769?s=40&amp;v=4"> errors: Uncertainty Propagation for R Vectors</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="id_-errors-uncertainty-propagation-for-r-vectors">
+<img src="https://avatars1.githubusercontent.com/u/32303769?s=40&amp;v=4"> errors: Uncertainty Propagation for R Vectors<a class="anchor" aria-label="anchor" href="#id_-errors-uncertainty-propagation-for-r-vectors"></a>
+</h1></div>
 
 <p>The <strong>errors</strong> package provides support for easurement errors in R vectors, matrices and arrays: automatic uncertainty propagation and reporting.</p>
-<div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>See <a href="https://www.enchufa2.es/archives/errors-0-0-1.html">the initial blog post</a>. The package includes a vignette that is an up-to-date version of the following R Journal publication, which should be used for citations:</p>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<p>See <a href="https://www.enchufa2.es/archives/errors-0-0-1.html" class="external-link">the initial blog post</a>. The package includes a vignette that is an up-to-date version of the following R Journal publication, which should be used for citations:</p>
 <ul>
-<li>Iñaki Ucar, Edzer Pebesma and Arturo Azcorra (2018). “Measurement Errors in R.” <em>The R Journal</em>, 10 (2), 549–557. DOI: <a href="https://doi.org/10.32614/RJ-2018-075">10.32614/RJ-2018-075</a>
+<li>Iñaki Ucar, Edzer Pebesma and Arturo Azcorra (2018). “Measurement Errors in R.” <em>The R Journal</em>, 10 (2), 549–557. DOI: <a href="https://doi.org/10.32614/RJ-2018-075" class="external-link">10.32614/RJ-2018-075</a>
 </li>
 </ul>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the release version from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"errors"</span><span class="op">)</span></code></pre></div>
-<p>The installation from GitHub requires the <a href="https://cran.r-project.org/package=remotes">remotes</a> package.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"errors"</span><span class="op">)</span></span></code></pre></div>
+<p>The installation from GitHub requires the <a href="https://cran.r-project.org/package=remotes" class="external-link">remotes</a> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"r-quantities/errors"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"r-quantities/errors"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=errors">https://​cloud.r-project.org/​package=errors</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/r-quantities/errors/">https://​github.com/​r-quantities/​errors/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/r-quantities/errors/issues">https://​github.com/​r-quantities/​errors/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing errors</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Iñaki Ucar <br><small class="roles"> Author, copyright holder, maintainer </small> <a href="https://orcid.org/0000-0001-6403-5550" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=errors" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/r-quantities/errors/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/r-quantities/errors/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/r-quantities/errors/actions"><img src="https://github.com/r-quantities/errors/workflows/build/badge.svg" alt="Build Status"></a></li>
-<li><a href="https://codecov.io/gh/r-quantities/errors"><img src="https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg" alt="Coverage Status"></a></li>
-<li><a href="https://cran.r-project.org/package=errors"><img src="https://www.r-pkg.org/badges/version/errors" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/package=errors"><img src="https://cranlogs.r-pkg.org/badges/errors" alt="Downloads"></a></li>
-<li><a href="https://doi.org/10.32614/RJ-2018-075"><img src="https://img.shields.io/badge/doi-10.32614/RJ--2018--075-informational.svg" alt="DOI"></a></li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing errors</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Iñaki Ucar <br><small class="roles"> Author, copyright holder, maintainer </small> <a href="https://orcid.org/0000-0001-6403-5550" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/r-quantities/errors/actions" class="external-link"><img src="https://github.com/r-quantities/errors/workflows/build/badge.svg" alt="Build Status"></a></li>
+<li><a href="https://app.codecov.io/gh/r-quantities/errors" class="external-link"><img src="https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg" alt="Coverage Status"></a></li>
+<li><a href="https://cran.r-project.org/package=errors" class="external-link"><img src="https://www.r-pkg.org/badges/version/errors" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=errors" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/errors" alt="Downloads"></a></li>
+<li><a href="https://doi.org/10.32614/RJ-2018-075" class="external-link"><img src="https://img.shields.io/badge/doi-10.32614/RJ--2018--075-informational.svg" alt="DOI"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Iñaki Ucar.</p>
+  <p></p>
+<p>Developed by Iñaki Ucar.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -174,6 +175,8 @@
 
   
 
+
+  
 
   </body>
 </html>
