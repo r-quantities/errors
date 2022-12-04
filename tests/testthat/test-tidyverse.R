@@ -67,12 +67,12 @@ test_that("can combine errors vectors", {
 
   x <- set_errors(1:3, 3:1)
 
-  out <- vctrs::vec_unchop(vctrs::vec_chop(x))
+  out <- vctrs::list_unchop(vctrs::vec_chop(x))
   expect_equal(out, set_errors(1:3, as.double(3:1)))
 
   # Recursive case with df-cols
   df <- dplyr::tibble(foo = dplyr::tibble(x = x))
-  out <- vctrs::vec_unchop(vctrs::vec_chop(df))
+  out <- vctrs::list_unchop(vctrs::vec_chop(df))
   expect_equal(out$foo$x, set_errors(1:3, as.double(3:1)))
 })
 
