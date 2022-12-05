@@ -103,11 +103,10 @@ test_that("can compare errors vectors", {
   expect_equal(vctrs::vec_sort(x[3:1]), set_errors(1:3, as.double(3:1)))
 })
 
-`%>%` <- dplyr::`%>%`
-
 test_that("split-apply-combine with dplyr and base agree", {
   skip_if_not_installed("vctrs", "0.3.1")
   skip_if_not_installed("dplyr", "1.0.0")
+  `%>%` <- dplyr::`%>%`
 
   iris2 <- iris
   for (i in 1:4)
@@ -128,6 +127,7 @@ test_that("split-apply-combine with dplyr and base agree", {
 
 test_that("split-apply-combine with dplyr can combine integers and errors", {
   skip_if_not_installed("dplyr", "1.0.0")
+  `%>%` <- dplyr::`%>%`
 
   df <- dplyr::tibble(
     x = c(FALSE, TRUE, FALSE),
