@@ -1,3 +1,8 @@
+# errors 0.4.0.1
+
+- Switch from `size` (deprecated in `ggplot2` v3.4.0) to `linewidth` aesthetic
+  in `geom_errors()` (#55).
+
 # errors 0.4.0
 
 - Add new `geom_errors()` function to automatically add errorbars to `ggplot2`

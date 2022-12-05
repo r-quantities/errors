@@ -66,6 +66,20 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \description{
 Automatic errorbars for variables with uncertainty.
 }
+\section{Aesthetics}{
+
+\code{geom_errors()} understands the following aesthetics
+(required aesthetics are in bold):
+\itemize{
+\item \strong{\code{x} \emph{or} \code{y}}
+\item alpha
+\item colour
+\item group
+\item linetype
+\item linewidth
+}
+}
+
 \examples{
 if (requireNamespace("ggplot2", quietly=TRUE)) {
 
@@ -78,7 +92,7 @@ ggplot(iris.e) + aes(Sepal.Length, Sepal.Width, color=Species) +
   geom_point() + geom_errors()
 
 ggplot(iris.e) + aes(Sepal.Length, Sepal.Width, color=Species) +
-  geom_point() + geom_errors(width=0.05, height=0.05, size=0.2)
+  geom_point() + geom_errors(width=0.05, height=0.05, linewidth=0.2)
 
 }
 }

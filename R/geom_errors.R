@@ -4,6 +4,18 @@
 #'
 #' @inheritParams ggplot2::geom_errorbar
 #'
+#' @section Aesthetics:
+#' \code{geom_errors()} understands the following aesthetics
+#' (required aesthetics are in bold):
+#' \itemize{
+#' \item \strong{\code{x} \emph{or} \code{y}}
+#' \item alpha
+#' \item colour
+#' \item group
+#' \item linetype
+#' \item linewidth
+#' }
+#'
 #' @examples
 #' if (requireNamespace("ggplot2", quietly=TRUE)) {
 #'
@@ -16,7 +28,7 @@
 #'   geom_point() + geom_errors()
 #'
 #' ggplot(iris.e) + aes(Sepal.Length, Sepal.Width, color=Species) +
-#'   geom_point() + geom_errors(width=0.05, height=0.05, size=0.2)
+#'   geom_point() + geom_errors(width=0.05, height=0.05, linewidth=0.2)
 #'
 #' }
 #' @export
@@ -78,7 +90,7 @@ MakeGeomErrors <- function() ggplot2::ggproto(
   "GeomErrors", ggplot2::GeomErrorbar,
 
   default_aes = ggplot2::aes(
-    colour="black", size=0.5, linetype=1, width=0.5, height=0.5, alpha=NA),
+    colour="black", linewidth=0.5, linetype=1, width=0.5, height=0.5, alpha=NA),
 
   required_aes = c("x|y"),
 
