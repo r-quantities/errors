@@ -2,14 +2,15 @@
 title: Measurement Errors in R
 author: Iñaki Ucar, Edzer Pebesma, Arturo Azcorra
 abstract: >
-  This paper presents an R package to handle and represent measurements with errors in a very simple way. We briefly introduce the main concepts of metrology and propagation of uncertainty, and discuss related R packages. Building upon this, we introduce the \pkg{errors} package, which provides a class for associating uncertainty metadata, automated propagation and reporting. Working with \pkg{errors} enables transparent, lightweight, less error-prone handling and convenient representation of measurements with errors. Finally, we discuss the advantages, limitations and future work of computing with errors.
+  This paper presents an R package to handle and represent measurements with errors in a very simple way. We briefly introduce the main concepts of metrology and propagation of uncertainty, and discuss related R packages. Building upon this, we introduce the **errors** package, which provides a class for associating uncertainty metadata, automated propagation and reporting. Working with **errors** enables transparent, lightweight, less error-prone handling and convenient representation of measurements with errors. Finally, we discuss the advantages, limitations and future work of computing with errors.
 bibliography: rjournal.bib
 output:
   rmarkdown::pdf_document:
     citation_package: natbib
     number_sections: true
     includes:
-      in_header: includes/rjournal-preamble.tex
+      in_header: rjournal-preamble.tex
+link-citations: true
 classoption: a4paper,11pt
 vignette: >
   %\VignetteIndexEntry{Measurement Errors in R}
@@ -30,91 +31,145 @@ knitr::knit_hooks$set(output = function(x, options) {
   hook_output(x, options)
 })
 knitr::opts_chunk$set(message=FALSE, warning=FALSE, linewidth=80)
+
+# from https://stackoverflow.com/a/47298632/6788081
+ref <- function(useName) {
+  if(!exists(".refctr")) .refctr <- c(`_` = 0)
+  if(any(names(.refctr) == useName)) return(.refctr[useName])
+  type <- strsplit(useName, ":")[[1]][1]
+  nObj <- sum(grepl(type, names(.refctr)))
+  useNum <- nObj + 1
+  newrefctr <- c(.refctr, useNum)
+  names(newrefctr)[length(.refctr) + 1] <- useName
+  assign(".refctr", newrefctr, envir=.rmdenvir)
+  return(useNum)
+}
+.rmdenvir = environment()
+.refctr <- c(`_` = 0)
+
+label <- function(x) {
+  if (!knitr::is_html_output())
+    return("")
+  if (grepl("fig", x))
+    return(paste0("Figure ", ref(x), ": "))
+  return(paste0("Table ", ref(x), ": "))
+}
 ```
 
-This manuscript corresponds to `errors` version `r packageDescription("errors")$Version` and was typeset on `r strftime(Sys.Date(), "%B %d, %Y")`. For citations, please use the version published in the R Journal (see `citation("errors")`).
+```{r, echo=FALSE, eval=knitr::is_html_output(), results='asis'}
+cat('<div style="display:none">',
+    '$\\newcommand{\\E}{\\mathbb{E}}$',
+    '</div>', sep="\n")
+```
+
+This manuscript corresponds to `errors` version `r packageDescription("errors")$Version` and was typeset on `r strftime(Sys.Date(), "%Y-%m-%d")`.\
+For citations, please use the version published in the R Journal (see `citation("errors")`).
 
 # Introduction
 
-The International Vocabulary of Metrology (VIM) defines a \dfn{quantity} as "a property of a phenomenon, body, or substance, where the property has a magnitude that can be expressed as a number and a reference", where most typically the number is a \dfn{quantity value}, attributed to a \dfn{measurand} and experimentally obtained via some measurement procedure, and the reference is a \dfn{measurement unit} \citep{VIM:2012}.
+The International Vocabulary of Metrology (VIM) defines a _quantity_ as "a property of a phenomenon, body, or substance, where the property has a magnitude that can be expressed as a number and a reference", where most typically the number is a _quantity value_, attributed to a _measurand_ and experimentally obtained via some measurement procedure, and the reference is a _measurement unit_ [@VIM:2012].
 
-Additionally, any quantity value must accommodate some indication about the quality of the measurement, a quantifiable attribute known as \dfn{uncertainty}. The Guide to the Expression of Uncertainty in Measurement (GUM) defines \dfn{uncertainty} as "a parameter, associated with the result of a measurement, that characterises the dispersion of the values that could reasonably be attributed to the measurand" \citep{GUM:2008}. Uncertainty can be mainly classified into \dfn{standard uncertainty}, which is the result of a direct measurement (e.g., electrical voltage measured with a voltmeter, or current measured with a amperemeter), and \dfn{combined standard uncertainty}, which is the result of an indirect measurement (i.e., the standard uncertainty when the result is derived from a number of other quantities by the means of some mathematical relationship; e.g., electrical power as a product of voltage and current). Therefore, provided a set of quantities with known uncertainties, the process of obtaining the uncertainty of a derived measurement is called \dfn{propagation of uncertainty}.
+Additionally, any quantity value must accommodate some indication about the quality of the measurement, a quantifiable attribute known as _uncertainty_. The Guide to the Expression of Uncertainty in Measurement (GUM) defines _uncertainty_ as "a parameter, associated with the result of a measurement, that characterises the dispersion of the values that could reasonably be attributed to the measurand" [@GUM:2008]. Uncertainty can be mainly classified into _standard uncertainty_, which is the result of a direct measurement (e.g., electrical voltage measured with a voltmeter, or current measured with a amperemeter), and _combined standard uncertainty_, which is the result of an indirect measurement (i.e., the standard uncertainty when the result is derived from a number of other quantities by the means of some mathematical relationship; e.g., electrical power as a product of voltage and current). Therefore, provided a set of quantities with known uncertainties, the process of obtaining the uncertainty of a derived measurement is called _propagation of uncertainty_.
 
-Traditionally, computational systems have treated these three components (quantity values, measurement units and uncertainty) separately. Data consisted of bare numbers, and mathematical operations applied to them solely. Units were just metadata, and uncertainty propagation was an unpleasant task requiring additional effort and complex operations. Nowadays though, many software libraries have formalised \dfn{quantity calculus} as method of including units within the scope of mathematical operations, thus preserving dimensional correctness and protecting us from computing nonsensical combinations of quantities. However, these libraries rarely integrate uncertainty handling and propagation \citep{Flatter:2018}.
+Traditionally, computational systems have treated these three components (quantity values, measurement units and uncertainty) separately. Data consisted of bare numbers, and mathematical operations applied to them solely. Units were just metadata, and uncertainty propagation was an unpleasant task requiring additional effort and complex operations. Nowadays though, many software libraries have formalised _quantity calculus_ as method of including units within the scope of mathematical operations, thus preserving dimensional correctness and protecting us from computing nonsensical combinations of quantities. However, these libraries rarely integrate uncertainty handling and propagation [@Flatter:2018].
 
-Within the R environment, the \CRANpkg{units} package \citep{CRAN:units, Pebesma:2016:units} defines a class for associating unit metadata to numeric vectors, which enables transparent quantity derivation, simplification and conversion. This approach is a very comfortable way of managing units with the added advantage of eliminating an entire class of potential programming mistakes. Unfortunately, neither \pkg{units} nor any other package address the integration of uncertainties into quantity calculus.
+Within the R environment, the **units** package [@CRAN:units;@Pebesma:2016:units] defines a class for associating unit metadata to numeric vectors, which enables transparent quantity derivation, simplification and conversion. This approach is a very comfortable way of managing units with the added advantage of eliminating an entire class of potential programming mistakes. Unfortunately, neither **units** nor any other package address the integration of uncertainties into quantity calculus.
 
-This article presents \CRANpkg{errors} \citep{CRAN:errors}, a package that defines a framework for associating uncertainty metadata to R vectors, matrices and arrays, thus providing transparent, lightweight and automated propagation of uncertainty. This implementation also enables ongoing developments for integrating units and uncertainty handling into a complete solution.
+This article presents **errors** [@CRAN:errors], a package that defines a framework for associating uncertainty metadata to R vectors, matrices and arrays, thus providing transparent, lightweight and automated propagation of uncertainty. This implementation also enables ongoing developments for integrating units and uncertainty handling into a complete solution.
 
 # Propagation of uncertainty
 
-There are two main methods for propagation of uncertainty: the \dfn{Taylor series method} (TSM) and the \dfn{Monte Carlo method} (MCM). The TSM, also called the \dfn{delta method}, is based on a Taylor expansion of the mathematical expression that produces the output variables. As for the MCM, it can deal with generalised input distributions and propagates the uncertainty by Monte Carlo simulation.
+There are two main methods for propagation of uncertainty: the _Taylor series method_ (TSM) and the _Monte Carlo method_ (MCM). The TSM, also called the _delta method_, is based on a Taylor expansion of the mathematical expression that produces the output variables. As for the MCM, it can deal with generalised input distributions and propagates the uncertainty by Monte Carlo simulation.
 
 ## Taylor series method
 
-The TSM is a flexible and simple method of propagation of uncertainty that offers a good degree of approximation in most cases. In the following, we will provide a brief description. A full derivation, discussion and examples can be found in \citet{Arras:1998}.
+The TSM is a flexible and simple method of propagation of uncertainty that offers a good degree of approximation in most cases. In the following, we will provide a brief description. A full derivation, discussion and examples can be found in @Arras:1998.
 
-Mathematically, an indirect measurement is obtained as a function of $n$ direct or indirect measurements, $Y = f(X_1, ..., X_n)$, where the distribution of $X_n$ is unknown *a priori*. Usually, the sources of random variability are many, independent and probably unknown as well. Thus, the central limit theorem establishes that an addition of a sufficiently large number of random variables tends to a normal distribution. As a result, the \strong{first assumption} states that $X_n$ are normally distributed.
+Mathematically, an indirect measurement is obtained as a function of $n$ direct or indirect measurements, $Y = f(X_1, ..., X_n)$, where the distribution of $X_n$ is unknown *a priori*. Usually, the sources of random variability are many, independent and probably unknown as well. Thus, the central limit theorem establishes that an addition of a sufficiently large number of random variables tends to a normal distribution. As a result, the **first assumption** states that $X_n$ are normally distributed.
 
-The \strong{second assumption} presumes linearity, i.e., that $f$ can be approximated by a first-order Taylor series expansion around $\mu_{X_n}$ (see Figure \ref{propagation}). Then, given a set of $n$ input variables $X$ and a set of $m$ output variables $Y$, the first-order \dfn{uncertainty propagation law} establishes that
+The **second assumption** presumes linearity, i.e., that $f$ can be approximated by a first-order Taylor series expansion around $\mu_{X_n}$ (see Figure `r ref("fig:propagation")`). Then, given a set of $n$ input variables $X$ and a set of $m$ output variables $Y$, the first-order _uncertainty propagation law_ establishes that
+\begin{equation*}
+\Sigma_Y = J_X \Sigma_X J_X^T \tag{`r ref("eq:prop-law")`}
+\end{equation*}
+\noindent where $\Sigma$ is the covariance matrix and $J$ is the Jacobian operator.
 
-\begin{equation}\Sigma_Y = J_X \Sigma_X J_X^T\label{eq:prop-law}\end{equation}
-
-\noindent where $\Sigma$ is the covariance matrix and $J$ is the Jacobian operator. 
-
-```{r propagation, echo=FALSE, out.width='50%', fig.cap='Illustration of linearity in an interval $\\pm$ one standard deviation around the mean.\\label{propagation}', fig.align='center'}
-knitr::include_graphics("includes/rjournal-propagation.pdf")
+```{r propagation, echo=FALSE, out.width='50%', fig.cap=paste0(label("fig:propagation"), "Illustration of linearity in an interval $\\pm$ one standard deviation around the mean."), fig.height=3.7, fig.width=4.5, fig.align='center'}
+library(ggplot2)
+df <- data.frame(x=-5:5)
+p1 <- ggplot(df, aes(x)) + theme_void() +
+  stat_function(fun=dnorm, alpha=0.4) +
+  geom_area(stat="function", fun=dnorm, fill="black", xlim=c(-1, 1), alpha=0.4) +
+  scale_x_continuous(expand=c(0, 0)) + scale_y_continuous(expand=c(0, 0))
+p2 <- p1 + coord_flip()
+f <- function(x) (x-5)^3/100+1.25
+f1 <- function(x) eval(D(as.list(f)[[2]], "x"))
+ggplot(df, aes(x)) +
+  theme(axis.line=element_line(), panel.grid=element_blank(), panel.background=element_blank(),
+        axis.text=element_text(size=12), axis.title=element_blank()) +
+  scale_x_continuous(expand=c(0, 0), breaks=0, labels=expression(mu[X[n]])) +
+  scale_y_continuous(limits=c(-5, 5), expand=c(0, 0), breaks=0, labels=expression(mu[Y])) +
+  stat_function(fun=f, n=1000) +
+  geom_abline(slope=f1(0), intercept=0, linetype="dashed") +
+  annotation_custom(ggplotGrob(p1), ymin=-5, ymax=-3.3, xmin=-2.5, xmax=2.5) +
+  annotation_custom(ggplotGrob(p2), xmin=-5, xmax=-3.8, ymin=-2, ymax=2) +
+  annotate("segment", x=0, xend=0, y=-5, yend=0, alpha=0.6) +
+  annotate("segment", y=0, yend=0, x=-5, xend=0, alpha=0.6) +
+  annotate("segment", x=0.5, xend=0.5, y=-5, yend=0.5*f1(0), linetype="dashed", alpha=0.6) +
+  annotate("segment", x=-0.5, xend=-0.5, y=-5, yend=-0.5*f1(0), linetype="dashed", alpha=0.6) +
+  annotate("segment", y=0.5*f1(0), yend=0.5*f1(0), x=-5, xend=0.5, linetype="dashed", alpha=0.6) +
+  annotate("segment", y=-0.5*f1(0), yend=-0.5*f1(0), x=-5, xend=-0.5, linetype="dashed", alpha=0.6) +
+  annotate("text", label="f(X[n])", parse=TRUE, x=4, y=1.6) +
+  labs(y="Y", x=expression(X[n]))
 ```
 
-In practice, as recommended in the GUM \citep{GUM:2008}, this first-order approximation is good even if $f$ is non-linear, provided that the non-linearity is negligible compared to the magnitude of the uncertainty, i.e., $\E[f(X)]\approx f(\E[X])$. Also, this weaker condition is distribution-free: no assumptions are needed on the probability density functions (PDF) of $X_n$, although they must be reasonably symmetric.
+In practice, as recommended in the GUM [@GUM:2008], this first-order approximation is good even if $f$ is non-linear, provided that the non-linearity is negligible compared to the magnitude of the uncertainty, i.e., $\E[f(X)]\approx f(\E[X])$. Also, this weaker condition is distribution-free: no assumptions are needed on the probability density functions (PDF) of $X_n$, although they must be reasonably symmetric.
 
-If we consider Equation \eqref{eq:prop-law} for pairwise computations, i.e., $Y = f(X_1, X_2)$, we can write the propagation of the uncertainty $\sigma_Y$ as follows:
-
-\begin{equation}\label{eq:prop-var}
+If we consider Equation (`r ref("eq:prop-law")`) for pairwise computations, i.e., $Y = f(X_1, X_2)$, we can write the propagation of the uncertainty $\sigma_Y$ as follows:
+\begin{equation*}
   \sigma_Y^2 = \left(\frac{\partial^2 f}{\partial X_1^2}\right)^2 \sigma_{X_1}^2 +
                \left(\frac{\partial^2 f}{\partial X_2^2}\right)^2 \sigma_{X_2}^2 +
                2 \frac{\partial f \partial f}{\partial X_1 \partial X_2} \sigma_{X_1 X_2}
-\end{equation}
+  \tag{`r ref("eq:prop-var")`}
+\end{equation*}
 
 The cross-covariances for the output $Y$ and any other variable $Z$ can be simplified as follows:
-
-\begin{equation}\label{eq:prop-covar}
+\begin{equation*}
   \sigma_{Y Z} = \frac{\partial f}{\partial X_1} \sigma_{X_1 Z} +
                  \frac{\partial f}{\partial X_2} \sigma_{X_2 Z}
-\end{equation}
-
+  \tag{`r ref("eq:prop-covar")`}
+\end{equation*}
 \noindent where, notably, if $Z=X_i$, one of the covariances above results in $\sigma_{X_i}^2$. Finally, and for the sake of completeness, the correlation coefficient can be obtained as $r_{Y Z} = \sigma_{Y Z} / (\sigma_{Y}\sigma_{Z})$.
 
 ## Monte Carlo method
 
-The MCM is based on the same principles underlying the TSM. It is based on the propagation of the PDFs of the input variables $X_n$ by performing random sampling and evaluating them under the model considered. Thus, this method is not constrained by the TSM assumptions, and explicitly determines a PDF for the output quantity $Y$, which makes it a more general approach that applies to a broader set of problems. For further details on this method, as well as a comparison with the TSM and some discussion on the applicability of both methods, the reader may refer to the Supplement 1 of the GUM \citep{GUM:2008}.
+The MCM is based on the same principles underlying the TSM. It is based on the propagation of the PDFs of the input variables $X_n$ by performing random sampling and evaluating them under the model considered. Thus, this method is not constrained by the TSM assumptions, and explicitly determines a PDF for the output quantity $Y$, which makes it a more general approach that applies to a broader set of problems. For further details on this method, as well as a comparison with the TSM and some discussion on the applicability of both methods, the reader may refer to the Supplement 1 of the GUM [@GUM:2008].
 
 # Reporting uncertainty
 
-The GUM \citep{GUM:2008} defines four ways of reporting standard uncertainty and combined standard uncertainty. For instance, if the reported quantity is assumed to be a mass $m_S$ of nominal value 100 g:
+The GUM [@GUM:2008] defines four ways of reporting standard uncertainty and combined standard uncertainty. For instance, if the reported quantity is assumed to be a mass $m_S$ of nominal value 100 g:
 
 > 1. $m_S = 100.02147$ g with (a combined standard uncertainty) $u_c$ = 0.35 mg.
 > 2. $m_S = 100.02147(35)$ g, where the number in parentheses is the numerical value of (the combined standard uncertainty) $u_c$ referred to the corresponding last digits of the quoted result.
 > 3. $m_S = 100.02147(0.00035)$ g, where the number in parentheses is the numerical value of (the combined standard uncertainty) $u_c$ expressed in the unit of the quoted result.
 > 4. $m_S = (100.02147 \pm 0.00035)$ g, where the number following the symbol $\pm$ is the numerical value of (the combined standard uncertainty) $u_c$ and not a confidence interval.
 
-Schemes (2, 3) and (4) would be referred to as \dfn{parenthesis} notation and \dfn{plus-minus} notation respectively throughout this document. Although (4) is a very extended notation, the GUM explicitly discourages its use to prevent confusion with confidence intervals.
+Schemes (2, 3) and (4) would be referred to as _parenthesis_ notation and _plus-minus_ notation respectively throughout this document. Although (4) is a very extended notation, the GUM explicitly discourages its use to prevent confusion with confidence intervals.
 
 # Related work
 
-Several R packages are devoted to or provide methods for propagation of uncertainties. The \CRANpkg{car} \citep{CRAN:car, Fox:2011:car} and \CRANpkg{msm} \citep{CRAN:msm, Jackson:2011:msm} packages provide the functions \code{deltaMethod()} and \code{deltamethod()} respectively. Both of them implement a first-order TSM with a similar syntax, requiring a formula, a vector of values and a covariance matrix, thus being able to deal with dependency across variables.
+Several R packages are devoted to or provide methods for propagation of uncertainties. The **car** [@CRAN:car;@Fox:2011:car] and **msm** [@CRAN:msm;@Jackson:2011:msm] packages provide the functions `deltaMethod()` and `deltamethod()` respectively. Both of them implement a first-order TSM with a similar syntax, requiring a formula, a vector of values and a covariance matrix, thus being able to deal with dependency across variables.
 
-The \CRANpkg{metRology} \citep{CRAN:metRology} and \CRANpkg{propagate} \citep{CRAN:propagate} packages stand out as very comprehensive sets of tools specifically focused on this topic, including both TSM and MCM. The \pkg{metRology} package implements TSM using algebraic or numeric differentiation, with support for correlation. It also provides a function for assessing the statistical performance of GUM uncertainty (TSM) using attained coverage probability. The \pkg{propagate} package implements TSM up to second order. It provides a unified interface for both TSM and MCM through the \code{propagate()} function, which requires an expression and a data frame or matrix as input. Unfortunately, as in the case of \pkg{car} and \pkg{msm}, these packages are limited to work only with expressions, which does not solve the issue of requiring a separate workflow to deal with uncertainties.
+The **metRology** [@CRAN:metRology] and **propagate** [@CRAN:propagate] packages stand out as very comprehensive sets of tools specifically focused on this topic, including both TSM and MCM. The **metRology** package implements TSM using algebraic or numeric differentiation, with support for correlation. It also provides a function for assessing the statistical performance of GUM uncertainty (TSM) using attained coverage probability. The **propagate** package implements TSM up to second order. It provides a unified interface for both TSM and MCM through the `propagate()` function, which requires an expression and a data frame or matrix as input. Unfortunately, as in the case of **car** and **msm**, these packages are limited to work only with expressions, which does not solve the issue of requiring a separate workflow to deal with uncertainties.
 
-The \CRANpkg{spup} package \citep{CRAN:spup} focuses on uncertainty analysis in spatial environmental modelling, where the spatial cross-correlation between variables becomes important. The uncertainty is described with probability distributions and propagated using MCM.
+The **spup** package [@CRAN:spup] focuses on uncertainty analysis in spatial environmental modelling, where the spatial cross-correlation between variables becomes important. The uncertainty is described with probability distributions and propagated using MCM.
 
-Finally, the \CRANpkg{distr} package \citep{CRAN:distr, Ruckdeschel:2006:distr} takes this idea one step further by providing an S4-based object-oriented implementation of probability distributions, with which one can operate arithmetically or apply mathematical functions. It implements all kinds of probability distributions and has more methods for computing the distribution of derived quantities. Also, \pkg{distr} is the base of a whole family of packages, such as \CRANpkg{distrEllipse}, \CRANpkg{distrEx}, \CRANpkg{distrMod}, \CRANpkg{distrRmetrics}, \CRANpkg{distrSim} and \CRANpkg{distrTeach}.
+Finally, the **distr** package [@CRAN:distr;@Ruckdeschel:2006:distr] takes this idea one step further by providing an S4-based object-oriented implementation of probability distributions, with which one can operate arithmetically or apply mathematical functions. It implements all kinds of probability distributions and has more methods for computing the distribution of derived quantities. Also, **distr** is the base of a whole family of packages, such as **distrEllipse**, **distrEx**, **distrMod**, **distrRmetrics**, **distrSim** and **distrTeach**.
 
-All these packages provide excellent tools for uncertainty analysis and propagation. However, none of them addresses the issue of an integrated workflow, as \pkg{units} does for unit metadata by assigning units directly to R vectors, matrices and arrays. As a result, units can be added to any existing R computation in a very straightforward way. On the other hand, existing tools for uncertainty propagation require building specific expressions or data structures, and then some more work to extract the results out and to report them properly, with an appropriate number of significant digits.
+All these packages provide excellent tools for uncertainty analysis and propagation. However, none of them addresses the issue of an integrated workflow, as **units** does for unit metadata by assigning units directly to R vectors, matrices and arrays. As a result, units can be added to any existing R computation in a very straightforward way. On the other hand, existing tools for uncertainty propagation require building specific expressions or data structures, and then some more work to extract the results out and to report them properly, with an appropriate number of significant digits.
 
-# Automated uncertainty handling in R: the \pkg{errors} package
+# Automated uncertainty handling in R: the **errors** package
 
-The \pkg{errors} package aims to provide easy and lightweight handling of measurement with errors, including uncertainty propagation using the first-order TSM presented in the previous section and a formally sound representation.
+The **errors** package aims to provide easy and lightweight handling of measurement with errors, including uncertainty propagation using the first-order TSM presented in the previous section and a formally sound representation.
 
 ## Package description and usage
 
@@ -131,13 +186,13 @@ x; y
 (z <- x / y)
 ```
 
-The \code{errors()} method assigns or retrieves a vector of uncertainties, which is stored as an attribute of the class \code{errors}, along with a unique object identifier:
+The `errors()` method assigns or retrieves a vector of uncertainties, which is stored as an attribute of the class `errors`, along with a unique object identifier:
 
 ```{r}
 str(x)
 ```
 
-Correlations (and thus covariances) between pairs of variables can be set and retrieved using the \code{correl()} and \code{covar()} methods. These correlations are stored in an internal hash table indexed by the unique object identifier assigned to each \code{errors} object. If an object is removed, its associated correlations are cleaned up automatically.
+Correlations (and thus covariances) between pairs of variables can be set and retrieved using the `correl()` and `covar()` methods. These correlations are stored in an internal hash table indexed by the unique object identifier assigned to each `errors` object. If an object is removed, its associated correlations are cleaned up automatically.
 
 ```{r}
 correl(x, x) # one, cannot be changed
@@ -147,18 +202,18 @@ correl(x, y)
 covar(x, y)
 ```
 
-Internally, \pkg{errors} provides S3 methods for the generics belonging to the groups \code{Math} and \code{Ops}, which propagate the uncertainty and the covariance using Equations \eqref{eq:prop-var} and \eqref{eq:prop-covar} respectively.
+Internally, **errors** provides S3 methods for the generics belonging to the groups `Math` and `Ops`, which propagate the uncertainty and the covariance using Equations (`r ref("eq:prop-var")`) and (`r ref("eq:prop-covar")`) respectively.
 
 ```{r}
 z # previous computation without correlations
 (z_correl <- x / y)
 ```
 
-Other many S3 methods are also provided, such as generics belonging to the \code{Summary} group, subsetting operators (\code{[}, \code{[<-}, \code{[[}, \code{[[<-}), concatenation (\code{c()}), differentiation (\code{diff}), row and column binding (\code{rbind}, \code{cbind}), coercion to list, data frame and matrix, and more. Such methods mutate the \code{errors} object, and thus return a new one with no correlations associated. There are also *setters* defined as an alternative to the assignment methods (\code{set\_*()} instead of \code{errors<-}, \code{correl<-} and \code{covar<-}), primarily intended for their use in conjunction with the pipe operator (\code{\%>\%}) from the \CRANpkg{magrittr} \citep{CRAN:magrittr} package.
+Other many S3 methods are also provided, such as generics belonging to the `Summary` group, subsetting operators (`[`, `[<-`, `[[`, `[[<-`), concatenation (`c()`), differentiation (`diff`), row and column binding (`rbind`, `cbind`), coercion to list, data frame and matrix, and more. Such methods mutate the `errors` object, and thus return a new one with no correlations associated. There are also *setters* defined as an alternative to the assignment methods (`set_*()` instead of `errors<-`, `correl<-` and `covar<-`), primarily intended for their use in conjunction with the pipe operator (`%>%`) from the **magrittr** [@CRAN:magrittr] package.
 
-Additionally, other useful summaries are provided, namely, the mean, the weighted mean and the median. The uncertainty of any measurement of central tendency cannot be smaller than the uncertainty of the individual measurements. Therefore, the uncertainty assigned to the mean is computed as the maximum between the standard deviation of the mean and the mean of the individual uncertainties (weighted, in the case of the weighted mean). As for the median, its uncertainty is computed as $\sqrt{\pi/2}\approx1.253$ times the standard deviation of the mean, where this constant comes from the asymptotic variance formula \citep{Hampel:2011:Robust}.
+Additionally, other useful summaries are provided, namely, the mean, the weighted mean and the median. The uncertainty of any measurement of central tendency cannot be smaller than the uncertainty of the individual measurements. Therefore, the uncertainty assigned to the mean is computed as the maximum between the standard deviation of the mean and the mean of the individual uncertainties (weighted, in the case of the weighted mean). As for the median, its uncertainty is computed as $\sqrt{\pi/2}\approx1.253$ times the standard deviation of the mean, where this constant comes from the asymptotic variance formula [@Hampel:2011:Robust].
 
-It is worth noting that both values and uncertainties are stored with all the digits. However, when a single measurement or a column of measurements in a data frame are printed, there are S3 methods for \code{format()} and \code{print()} defined to properly format the output and display a single significant digit for the uncertainty. This default representation can be overridden using the \code{digits} option, and it is globally controlled with the option \code{errors.digits}.
+It is worth noting that both values and uncertainties are stored with all the digits. However, when a single measurement or a column of measurements in a data frame are printed, there are S3 methods for `format()` and `print()` defined to properly format the output and display a single significant digit for the uncertainty. This default representation can be overridden using the `digits` option, and it is globally controlled with the option `errors.digits`.
 
 ```{r}
 # the elementary charge
@@ -166,7 +221,7 @@ e <- set_errors(1.6021766208e-19, 0.0000000098e-19)
 print(e, digits = 2)
 ```
 
-The \dfn{parenthesis} notation, in which *the number in parentheses is the uncertainty referred to the corresponding last digits of the quantity value* (scheme 2 from the GUM, widely used in physics due to its compactness), is used by default, but this can be overridden through the appropriate option in order to use the \dfn{plus-minus} notation instead.
+The _parenthesis_ notation, in which *the number in parentheses is the uncertainty referred to the corresponding last digits of the quantity value* (scheme 2 from the GUM, widely used in physics due to its compactness), is used by default, but this can be overridden through the appropriate option in order to use the _plus-minus_ notation instead.
 
 ```{r}
 options(errors.notation = "plus-minus")
@@ -174,18 +229,19 @@ print(e, digits = 2)
 options(errors.notation = "parenthesis")
 ```
 
-Finally, \pkg{errors} also facilitates plotting of error bars. In the following, we first assign a 2\% of uncertainty to all the numeric variables in the \code{iris} data set and then we plot it using base graphics and \CRANpkg{ggplot2} \citep{CRAN:ggplot2, Wickham:2009:ggplot2}. The result is shown in Figure \ref{plot}.
+Finally, **errors** also facilitates plotting of error bars. In the following, we first assign a 2\% of uncertainty to all the numeric variables in the `iris` data set and then we plot it using base graphics and **ggplot2** [@CRAN:ggplot2;@Wickham:2009:ggplot2]. The result is shown in Figure `r ref("fig:plot")`.
 
 ```{r}
 iris.e <- iris
 iris.e[1:4] <- lapply(iris.e[1:4], function(x) set_errors(x, x*0.02))
 
-head(iris.e, 3)
+head(iris.e)
 ```
 
 ```{r, eval=FALSE}
 plot(Sepal.Width ~ Sepal.Length, iris.e, col=Species)
-legend(6.2, 4.4, unique(iris.e[["Species"]]), col=1:length(iris.e[["Species"]]), pch=1)
+legend(6.2, 4.4, unique(iris.e[["Species"]]),
+       col=1:length(iris.e[["Species"]]), pch=1)
 
 library(ggplot2)
 
@@ -193,25 +249,43 @@ ggplot(iris.e) + aes(Sepal.Length, Sepal.Width, color=Species) +
   geom_point() + geom_errors() + theme_bw() + theme(legend.position=c(0.6, 0.8))
 ```
 
-```{r plot, echo=FALSE, out.width='100%', fig.cap='Base plot with error bars (left) and \\pkg{ggplot2}\'s version (right).\\label{plot}'}
-knitr::include_graphics("includes/rjournal-plot.pdf")
+```{r plot, echo=FALSE, out.width='100%', fig.height=3.5, fig.width=10, fig.cap=paste0(label("fig:plot"), "Base plot with error bars (left) and ggplot2's version (right).")}
+par(mfrow=c(1, 2), mar=c(2.4, 2, 0.4, 1))
+
+plot(Sepal.Width ~ Sepal.Length, iris.e, col=Species)
+legend(6.2, 4.4, unique(iris.e[["Species"]]),
+       col=1:length(iris.e[["Species"]]), pch=1)
+
+library(ggplot2)
+
+p <- ggplot(iris.e) + aes(Sepal.Length, Sepal.Width, color=Species) +
+  geom_point() + geom_errors() + theme_bw() + theme(legend.position=c(0.6, 0.8))
+
+plot.new()
+fig <- par("fig")
+figurevp <- grid::viewport(
+  x = unit(fig[1], "npc"), y = unit(fig[3], "npc"), just = c("left", "bottom"),
+  width = unit(fig[2] - fig[1], "npc"), height = unit(fig[4] - fig[3], "npc"))
+grid::pushViewport(figurevp)
+vp1 <- grid::plotViewport(c(0, 0, 0, 0))
+print(p, vp = vp1)
 ```
 
-In base graphics, the error bars are automatically plotted when an object of class \code{errors} is passed. Additionally, we provide the convenience functions \code{errors\_min(x)} and \code{errors\_max(x)} for obtaining the boundaries of the interval in \pkg{ggplot2} and other plotting packages, instead of writing \code{x - errors(x)} and \code{x + errors(x)} respectively.
+In base graphics, the error bars are automatically plotted when an object of class `errors` is passed. Additionally, we provide the convenience functions `errors_min(x)` and `errors_max(x)` for obtaining the boundaries of the interval in **ggplot2** and other plotting packages, instead of writing `x - errors(x)` and `x + errors(x)` respectively.
 
 ## Example: Simultaneous resistance and reactance measurement
 
-From Annex H.2 of the GUM \citep{GUM:2008}:
+From Annex H.2 of the GUM [@GUM:2008]:
 
 > The resistance $R$ and the reactance $X$ of a circuit element are determined by measuring the amplitude $V$ of a sinusoidally-alternating potential difference across its terminals, the amplitude $I$ of the alternating current passing through it, and the phase-shift angle $\phi$ of the alternating potential difference relative to the alternating current.
 
 The measurands (resistance $R$, reactance $X$ and impedance $Z$) are related to the input quantities ($V$, $I$, $phi$) by the Ohm's law:
-
-\begin{equation}
+\begin{equation*}
   R = \frac{V}{I}\cos\phi; \qquad X = \frac{V}{I}\sin\phi; \qquad Z = \frac{V}{I}
-\end{equation}
+  \tag{`r ref("eq:ohm")`}
+\end{equation*}
 
-Five simultaneous observations for each input variable are provided (Table H.2 of the GUM), which are included in \pkg{errors} as dataset \code{GUM.H.2}. First, we need to obtain the mean input values and set the correlations from the measurements. Then, we compute the measurands and examine the correlations between them. The results agree with those reported in the GUM:
+Five simultaneous observations for each input variable are provided (Table H.2 of the GUM), which are included in **errors** as dataset `GUM.H.2`. First, we need to obtain the mean input values and set the correlations from the measurements. Then, we compute the measurands and examine the correlations between them. The results agree with those reported in the GUM:
 
 ```{r}
 V   <- mean(set_errors(GUM.H.2$V))
@@ -231,15 +305,14 @@ correl(R, X); correl(R, Z); correl(X, Z)
 
 ## Example: Calibration of a thermometer
 
-From Annex H.3 of the GUM \citep{GUM:2008}:
+From Annex H.3 of the GUM [@GUM:2008]:
 
 > A thermometer is calibrated by comparing $n=11$ temperature readings $t_k$ of the thermometer [...] with corresponding known reference temperatures $t_{R,k}$ in the temperature range 21 $^\circ$C to 27 $^\circ$C to obtain the corrections $b_k=t_{R,k}-t_k$ to the readings.
 
-Measured temperatures and corrections (Table H.6 of the GUM), which are included in \pkg{errors} as dataset \code{GUM.H.3}, are related by a linear calibration curve:
-
-\begin{equation}
-  b(t) = y_1 + y_2 (t - t_0)
-\end{equation}
+Measured temperatures and corrections (Table H.6 of the GUM), which are included in **errors** as dataset `GUM.H.3`, are related by a linear calibration curve:
+\begin{equation*}
+  b(t) = y_1 + y_2 (t - t_0) \tag{`r ref("eq:calib")`}
+\end{equation*}
 
 In the following, we first fit the linear model for a reference temperature $t_0=20$ $^\circ$C. Then, we extract the coefficients, and assign the uncertainty and correlation between them. Finally, we compute the predicted correction $b(30)$, which agrees with the value reported in the GUM:
 
@@ -255,27 +328,27 @@ print(b.30 <- y1 + y2 * set_errors(30 - 20), digits = 2, notation = "plus-minus"
 
 # Discussion
 
-The \pkg{errors} package provides the means for defining numeric vectors, matrices and arrays with errors in R, as well as to operate with them in a transparent way. Propagation of uncertainty implements the commonly used first-order TSM formula from Equation \eqref{eq:prop-law}. This method has been pre-computed and expanded for each operation in the S3 groups \code{Math} and \code{Ops}, instead of differentiating symbolic expressions on demand or using functions from other packages for this task. The advantages of this approach are twofold. On the one hand, it is faster, as it does not involve simulation nor symbolic computation, and very lightweight in terms of package dependencies. 
+The **errors** package provides the means for defining numeric vectors, matrices and arrays with errors in R, as well as to operate with them in a transparent way. Propagation of uncertainty implements the commonly used first-order TSM formula from Equation (`r ref("eq:prop-law")`). This method has been pre-computed and expanded for each operation in the S3 groups `Math` and `Ops`, instead of differentiating symbolic expressions on demand or using functions from other packages for this task. The advantages of this approach are twofold. On the one hand, it is faster, as it does not involve simulation nor symbolic computation, and very lightweight in terms of package dependencies. 
 
-Another advantage of \pkg{errors} is the built-in consistent and formally sound representation of measurements with errors, rounding the uncertainty to one significant digit by default and supporting two widely used notations: \dfn{parenthesis} (e.g., $5.00(1)$) and \dfn{plus-minus} (e.g., $5.00 \pm 0.01$). These notations are applied for single numbers and data frames, as well as \code{tbl\_df} data frames from the \CRANpkg{tibble} \citep{CRAN:tibble} package.
+Another advantage of **errors** is the built-in consistent and formally sound representation of measurements with errors, rounding the uncertainty to one significant digit by default and supporting two widely used notations: _parenthesis_ (e.g., $5.00(1)$) and _plus-minus_ (e.g., $5.00 \pm 0.01$). These notations are applied for single numbers and data frames, as well as `tbl_df` data frames from the **tibble** [@CRAN:tibble] package.
 
-Full support is provided for both \code{data.frame} and \code{tbl\_df}, as well as matrices and arrays. However, some operations on those data structures may drop uncertainties (i.e., object class and attributes). More specifically, there are six common *data wrangling* operations: row subsetting, row ordering, column transformation, row aggregation, column joining and (un)pivoting. Table \ref{tab:compat} shows the correspondence between these operations and R base functions, as well as the compatibility with \pkg{errors}.
+Full support is provided for both `data.frame` and `tbl_df`, as well as matrices and arrays. However, some operations on those data structures may drop uncertainties (i.e., object class and attributes). More specifically, there are six common *data wrangling* operations: row subsetting, row ordering, column transformation, row aggregation, column joining and (un)pivoting. Table `r ref("tab:compat")` shows the correspondence between these operations and R base functions, as well as the compatibility with **errors**.
 
 ```{r, echo=FALSE}
 df <- data.frame(
     c("Row subsetting", "Row ordering", "Column transformation", "Row aggregation", "Column joining", "(Un)Pivoting"),
-    c("\\code{[}, \\code{[[}, \\code{subset}", "\\code{order} + \\code{[}", "\\code{transform}, \\code{within}", "\\code{tapply}, \\code{by}, \\code{aggregate}", "\\code{merge}", "\\code{reshape}"),
-    c("Full", "Full", "Full", "with \\code{simplify=FALSE}", "Full", "Full")
+    c("`[`, `[[`, `subset`", "`order` + `[`", "`transform`, `within`", "`tapply`, `by`, `aggregate`", "`merge`", "`reshape`"),
+    c("Full", "Full", "Full", "with `simplify=FALSE`", "Full", "Full")
 )
 
 knitr::kable(
-  df, format = "latex", booktabs = TRUE, row.names = FALSE, linesep = "", escape=FALSE,
+  df, booktabs=knitr::is_latex_output(), row.names=FALSE, linesep="", escape=FALSE,
   col.names = c("Operation", "R base function(s)", "Compatibility"),
-  caption = "Compatibility of \\pkg{errors} and R base data wrangling functions.\\label{tab:compat}"
+  caption = paste(label("tab:compat"), "Compatibility of errors and R base data wrangling functions.")
 )
 ```
 
-Overall, \pkg{errors} is fully compatible with data wrangling operations embed in R base, and this is because those functions are mainly based on the subsetting generics, for which \pkg{errors} provides the corresponding S3 methods. Nonetheless, special attention must be paid to aggregations, which store partial results in lists that are finally simplified. Such simplification is made with \code{unlist}, which drops all the input attributes, including custom classes. However, all these aggregation functions provide the argument \code{simplify} (sometimes \code{SIMPLIFY}), which if set to \code{FALSE}, prevents this destructive simplification, and lists are returned. Such lists can be simplified *non-destructively* by calling \code{do.call(c, ...)}.
+Overall, **errors** is fully compatible with data wrangling operations embed in R base, and this is because those functions are mainly based on the subsetting generics, for which **errors** provides the corresponding S3 methods. Nonetheless, special attention must be paid to aggregations, which store partial results in lists that are finally simplified. Such simplification is made with `unlist`, which drops all the input attributes, including custom classes. However, all these aggregation functions provide the argument `simplify` (sometimes `SIMPLIFY`), which if set to `FALSE`, prevents this destructive simplification, and lists are returned. Such lists can be simplified *non-destructively* by calling `do.call(c, ...)`.
 
 ```{r}
 unlist <- function(x) if (is.list(x)) do.call(c, x) else x
@@ -285,6 +358,10 @@ as.data.frame(lapply(iris.e.agg, unlist), col.names=colnames(iris.e.agg))
 
 # Summary and future work
 
-We have introduced \pkg{errors}, a lightweight R package for managing numeric data with associated standard uncertainties. The new class \code{errors} provides numeric operations with automated propagation of uncertainty through a first-order TSM, and a formally sound representation of measurements with errors. Using this package makes the process of computing indirect measurements easier and less error-prone.
+We have introduced **errors**, a lightweight R package for managing numeric data with associated standard uncertainties. The new class `errors` provides numeric operations with automated propagation of uncertainty through a first-order TSM, and a formally sound representation of measurements with errors. Using this package makes the process of computing indirect measurements easier and less error-prone.
 
-Future work includes importing and exporting data with uncertainties and providing the user with an interface for plugging uncertainty propagation methods from other packages. Finally, \pkg{errors} enables ongoing developments for integrating \pkg{units} and uncertainty handling into a complete solution for quantity calculus. Having a unified workflow for managing measurements with units and errors would be an interesting addition to the R ecosystem with very few precedents in other programming languages.
+Future work includes importing and exporting data with uncertainties and providing the user with an interface for plugging uncertainty propagation methods from other packages. Finally, **errors** enables ongoing developments for integrating **units** and uncertainty handling into a complete solution for quantity calculus. Having a unified workflow for managing measurements with units and errors would be an interesting addition to the R ecosystem with very few precedents in other programming languages.
+
+```{r, echo=FALSE, eval=knitr::is_html_output(), results='asis'}
+cat('# References')
+```
