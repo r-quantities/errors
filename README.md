@@ -1,4 +1,4 @@
-# <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> Measurement Errors in R
+# <img src="https://avatars1.githubusercontent.com/u/32303769?s=40&v=4"> Measurement Errors for R
 
 [![Build Status](https://github.com/r-quantities/errors/workflows/build/badge.svg)](https://github.com/r-quantities/errors/actions)
 [![Coverage Status](https://codecov.io/gh/r-quantities/errors/branch/master/graph/badge.svg)](https://app.codecov.io/gh/r-quantities/errors)
