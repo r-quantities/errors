@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">errors</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,8 +99,8 @@ Edzer Pebesma, Arturo Azcorra</h4>
 <div style="display:none">
 <p><span class="math inline">\(\newcommand{\E}{\mathbb{E}}\)</span></p>
 </div>
-<p>This manuscript corresponds to <code>errors</code> version 0.4.0 and
-was typeset on 2022-12-05.<br>
+<p>This manuscript corresponds to <code>errors</code> version 0.4.0.1
+and was typeset on 2022-12-10.<br>
 For citations, please use the version published in the R Journal (see
 <code>citation("errors")</code>).</p>
 <div class="section level2">
@@ -351,19 +351,19 @@ uncertainties:</p>
 <span><span class="fu"><a href="../reference/errors.html">errors</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0.02</span></span>
 <span><span class="va">x</span>; <span class="va">y</span></span></code></pre></div>
 <pre><code><span><span class="co">## Errors: 0.01 0.01 0.01 0.01 0.01</span></span>
-<span><span class="co">## [1] 0.9917732 2.0011008 2.9964065 4.0022235 5.0080025</span></span></code></pre>
+<span><span class="co">## [1] 0.9995729 1.9746938 3.0229961 4.0068476 5.0192729</span></span></code></pre>
 <pre><code><span><span class="co">## Errors: 0.02 0.02 0.02 0.02 0.02</span></span>
-<span><span class="co">## [1] 1.033266 2.027488 3.015628 4.009798 4.988872</span></span></code></pre>
+<span><span class="co">## [1] 1.013888 2.023504 2.999805 3.982961 5.005937</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">/</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Errors: 0.020948451 0.010914088 0.007377145 0.005568084 0.004495867</span></span>
-<span><span class="co">## [1] 0.9598433 0.9869855 0.9936259 0.9981109 1.0038347</span></span></code></pre>
+<pre><code><span><span class="co">## Errors: 0.021805617 0.010837757 0.007500181 0.005641035 0.004476354</span></span>
+<span><span class="co">## [1] 0.9858805 0.9758785 1.0077309 1.0059972 1.0026639</span></span></code></pre>
 <p>The <code><a href="../reference/errors.html">errors()</a></code> method assigns or retrieves a vector of
 uncertainties, which is stored as an attribute of the class
 <code>errors</code>, along with a unique object identifier:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##  Errors: num [1:5] 0.99(1) 2.00(1) 3.00(1) 4.00(1) 5.01(1)</span></span></code></pre>
+<pre><code><span><span class="co">##  Errors: num [1:5] 1.00(1) 1.97(1) 3.02(1) 4.01(1) 5.02(1)</span></span></code></pre>
 <p>Correlations (and thus covariances) between pairs of variables can be
 set and retrieved using the <code><a href="../reference/correl.html">correl()</a></code> and
 <code><a href="../reference/correl.html">covar()</a></code> methods. These correlations are stored in an
@@ -379,22 +379,22 @@ correlations are cleaned up automatically.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/correl.html">correl</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/correl.html">correl</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] -0.6236099  0.6436706 -0.7648561 -0.2607685 -0.8886534</span></span></code></pre>
+<pre><code><span><span class="co">## [1]  0.03370926 -0.47662316  0.75455549 -0.96554270 -0.88894974</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/correl.html">covar</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] -1.247220e-04  1.287341e-04 -1.529712e-04 -5.215369e-05 -1.777307e-04</span></span></code></pre>
+<pre><code><span><span class="co">## [1]  6.741851e-06 -9.532463e-05  1.509111e-04 -1.931085e-04 -1.777899e-04</span></span></code></pre>
 <p>Internally, <strong>errors</strong> provides S3 methods for the
 generics belonging to the groups <code>Math</code> and <code>Ops</code>,
 which propagate the uncertainty and the covariance using Equations (2)
 and (3) respectively.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">z</span> <span class="co"># previous computation without correlations</span></span></code></pre></div>
-<pre><code><span><span class="co">## Errors: 0.020948451 0.010914088 0.007377145 0.005568084 0.004495867</span></span>
-<span><span class="co">## [1] 0.9598433 0.9869855 0.9936259 0.9981109 1.0038347</span></span></code></pre>
+<pre><code><span><span class="co">## Errors: 0.021805617 0.010837757 0.007500181 0.005641035 0.004476354</span></span>
+<span><span class="co">## [1] 0.9858805 0.9758785 1.0077309 1.0059972 1.0026639</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">z_correl</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">/</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Errors: 0.025750657 0.007569601 0.009372834 0.006121985 0.005877886</span></span>
-<span><span class="co">## [1] 0.9598433 0.9869855 0.9936259 0.9981109 1.0038347</span></span></code></pre>
+<pre><code><span><span class="co">## Errors: 0.021507053 0.012763047 0.004738487 0.007504187 0.005853633</span></span>
+<span><span class="co">## [1] 0.9858805 0.9758785 1.0077309 1.0059972 1.0026639</span></span></code></pre>
 <p>Other many S3 methods are also provided, such as generics belonging
 to the <code>Summary</code> group, subsetting operators (<code>[</code>,
 <code>[&lt;-</code>, <code>[[</code>, <code>[[&lt;-</code>),
