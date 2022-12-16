@@ -33,15 +33,20 @@ test_that("summary methods work properly", {
 
 test_that("na.rm is propagated", {
   xval <- 1.1:10.1
+  xval[1] <- NA
   xerr <- rep(0.05, 10)
+  xerr[3] <- NA
   xval[c(2, 9)] <- c(1.102, 10.098)
   xerr[c(2, 9)] <- 0.1
   x <- set_errors(xval, xerr)
-  x[3] <- NA
 
-  expect_equal(max(x, na.rm=TRUE), max(xval + xerr))
-  expect_equal(min(x, na.rm=TRUE), min(xval - xerr))
+  expect_equal(max(x, na.rm=TRUE), max(xval + xerr, na.rm=TRUE))
+  expect_equal(min(x, na.rm=TRUE), min(xval - xerr, na.rm=TRUE))
 
   expect_equal(range(x, na.rm=TRUE)[1], min(x, na.rm=TRUE))
   expect_equal(range(x, na.rm=TRUE)[2], max(x, na.rm=TRUE))
+
+  expect_equal(mean(x, na.rm=TRUE), mean(x[-c(1, 3)]))
+  expect_equal(weighted.mean(x, na.rm=TRUE), weighted.mean(x[-c(1, 3)]))
+  expect_equal(median(x, na.rm=TRUE), median(x[-c(1, 3)]))
 })

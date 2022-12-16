@@ -6,14 +6,23 @@
 \alias{median.errors}
 \title{Arithmetic Mean and Median Value}
 \usage{
-\method{mean}{errors}(x, ...)
+\method{mean}{errors}(x, trim = 0, na.rm = FALSE, ...)
 
-\method{weighted.mean}{errors}(x, ...)
+\method{weighted.mean}{errors}(x, ..., na.rm = FALSE)
 
-\method{median}{errors}(x, ...)
+\method{median}{errors}(x, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{an \code{errors} object.}
+
+\item{trim}{the fraction (0 to 0.5) of observations to be
+    trimmed from each end of \code{x} before the mean is computed.
+    Values of trim outside that range are taken as the nearest endpoint.
+  }
+
+\item{na.rm}{a logical evaluating to \code{TRUE} or \code{FALSE}
+    indicating whether \code{NA} values should be stripped before the
+    computation proceeds.}
 
 \item{...}{further arguments passed to of from other methods.}
 }

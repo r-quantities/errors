@@ -275,3 +275,15 @@ unique.errors <- function(x, incomparables=FALSE, MARGIN=1, ...) {
   args[[MARGIN]] <- !dup
   do.call("[", c(list(x), args, list(drop = FALSE)))
 }
+
+#' @export
+na.omit.errors <- function(object, ...) {
+  object[is.na(errors(object))] <- NA
+  NextMethod()
+}
+
+#' @export
+na.fail.errors <- na.omit.errors
+
+#' @export
+na.exclude.errors <- na.omit.errors

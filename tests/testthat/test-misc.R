@@ -182,3 +182,28 @@ test_that("duplicated-related methods work as expected", {
   expect_equal(anyDuplicated(x), 0)
   expect_equal(unique(x), x)
 })
+
+test_that("NA handling functions work as expected", {
+  x <- set_errors(c(1, 2, NA), c(0.1, 0.1, 0.1))
+  y <- set_errors(c(1, 2, 3), c(0.1, 0.1, NA))
+
+  expect_error(na.fail(x))
+  expect_error(na.fail(y))
+
+  xo <- na.omit(x)
+  attr(xo, "na.action") <- NULL
+  yo <- na.omit(y)
+  attr(yo, "na.action") <- NULL
+  expect_equal(x[-3], xo)
+  expect_equal(y[-3], yo)
+
+  xe <- na.exclude(x)
+  attr(xe, "na.action") <- NULL
+  ye <- na.exclude(y)
+  attr(ye, "na.action") <- NULL
+  expect_equal(x[-3], xe)
+  expect_equal(y[-3], ye)
+
+  expect_identical(x, na.pass(x))
+  expect_identical(y, na.pass(y))
+})

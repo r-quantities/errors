@@ -18,6 +18,7 @@ Summary.errors <- function(..., na.rm = FALSE) {
   dots <- list(...)
   dots[names(dots) != ""] <- NULL # unnamed only
   x <- do.call(c, dots)
+  if (na.rm) x <- na.omit(x)
   switch(
     .Generic,
     "all" = , "any" =
@@ -27,9 +28,9 @@ Summary.errors <- function(..., na.rm = FALSE) {
       xx <- NextMethod()
       set_errors(xx, sqrt(colSums(cbind(.e(x) * xx / .v(x))^2)))
     },
-    "max" = max(errors_max(x), na.rm=na.rm),
-    "min" = min(errors_min(x), na.rm=na.rm),
-    "range" = range(errors_min(x), errors_max(x), na.rm=na.rm)
+    "max" = max(errors_max(x)),
+    "min" = min(errors_min(x)),
+    "range" = range(errors_min(x), errors_max(x))
   )
 }
 
@@ -39,6 +40,7 @@ Summary.errors <- function(..., na.rm = FALSE) {
 #'
 #' @param x an \code{errors} object.
 #' @param ... further arguments passed to of from other methods.
+#' @inheritParams base::mean
 #'
 #'
 #' @details The \code{mean} and \code{weighted.mean} methods set the uncertainty as
@@ -51,21 +53,24 @@ Summary.errors <- function(..., na.rm = FALSE) {
 #' @return An \code{errors} object.
 #'
 #' @export
-mean.errors <- function(x, ...) {
+mean.errors <- function(x, trim = 0, na.rm = FALSE, ...) {
+  if (na.rm) x <- na.omit(x)
   e <- max(mean(.e(x)), sd(.v(x))/sqrt(length(x)))
   set_errors(unclass(NextMethod()), e)
 }
 
 #' @name mean.errors
 #' @export
-weighted.mean.errors <- function(x, ...) {
+weighted.mean.errors <- function(x, ..., na.rm = FALSE) {
+  if (na.rm) x <- na.omit(x)
   e <- max(weighted.mean(.e(x), ...), sd(.v(x))/sqrt(length(x)))
   set_errors(unclass(NextMethod()), e)
 }
 
 #' @name mean.errors
 #' @export
-median.errors = function(x, ...) {
+median.errors = function(x, na.rm = FALSE, ...) {
+  if (na.rm) x <- na.omit(x)
   e <- 1.253 * .e(mean(x))
   set_errors(unclass(NextMethod()), e)
 }
