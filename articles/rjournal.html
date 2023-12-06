@@ -8,10 +8,10 @@
 <meta name="description" content="errors">
 <title>Measurement Errors in R • errors</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Measurement Errors in R">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Measurement Errors in R">
 <meta property="og:description" content="errors">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">errors</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,8 +99,8 @@ Edzer Pebesma, Arturo Azcorra</h4>
 <div style="display:none">
 <p><span class="math inline">\(\newcommand{\E}{\mathbb{E}}\)</span></p>
 </div>
-<p>This manuscript corresponds to <code>errors</code> version 0.4.0.1
-and was typeset on 2022-12-10.<br>
+<p>This manuscript corresponds to <code>errors</code> version 0.4.1 and
+was typeset on 2023-12-06.<br>
 For citations, please use the version published in the R Journal (see
 <code>citation("errors")</code>).</p>
 <div class="section level2">
@@ -351,19 +351,19 @@ uncertainties:</p>
 <span><span class="fu"><a href="../reference/errors.html">errors</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0.02</span></span>
 <span><span class="va">x</span>; <span class="va">y</span></span></code></pre></div>
 <pre><code><span><span class="co">## Errors: 0.01 0.01 0.01 0.01 0.01</span></span>
-<span><span class="co">## [1] 0.9995729 1.9746938 3.0229961 4.0068476 5.0192729</span></span></code></pre>
+<span><span class="co">## [1] 0.9880272 1.9972840 3.0092449 3.9969801 5.0027196</span></span></code></pre>
 <pre><code><span><span class="co">## Errors: 0.02 0.02 0.02 0.02 0.02</span></span>
-<span><span class="co">## [1] 1.013888 2.023504 2.999805 3.982961 5.005937</span></span></code></pre>
+<span><span class="co">## [1] 0.9618059 2.0073178 2.9913098 4.0198095 4.9844877</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">/</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Errors: 0.021805617 0.010837757 0.007500181 0.005641035 0.004476354</span></span>
-<span><span class="co">## [1] 0.9858805 0.9758785 1.0077309 1.0059972 1.0026639</span></span></code></pre>
+<pre><code><span><span class="co">## Errors: 0.023757049 0.011095057 0.007511090 0.005537363 0.004499186</span></span>
+<span><span class="co">## [1] 1.0272626 0.9950014 1.0059957 0.9943208 1.0036577</span></span></code></pre>
 <p>The <code><a href="../reference/errors.html">errors()</a></code> method assigns or retrieves a vector of
 uncertainties, which is stored as an attribute of the class
 <code>errors</code>, along with a unique object identifier:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##  Errors: num [1:5] 1.00(1) 1.97(1) 3.02(1) 4.01(1) 5.02(1)</span></span></code></pre>
+<pre><code><span><span class="co">##  Errors: num [1:5] 0.99(1) 2.00(1) 3.01(1) 4.00(1) 5.00(1)</span></span></code></pre>
 <p>Correlations (and thus covariances) between pairs of variables can be
 set and retrieved using the <code><a href="../reference/correl.html">correl()</a></code> and
 <code><a href="../reference/correl.html">covar()</a></code> methods. These correlations are stored in an
@@ -379,22 +379,22 @@ correlations are cleaned up automatically.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/correl.html">correl</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/correl.html">correl</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1]  0.03370926 -0.47662316  0.75455549 -0.96554270 -0.88894974</span></span></code></pre>
+<pre><code><span><span class="co">## [1]  0.9679883 -0.8696443 -0.8666591  0.6161247  0.7003761</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/correl.html">covar</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1]  6.741851e-06 -9.532463e-05  1.509111e-04 -1.931085e-04 -1.777899e-04</span></span></code></pre>
+<pre><code><span><span class="co">## [1]  0.0001935977 -0.0001739289 -0.0001733318  0.0001232249  0.0001400752</span></span></code></pre>
 <p>Internally, <strong>errors</strong> provides S3 methods for the
 generics belonging to the groups <code>Math</code> and <code>Ops</code>,
 which propagate the uncertainty and the covariance using Equations (2)
 and (3) respectively.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">z</span> <span class="co"># previous computation without correlations</span></span></code></pre></div>
-<pre><code><span><span class="co">## Errors: 0.021805617 0.010837757 0.007500181 0.005641035 0.004476354</span></span>
-<span><span class="co">## [1] 0.9858805 0.9758785 1.0077309 1.0059972 1.0026639</span></span></code></pre>
+<pre><code><span><span class="co">## Errors: 0.023757049 0.011095057 0.007511090 0.005537363 0.004499186</span></span>
+<span><span class="co">## [1] 1.0272626 0.9950014 1.0059957 0.9943208 1.0036577</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">z_correl</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">/</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Errors: 0.021507053 0.012763047 0.004738487 0.007504187 0.005853633</span></span>
-<span><span class="co">## [1] 0.9858805 0.9758785 1.0077309 1.0059972 1.0026639</span></span></code></pre>
+<pre><code><span><span class="co">## Errors: 0.011594343 0.014456842 0.009766835 0.003936665 0.002987566</span></span>
+<span><span class="co">## [1] 1.0272626 0.9950014 1.0059957 0.9943208 1.0036577</span></span></code></pre>
 <p>Other many S3 methods are also provided, such as generics belonging
 to the <code>Summary</code> group, subsetting operators (<code>[</code>,
 <code>[&lt;-</code>, <code>[[</code>, <code>[[&lt;-</code>),
@@ -802,7 +802,7 @@ Simple Data Frames</em>. <a href="https://CRAN.R-project.org/package=tibble" cla
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
