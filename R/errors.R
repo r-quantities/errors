@@ -232,9 +232,5 @@ drop_errors.errors <- function(x) {
 #' @name drop_errors
 #' @export
 drop_errors.data.frame <- function(x) {
-  for (i in seq_along(x)) {
-    if (inherits(x[[i]], "errors"))
-      x[[i]] <- drop_errors(x[[i]])
-  }
-  x
+  dfapply(x, function(i) if (inherits(i, "errors")) drop_errors(i) else i)
 }

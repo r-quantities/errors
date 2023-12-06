@@ -72,3 +72,17 @@ cond2int <- function(...) {
   args <- c(...)
   sum(2^(seq_along(args) - 1) * args)
 }
+
+dfapply <- function(X, FUN, ...) {
+  attrs <- attributes(X)
+  X <- lapply(X, FUN, ...)
+  attributes(X) <- attrs
+  X
+}
+
+df2apply <- function(X, Y, FUN, ...) {
+  attrs <- attributes(X)
+  X <- mapply(FUN, X, Y, ..., SIMPLIFY=FALSE)
+  attributes(X) <- attrs
+  X
+}

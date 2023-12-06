@@ -1,9 +1,10 @@
-# errors 0.4.0.2
+# errors 0.4.1
 
 - Switch from `size` (deprecated in `ggplot2` v3.4.0) to `linewidth` aesthetic
   in `geom_errors()` (#55).
 - Implement methods for dealing with missing values in `errors` objects,
   and fix `na.rm` behavior for summary methods (#56).
+- Performance improvements for `data.frame` methods.
 
 # errors 0.4.0
 
