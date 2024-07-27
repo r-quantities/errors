@@ -26,6 +26,15 @@ warn_once_coercion <- function(fun) warn_once(
 
 get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)
 
+digits_pdg <- function(x) {
+  # extract 3 highest order digits
+  x <- ifelse(is.finite(x), x, 0)
+  x_sci <- formatC(abs(x), digits=2, format="e", decimal.mark=".")
+  x_hod <- as.integer(gsub("(\\.|e.*)", "", x_sci))
+
+  ifelse(x_hod < 355, 2, ifelse(x_hod < 950, 1, 0))
+}
+
 propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "taylor-first-order")) {
   # if y not defined, use a vector of NAs
   if (length(y) == 1 && is.na(y))
