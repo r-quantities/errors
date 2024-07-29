@@ -51,9 +51,10 @@ test_that("error formatting works properly", {
   expect_equal(format(x - set_errors(10)), "0(1)")
   expect_equal(format(x - x), "0(0)")
 
-  x <- set_errors(c(0.4, NA, NaN, Inf))
+  x <- set_errors(c(0.4, NA, NaN, Inf, -Inf))
   expect_equal(format(x[1]), "0.4(0)")
   expect_equal(format(x[2]), "NA(NA)")
   expect_equal(format(x[3]), "NaN(NaN)")
   expect_equal(format(x[4]), "Inf(Inf)")
+  expect_equal(format(x[5]), "-Inf(Inf)")
 })

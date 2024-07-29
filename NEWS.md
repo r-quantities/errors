@@ -1,3 +1,7 @@
+# errors 0.4.2
+
+- Add support for PDG rounding rules (@davidchall #59 addressing #45).
+
 # errors 0.4.1
 
 - Switch from `size` (deprecated in `ggplot2` v3.4.0) to `linewidth` aesthetic

@@ -12,8 +12,8 @@
 
 \item{digits}{how many significant digits are to be used for uncertainties.
 The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
-Use `digits="pdg"` to choose an appropriate number of digits for each value
-according to the Particle Data Group rounding rule.}
+Use \code{digits="pdg"} to choose an appropriate number of digits for each
+value according to the Particle Data Group rounding rule (see references).}
 
 \item{scientific}{logical specifying whether the elements should be
 encoded in scientific format.}

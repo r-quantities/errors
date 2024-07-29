@@ -34,7 +34,6 @@
 #' Measurement Errors in \R. \emph{The R Journal}, 10(2), 549-557.
 #' \doi{10.32614/RJ-2018-075}
 #'
-#' @docType package
 #' @import stats
 #' @name errors-package
 #'
@@ -77,7 +76,7 @@
 #' # Predicted correction for 30 degC
 #' (b.30 <- y1 + y2 * set_errors(30 - 20))
 #'
-NULL
+"_PACKAGE"
 
 #' Handle Uncertainty on a Numeric Vector
 #'
