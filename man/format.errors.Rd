@@ -11,7 +11,9 @@
 \item{x}{an \code{errors} object.}
 
 \item{digits}{how many significant digits are to be used for uncertainties.
-The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.}
+The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
+Use `digits="pdg"` to choose an appropriate number of digits for each value
+according to the Particle Data Group rounding rule.}
 
 \item{scientific}{logical specifying whether the elements should be
 encoded in scientific format.}
@@ -31,4 +33,10 @@ format(x, digits=2)
 format(x, scientific=TRUE)
 format(x, notation="plus-minus")
 
+x <- set_errors(c(0.827, 0.827), c(0.119, 0.367))
+format(x, notation="plus-minus", digits="pdg")
+
+}
+\references{
+K. Nakamura et al. (Particle Data Group), J. Phys. G 37, 075021 (2010)
 }

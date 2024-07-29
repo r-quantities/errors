@@ -5,11 +5,16 @@
 #' @param x an \code{errors} object.
 #' @param digits how many significant digits are to be used for uncertainties.
 #' The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
+#' Use `digits="pdg"` to choose an appropriate number of digits for each value
+#' according to the Particle Data Group rounding rule.
 #' @param scientific logical specifying whether the elements should be
 #' encoded in scientific format.
 #' @param notation error notation; \code{"parenthesis"} and \code{"plus-minus"}
 #' are supported through the \code{"errors.notation"} option.
 #' @param ... ignored.
+#'
+#' @references
+#' K. Nakamura et al. (Particle Data Group), J. Phys. G 37, 075021 (2010)
 #'
 #' @examples
 #' x <- set_errors(1:3*100, 1:3*100 * 0.05)
@@ -17,6 +22,9 @@
 #' format(x, digits=2)
 #' format(x, scientific=TRUE)
 #' format(x, notation="plus-minus")
+#'
+#' x <- set_errors(c(0.827, 0.827), c(0.119, 0.367))
+#' format(x, notation="plus-minus", digits="pdg")
 #'
 #' @export
 format.errors = function(x,
@@ -32,9 +40,12 @@ format.errors = function(x,
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
+  if (digits == "pdg")
+    digits <- digits_pdg(.e(x))
+
   e <- signif(.e(x), digits)
   exponent <- get_exponent(x)
-  value_digits <- ifelse(e, digits - get_exponent(e), getOption("digits"))
+  value_digits <- ifelse(e, digits - get_exponent(e), digits)
   value <- ifelse(e, signif(.v(x), exponent + value_digits), .v(x))
 
   cond <- (scientific | (exponent > 4+scipen | exponent < -3-scipen)) & is.finite(e)
@@ -61,7 +72,13 @@ format.errors = function(x,
       formatC(value[[i]], format="f", digits=max(0, value_digits[[i]]-1), decimal.mark=getOption("OutDec"))
     else format(value[[i]])
   })
-  e <- formatC(e, format="fg", flag="#", digits=digits, width=digits, decimal.mark=getOption("OutDec"))
+  e <- if (length(unique(digits)) > 1)  {
+    sapply(seq_along(digits), function(i) {
+      formatC(e[[i]], format="fg", flag="#", digits=digits[[i]], width=max(1, digits[[i]]), decimal.mark=getOption("OutDec"))
+    })
+  } else {
+    formatC(e, format="fg", flag="#", digits=digits[[1]], width=max(1, digits[[1]]), decimal.mark=getOption("OutDec"))
+  }
   e <- sub("\\.$", "", e)
   paste(prepend, value, sep, e, append, sep="")
 }
