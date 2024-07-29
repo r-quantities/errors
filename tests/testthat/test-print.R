@@ -57,4 +57,8 @@ test_that("error formatting works properly", {
   expect_equal(format(x[3]), "NaN(NaN)")
   expect_equal(format(x[4]), "Inf(Inf)")
   expect_equal(format(x[5]), "-Inf(Inf)")
+
+  x <- set_errors(c(0e10, 1e12), 0.1e12)
+  expect_equal(format(x), c("0.0(1)e12", "1.0(1)e12"))
+  expect_equal(format(x, digits=2), c("0.00(10)e12", "1.00(10)e12"))
 })

@@ -45,7 +45,7 @@ format.errors = function(x,
 
   e <- signif(.e(x), digits)
   nulle <- e == 0 & !is.na(e)
-  xexp <- get_exponent(x)
+  xexp <- ifelse(.v(x) == 0, get_exponent(e) + 1, get_exponent(x))
   value_digits <- ifelse(e, digits - get_exponent(e), digits)
   value <- ifelse(e, signif(.v(x), xexp + value_digits), .v(x))
   value <- ifelse(is.finite(value), value, .v(x))

@@ -1,6 +1,7 @@
 # errors 0.4.2
 
 - Add support for PDG rounding rules (@davidchall #59 addressing #45).
+- Improve formatting of null values (#48).
 
 # errors 0.4.1
 
