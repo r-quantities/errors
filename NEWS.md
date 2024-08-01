@@ -1,3 +1,8 @@
+# errors 0.4.3
+
+- add option to print uncertainty with decimal point when appropriate
+  in the `parenthesis` notation
+
 # errors 0.4.2
 
 - Add support for PDG rounding rules (@davidchall #59 addressing #45).

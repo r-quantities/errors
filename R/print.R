@@ -11,6 +11,9 @@
 #' encoded in scientific format.
 #' @param notation error notation; \code{"parenthesis"} and \code{"plus-minus"}
 #' are supported through the \code{"errors.notation"} option.
+#' When using the "parenthesis" error notation, by default the uncertainty
+#' is formatted without any decimal point, unless the option
+#' \code{"errors.parenthesis.unc.dec.point"} is set to TRUE.
 #' @param ... ignored.
 #'
 #' @references
@@ -34,21 +37,22 @@ format.errors = function(x,
                          ...)
 {
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
-
   if (is.null(digits))
     digits <- getOption("errors.digits", 1)
   digits <- if (digits == "pdg") digits_pdg(.e(x)) else rep(digits, length(x))
-
   scipen <- getOption("scipen", 0)
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
   e <- signif(.e(x), digits)
   nulle <- e == 0 & !is.na(e)
-  xexp <- ifelse(.v(x) == 0, get_exponent(e) + 1, get_exponent(x))
-  value_digits <- ifelse(e, digits - get_exponent(e), digits)
+  e_expon = get_exponent(e)
+  xexp <- ifelse(.v(x)==0, e_expon+1, get_exponent(x))
+  value_digits <- ifelse(e, digits - e_expon, digits)
   value <- ifelse(e, signif(.v(x), xexp + value_digits), .v(x))
+  ##+++ str(value)
   value <- ifelse(is.finite(value), value, .v(x))
+  ##+++ str(value)
 
   cond <- (scientific | (xexp > 4+scipen | xexp < -3-scipen)) & is.finite(e)
   e[cond] <- e[cond] * 10^(-xexp[cond])
@@ -60,7 +64,14 @@ format.errors = function(x,
   if (notation == "parenthesis") {
     sep <- "("
     append[] <- ")"
-    e[is.finite(e)] <- (e * 10^(pmax(0, value_digits-1)))[is.finite(e)]
+    if (!getOption("errors.parenthesis.unc.dec.point", FALSE)) {
+      ## remove decimal point from uncertainty by scaling it appropriately
+      e[is.finite(e)] <- (e * 10^(pmax(0, value_digits-1)))[is.finite(e)]
+    } else {
+      ## convert uncertainty for printing, keeping decimal point in line with value
+      e_scale_flag = (cond & e_expon < xexp) | (!cond & is.finite(e) & e_expon<0)
+      e[e_scale_flag] <- (e * 10^(pmax(0, value_digits-1)))[e_scale_flag]
+    }
   } else {
     sep <- paste0(" ", .pm, " ")
     prepend[cond] <- "("
@@ -81,7 +92,6 @@ format.errors = function(x,
             decimal.mark=getOption("OutDec"))
   })
   e <- sub("\\.$", "", e)
-
   paste(prepend, value, sep, e, append, sep="")
 }
 
