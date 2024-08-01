@@ -1,7 +1,7 @@
 # errors devel
 
 - Add option `decimals` to `format()` method to add support for uncertainty with
-  decimals in the `parenthesis` notation (@alusiani #60 addressing #47).
+  decimals in the `parenthesis` notation (@alusiani #60, #61 addressing #47).
 
 # errors 0.4.2
 
