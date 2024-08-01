@@ -37,22 +37,22 @@ format.errors = function(x,
                          ...)
 {
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
+
   if (is.null(digits))
     digits <- getOption("errors.digits", 1)
   digits <- if (digits == "pdg") digits_pdg(.e(x)) else rep(digits, length(x))
+
   scipen <- getOption("scipen", 0)
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
   e <- signif(.e(x), digits)
   nulle <- e == 0 & !is.na(e)
-  e_expon = get_exponent(e)
-  xexp <- ifelse(.v(x)==0, e_expon+1, get_exponent(x))
-  value_digits <- ifelse(e, digits - e_expon, digits)
+  eexp <- get_exponent(e)
+  xexp <- ifelse(.v(x)== 0, eexp+1, get_exponent(x))
+  value_digits <- ifelse(e, digits - eexp, digits)
   value <- ifelse(e, signif(.v(x), xexp + value_digits), .v(x))
-  ##+++ str(value)
   value <- ifelse(is.finite(value), value, .v(x))
-  ##+++ str(value)
 
   cond <- (scientific | (xexp > 4+scipen | xexp < -3-scipen)) & is.finite(e)
   e[cond] <- e[cond] * 10^(-xexp[cond])
@@ -69,7 +69,7 @@ format.errors = function(x,
       e[is.finite(e)] <- (e * 10^(pmax(0, value_digits-1)))[is.finite(e)]
     } else {
       ## convert uncertainty for printing, keeping decimal point in line with value
-      e_scale_flag = (cond & e_expon < xexp) | (!cond & is.finite(e) & e_expon<0)
+      e_scale_flag = (cond & eexp < xexp) | (!cond & is.finite(e) & eexp<0)
       e[e_scale_flag] <- (e * 10^(pmax(0, value_digits-1)))[e_scale_flag]
     }
   } else {
@@ -92,6 +92,7 @@ format.errors = function(x,
             decimal.mark=getOption("OutDec"))
   })
   e <- sub("\\.$", "", e)
+
   paste(prepend, value, sep, e, append, sep="")
 }
 
