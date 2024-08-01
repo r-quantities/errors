@@ -23,6 +23,9 @@ test_that("error formatting works properly", {
   expect_equal(format(x, notation="parenthesis", scientific=TRUE),
                c("1(1000)e4", "1.1(1)e4", "1.111(1)e4", "1.1111(1)e4", "1.11112(1)e4",
                  "1.111122(1)e4", "1.111122222(1)e4", "1.111122222000(1)e4"))
+  expect_equal(format(x, notation="parenthesis", digits=3, decimals=TRUE),
+               c("10000(12300000)", "11110(1230)", "11111.2(12.3)", "11111.22(1.23)",
+                 "11111.222(123)", "11111.2222(123)", "11111.2222200(123)", "11111.2222200000(123)"))
 
   expect_equal(format(x, notation="plus-minus"), sapply(list(
     c("10000", "10000000"), c("11000", "1000"), c("11110", "10"), c("11111", "1"),
@@ -41,14 +44,6 @@ test_that("error formatting works properly", {
     c("(1.11112", "0.00001)e4"), c("(1.111122", "0.000001)e4"), c("(1.111122222", "0.000000001)e4"),
     c("(1.111122222000", "0.000000000001)e4")),
     paste, collapse=paste("", .pm, "")))
-  #
-  # test using option to keep decimal point in uncertainty in parenthesis notation
-  #
-  saved_options = options(errors.parenthesis.unc.dec.point = TRUE)
-  expect_equal(format(x, notation="parenthesis", digits=3),
-               c("10000(12300000)", "11110(1230)", "11111.2(12.3)", "11111.22(1.23)",
-                 "11111.222(123)", "11111.2222(123)", "11111.2222200(123)", "11111.2222200000(123)"))
-  options(saved_options)
 
   x <- set_errors(rep(0.827, 3), c(0.119, 0.367, 0.962))
   expect_equal(format(x, notation="plus-minus", digits="pdg"), sapply(list(

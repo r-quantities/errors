@@ -4,14 +4,14 @@
 \alias{format.errors}
 \title{Encode \code{errors}}
 \usage{
-\method{format}{errors}(x, digits = NULL, scientific = FALSE,
-  notation = getOption("errors.notation", "parenthesis"), ...)
+\method{format}{errors}(x, digits = getOption("errors.digits", 1),
+  scientific = FALSE, notation = getOption("errors.notation",
+  "parenthesis"), decimals = getOption("errors.decimals", FALSE), ...)
 }
 \arguments{
 \item{x}{an \code{errors} object.}
 
 \item{digits}{how many significant digits are to be used for uncertainties.
-The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
 Use \code{digits="pdg"} to choose an appropriate number of digits for each
 value according to the Particle Data Group rounding rule (see references).}
 
@@ -19,10 +19,12 @@ value according to the Particle Data Group rounding rule (see references).}
 encoded in scientific format.}
 
 \item{notation}{error notation; \code{"parenthesis"} and \code{"plus-minus"}
-are supported through the \code{"errors.notation"} option.
-When using the "parenthesis" error notation, by default the uncertainty
-is formatted without any decimal point, unless the option
-\code{"errors.parenthesis.unc.dec.point"} is set to TRUE.}
+are supported through the \code{"errors.notation"} option.}
+
+\item{decimals}{logical specifying whether the uncertainty should be formatted
+with a decimal point even when the \code{"parenthesis"} notation is used.
+Otherwise (by default), the \code{"parenthesis"} notation scales the
+uncertainty to match the least significant digit of the value.}
 
 \item{...}{ignored.}
 }
@@ -33,6 +35,7 @@ Format an \code{errors} object for pretty printing.
 x <- set_errors(1:3*100, 1:3*100 * 0.05)
 format(x)
 format(x, digits=2)
+format(x, digits=2, decimals=TRUE)
 format(x, scientific=TRUE)
 format(x, notation="plus-minus")
 

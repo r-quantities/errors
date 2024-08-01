@@ -4,16 +4,16 @@
 #'
 #' @param x an \code{errors} object.
 #' @param digits how many significant digits are to be used for uncertainties.
-#' The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
 #' Use \code{digits="pdg"} to choose an appropriate number of digits for each
 #' value according to the Particle Data Group rounding rule (see references).
 #' @param scientific logical specifying whether the elements should be
 #' encoded in scientific format.
 #' @param notation error notation; \code{"parenthesis"} and \code{"plus-minus"}
 #' are supported through the \code{"errors.notation"} option.
-#' When using the "parenthesis" error notation, by default the uncertainty
-#' is formatted without any decimal point, unless the option
-#' \code{"errors.parenthesis.unc.dec.point"} is set to TRUE.
+#' @param decimals logical specifying whether the uncertainty should be formatted
+#' with a decimal point even when the \code{"parenthesis"} notation is used.
+#' Otherwise (by default), the \code{"parenthesis"} notation scales the
+#' uncertainty to match the least significant digit of the value.
 #' @param ... ignored.
 #'
 #' @references
@@ -23,6 +23,7 @@
 #' x <- set_errors(1:3*100, 1:3*100 * 0.05)
 #' format(x)
 #' format(x, digits=2)
+#' format(x, digits=2, decimals=TRUE)
 #' format(x, scientific=TRUE)
 #' format(x, notation="plus-minus")
 #'
@@ -31,15 +32,14 @@
 #'
 #' @export
 format.errors = function(x,
-                         digits = NULL,
+                         digits = getOption("errors.digits", 1),
                          scientific = FALSE,
                          notation = getOption("errors.notation", "parenthesis"),
+                         decimals = getOption("errors.decimals", FALSE),
                          ...)
 {
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
 
-  if (is.null(digits))
-    digits <- getOption("errors.digits", 1)
   digits <- if (digits == "pdg") digits_pdg(.e(x)) else rep(digits, length(x))
 
   scipen <- getOption("scipen", 0)
@@ -49,7 +49,7 @@ format.errors = function(x,
   e <- signif(.e(x), digits)
   nulle <- e == 0 & !is.na(e)
   eexp <- get_exponent(e)
-  xexp <- ifelse(.v(x)== 0, eexp+1, get_exponent(x))
+  xexp <- ifelse(.v(x) == 0, eexp + 1, get_exponent(x))
   value_digits <- ifelse(e, digits - eexp, digits)
   value <- ifelse(e, signif(.v(x), xexp + value_digits), .v(x))
   value <- ifelse(is.finite(value), value, .v(x))
@@ -64,14 +64,9 @@ format.errors = function(x,
   if (notation == "parenthesis") {
     sep <- "("
     append[] <- ")"
-    if (!getOption("errors.parenthesis.unc.dec.point", FALSE)) {
-      ## remove decimal point from uncertainty by scaling it appropriately
-      e[is.finite(e)] <- (e * 10^(pmax(0, value_digits-1)))[is.finite(e)]
-    } else {
-      ## convert uncertainty for printing, keeping decimal point in line with value
-      e_scale_flag = (cond & eexp < xexp) | (!cond & is.finite(e) & eexp<0)
-      e[e_scale_flag] <- (e * 10^(pmax(0, value_digits-1)))[e_scale_flag]
-    }
+    e_scale_flag <- if (!isTRUE(decimals)) is.finite(e) else
+      (cond & eexp < xexp) | (!cond & is.finite(e) & eexp < 0)
+    e[e_scale_flag] <- (e * 10^(pmax(0, value_digits-1)))[e_scale_flag]
   } else {
     sep <- paste0(" ", .pm, " ")
     prepend[cond] <- "("
