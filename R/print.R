@@ -4,6 +4,7 @@
 #'
 #' @param x an \code{errors} object.
 #' @param digits how many significant digits are to be used for uncertainties.
+#' The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
 #' Use \code{digits="pdg"} to choose an appropriate number of digits for each
 #' value according to the Particle Data Group rounding rule (see references).
 #' @param scientific logical specifying whether the elements should be
@@ -32,7 +33,7 @@
 #'
 #' @export
 format.errors = function(x,
-                         digits = getOption("errors.digits", 1),
+                         digits = NULL,
                          scientific = FALSE,
                          notation = getOption("errors.notation", "parenthesis"),
                          decimals = getOption("errors.decimals", FALSE),
@@ -40,6 +41,7 @@ format.errors = function(x,
 {
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
 
+  if (is.null(digits)) digits <- getOption("errors.digits", 1)
   digits <- if (digits == "pdg") digits_pdg(.e(x)) else rep(digits, length(x))
 
   scipen <- getOption("scipen", 0)

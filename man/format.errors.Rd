@@ -4,14 +4,15 @@
 \alias{format.errors}
 \title{Encode \code{errors}}
 \usage{
-\method{format}{errors}(x, digits = getOption("errors.digits", 1),
-  scientific = FALSE, notation = getOption("errors.notation",
-  "parenthesis"), decimals = getOption("errors.decimals", FALSE), ...)
+\method{format}{errors}(x, digits = NULL, scientific = FALSE,
+  notation = getOption("errors.notation", "parenthesis"),
+  decimals = getOption("errors.decimals", FALSE), ...)
 }
 \arguments{
 \item{x}{an \code{errors} object.}
 
 \item{digits}{how many significant digits are to be used for uncertainties.
+The default, \code{NULL}, uses \code{getOption("errors.digits", 1)}.
 Use \code{digits="pdg"} to choose an appropriate number of digits for each
 value according to the Particle Data Group rounding rule (see references).}
 
