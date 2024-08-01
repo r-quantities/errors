@@ -11,6 +11,10 @@
 #' encoded in scientific format.
 #' @param notation error notation; \code{"parenthesis"} and \code{"plus-minus"}
 #' are supported through the \code{"errors.notation"} option.
+#' @param decimals logical specifying whether the uncertainty should be formatted
+#' with a decimal point even when the \code{"parenthesis"} notation is used.
+#' Otherwise (by default), the \code{"parenthesis"} notation scales the
+#' uncertainty to match the least significant digit of the value.
 #' @param ... ignored.
 #'
 #' @references
@@ -20,6 +24,7 @@
 #' x <- set_errors(1:3*100, 1:3*100 * 0.05)
 #' format(x)
 #' format(x, digits=2)
+#' format(x, digits=2, decimals=TRUE)
 #' format(x, scientific=TRUE)
 #' format(x, notation="plus-minus")
 #'
@@ -31,12 +36,12 @@ format.errors = function(x,
                          digits = NULL,
                          scientific = FALSE,
                          notation = getOption("errors.notation", "parenthesis"),
+                         decimals = getOption("errors.decimals", FALSE),
                          ...)
 {
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
 
-  if (is.null(digits))
-    digits <- getOption("errors.digits", 1)
+  if (is.null(digits)) digits <- getOption("errors.digits", 1)
   digits <- if (digits == "pdg") digits_pdg(.e(x)) else rep(digits, length(x))
 
   scipen <- getOption("scipen", 0)
@@ -45,8 +50,9 @@ format.errors = function(x,
 
   e <- signif(.e(x), digits)
   nulle <- e == 0 & !is.na(e)
-  xexp <- ifelse(.v(x) == 0, get_exponent(e) + 1, get_exponent(x))
-  value_digits <- ifelse(e, digits - get_exponent(e), digits)
+  eexp <- get_exponent(e)
+  xexp <- ifelse(.v(x) == 0, eexp + 1, get_exponent(x))
+  value_digits <- ifelse(e, digits - eexp, digits)
   value <- ifelse(e, signif(.v(x), xexp + value_digits), .v(x))
   value <- ifelse(is.finite(value), value, .v(x))
 
@@ -60,7 +66,9 @@ format.errors = function(x,
   if (notation == "parenthesis") {
     sep <- "("
     append[] <- ")"
-    e[is.finite(e)] <- (e * 10^(pmax(0, value_digits-1)))[is.finite(e)]
+    e_scale_flag <- if (!isTRUE(decimals)) is.finite(e) else
+      (cond & eexp < xexp) | (!cond & is.finite(e) & eexp < 0)
+    e[e_scale_flag] <- (e * 10^(pmax(0, value_digits-1)))[e_scale_flag]
   } else {
     sep <- paste0(" ", .pm, " ")
     prepend[cond] <- "("

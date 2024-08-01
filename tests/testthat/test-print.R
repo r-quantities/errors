@@ -23,6 +23,9 @@ test_that("error formatting works properly", {
   expect_equal(format(x, notation="parenthesis", scientific=TRUE),
                c("1(1000)e4", "1.1(1)e4", "1.111(1)e4", "1.1111(1)e4", "1.11112(1)e4",
                  "1.111122(1)e4", "1.111122222(1)e4", "1.111122222000(1)e4"))
+  expect_equal(format(x, notation="parenthesis", digits=3, decimals=TRUE),
+               c("10000(12300000)", "11110(1230)", "11111.2(12.3)", "11111.22(1.23)",
+                 "11111.222(123)", "11111.2222(123)", "11111.2222200(123)", "11111.2222200000(123)"))
 
   expect_equal(format(x, notation="plus-minus"), sapply(list(
     c("10000", "10000000"), c("11000", "1000"), c("11110", "10"), c("11111", "1"),
