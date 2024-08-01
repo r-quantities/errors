@@ -1,7 +1,7 @@
-# errors 0.4.3
+# errors devel
 
-- add option to print uncertainty with decimal point when appropriate
-  in the `parenthesis` notation
+- Add option `decimals` to `format()` method to add support for uncertainty with
+  decimals in the `parenthesis` notation (@alusiani #60 addressing #47).
 
 # errors 0.4.2
 
