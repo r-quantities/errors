@@ -45,7 +45,7 @@ propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "
     "taylor-first-order" = {
       # propagate variance to new object
       var <- rowSums(cbind(
-        .e(x)^2 * dx^2, .e(y)^2 * dy^2, 2 * covar(x, y) * dx * dy
+        .e(x)^2 * dx^2, .e(y)^2 * dy^2, 2 * as.numeric(covar(x, y)) * dx * dy
       ), na.rm = TRUE)
       var[var < 0] <- 0
       xx <- set_errors(xx, sqrt(var))

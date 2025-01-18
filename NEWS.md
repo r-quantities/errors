@@ -1,7 +1,8 @@
-# errors devel
+# errors 0.4.3
 
 - Add option `decimals` to `format()` method to add support for uncertainty with
   decimals in the `parenthesis` notation (@alusiani #60, #61 addressing #47).
+- Fix internal `propagate` function (for r-quantities/units#371).
 
 # errors 0.4.2
 
