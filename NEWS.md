@@ -1,3 +1,7 @@
+# errors devel
+
+- Improve `cbind` arg name deparsing.
+
 # errors 0.4.3
 
 - Add option `decimals` to `format()` method to add support for uncertainty with

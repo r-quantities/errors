@@ -195,21 +195,16 @@ t.errors <- function(x) {
 #'
 #' @export
 cbind.errors <- function(..., deparse.level = 1) {
-  call <- as.character(match.call()[[1]])
-  allargs <- lapply(list(...), unclass)
-  nm <- names(as.list(match.call()))
-  nm <- nm[nm != "" & nm != "deparse.level"]
-  if (is.null(nm))
-    names(allargs) <- sapply(substitute(list(...))[-1], deparse)
-  else names(allargs) <- nm
-  allerrs <- lapply(list(...), function(x) {
+  dots <- .deparse(list(...), substitute(list(...)), deparse.level)
+  errs <- lapply(dots, function(x) {
     e <- .e(x)
     dim(e) <- dim(x)
     e
   })
+  call <- as.character(match.call()[[1]])
   set_errors(
-    do.call(call, c(allargs, deparse.level=deparse.level)),
-    as.numeric(do.call(call, allerrs))
+    do.call(call, c(lapply(dots, unclass), deparse.level=deparse.level)),
+    as.numeric(do.call(call, c(errs, deparse.level=0)))
   )
 }
 
