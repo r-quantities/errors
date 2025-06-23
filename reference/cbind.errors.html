@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">errors</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Combine <span style="R">R</span> Objects by Rows or Columns</h1>
-      <small class="dont-index">Source: <a href="https://github.com/r-quantities/errors/blob/v0.4.3/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/r-quantities/errors/blob/v0.4.4/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
       <div class="d-none name"><code>cbind.errors.Rd</code></div>
     </div>
 
@@ -88,7 +88,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1 3</span>
 <span class="r-in"><span><span class="op">(</span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">m</span>, <span class="fl">8</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="co"># insert a column</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Errors: 0.1 0.1 0.1 0.0 0.0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      x 8:10 y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      x NULL y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1    8 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1    9 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 1   10 3</span>
@@ -100,9 +100,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 3 0 0 1</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Errors: 0.0 0.0 0.1 0.2 0.1 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x 0 1 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> y 0 1 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [,1] [,2] [,3] [,4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x    0    1    1    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y    0    1    2    3</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -115,7 +115,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
