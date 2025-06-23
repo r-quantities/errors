@@ -104,9 +104,11 @@ MakeGeomErrors <- function() ggplot2::ggproto(
     data$xmax_bars <- data$xmax
     data$ymin <- data$ymax <- NULL
 
+    params$flipped_aes <- TRUE
+    params$width <- params$height
     data$xmin <- data$xmin_errors
     data$xmax <- data$xmax_errors
-    data <- ggplot2::GeomErrorbarh$setup_data(data, params)
+    data <- ggplot2::GeomErrorbar$setup_data(data, params)
     data$ymin_bars <- data$ymin
     data$ymax_bars <- data$ymax
     data$xmin <- data$xmax <- NULL
@@ -137,8 +139,8 @@ MakeGeomErrors <- function() ggplot2::ggproto(
       data$xmax <- data$xmax_errors
       data$ymin <- data$ymin_bars
       data$ymax <- data$ymax_bars
-      grob <- append(grob, list(ggplot2::GeomErrorbarh$draw_panel(
-        data, panel_params, coord=coord, height=height)))
+      grob <- append(grob, list(ggplot2::GeomErrorbar$draw_panel(
+        data, panel_params, coord=coord, width=height, flipped_aes = TRUE)))
     }
     grob <- do.call(grid::grobTree, grob)
     grob$name <- grid::grobName(grob, "geom_errors")
