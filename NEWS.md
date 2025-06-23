@@ -1,4 +1,4 @@
-# errors devel
+# errors 0.4.4
 
 - Improve `cbind` arg name deparsing.
 - Switch from `geom_errobarh()` (deprecated) to `geom_errorbar()` with flipped
