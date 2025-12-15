@@ -65,3 +65,10 @@ test_that("error formatting works properly", {
   expect_equal(format(x), c("0.0(1)e12", "1.0(1)e12"))
   expect_equal(format(x, digits=2), c("0.00(10)e12", "1.00(10)e12"))
 })
+
+test_that("print method returns the object invisibly", {
+  x <- set_errors(1:4, seq(0.1, 0.4, 0.1))
+
+  expect_output(x1 <- print(x))
+  expect_identical(x, x1)
+})

@@ -116,10 +116,10 @@ print.errors <- function(x, ...) {
     if (length(err) > 5L)
       e <- paste(e, "...")
     cat("Errors: ", e, "\n", sep = "")
-    x <- drop_errors(x)
-    NextMethod()
+    x_next <- drop_errors(x)
+    print(x_next, ...)
   } else {
     cat(format(x, ...), "\n", sep="")
-    invisible(x)
   }
+  invisible(x)
 }

@@ -1,3 +1,7 @@
+# errors devel
+
+- Fix `print()` method, which now correctly returns the object invisibly (#64).
+
 # errors 0.4.4
 
 - Improve `cbind` arg name deparsing.
