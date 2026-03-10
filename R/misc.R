@@ -212,6 +212,7 @@ cbind.errors <- function(..., deparse.level = 1) {
 #' @export
 rbind.errors <- cbind.errors
 
+#' @method all.equal errors
 #' @export
 all.equal.errors <- function(target, current, ...) {
   msg <- if (identical(attr(target, "id"), attr(current, "id")))
