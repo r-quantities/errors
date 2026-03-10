@@ -1,6 +1,7 @@
 # errors devel
 
 - Fix `print()` method, which now correctly returns the object invisibly (#64).
+- Fix `all.equal.errors()` registration (@MichaelChirico #67 addressing #66).
 
 # errors 0.4.4
 
