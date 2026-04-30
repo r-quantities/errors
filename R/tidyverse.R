@@ -38,7 +38,6 @@ vec_restore.errors <- function(x, ...) {
 }
 
 vec_proxy_equal.errors <- function(x, ...) {
-  warn_once_bool("vctrs::vec_proxy_equal")
   x
 }
 # Currently necessary because of r-lib/vctrs/issues/1140
