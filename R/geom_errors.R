@@ -149,4 +149,72 @@ MakeGeomErrors <- function() ggplot2::ggproto(
 )
 
 # registered in .onLoad()
-scale_type.errors <- function(x) "continuous"
+scale_type.errors <- function(x) {
+  if (!"errors" %in% .packages())
+    stop("Variable of class 'errors' found, but 'errors' package is not attached.\n",
+         "  Please, attach it using 'library(errors)' to properly show scales with errors.")
+  c("errors", "continuous")
+}
+
+#' @export
+scale_x_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_x_continuous(...))
+}
+
+#' @export
+scale_y_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_y_continuous(...))
+}
+
+#' @export
+scale_colour_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_colour_continuous(...))
+}
+
+#' @export
+scale_color_errors <- scale_colour_errors
+
+#' @export
+scale_fill_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_fill_continuous(...))
+}
+
+#' @export
+scale_alpha_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_alpha(...))
+}
+
+#' @export
+scale_size_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_size(...))
+}
+
+#' @export
+scale_size_area_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_size_area(...))
+}
+
+#' @export
+scale_radius_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_radius(...))
+}
+
+#' @export
+scale_linewidth_errors <- function(...) {
+  make_scale_errors(ggplot2::scale_linewidth(...))
+}
+
+make_scale_errors <- function(parent) {
+  if (!requireNamespace("ggplot2", quietly=TRUE))
+    stop("package 'ggplot2' is required for this functionality", call.=FALSE)
+
+  ggplot2::ggproto(
+    paste0(class(parent)[1], "Errors"),
+    parent,
+
+    map = function(self, x, limits = self$get_limits()) {
+      # remove errors for comparisons
+      ggplot2::ggproto_parent(parent, self)$map(.v(x), limits)
+    }
+  )
+}
