@@ -1,45 +1,59 @@
-.onLoad()
+test_that("boolean ops return probabilities", {
+  xval <- 1:2
+  xerr <- c(0, 1)
+  x1 <- set_errors(xval, xerr)
+  x2 <- set_errors(xval, xerr)
+  y1 <- x1 + 1
+  y2 <- set_errors(xval+1, xerr)
 
-test_that("bolean ops throw a warning once", {
-  xval <- 1
-  x <- set_errors(xval, 1)
+  old <- options(errors.compare.probabilistic = TRUE)
+  on.exit(do.call(options, old), TRUE)
 
-  expect_warning(expect_equal(!x, !xval))
-  expect_silent(expect_equal(!x, !xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x & x, xval & xval))
-  expect_silent(expect_equal(x & x, xval & xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x | x, xval | xval))
-  expect_silent(expect_equal(x | x, xval | xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x == x, xval == xval))
-  expect_silent(expect_equal(x == x, xval == xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x != x, xval != xval))
-  expect_silent(expect_equal(x != x, xval != xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x < x, xval < xval))
-  expect_silent(expect_equal(x < x, xval < xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x > x, xval > xval))
-  expect_silent(expect_equal(x > x, xval > xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x <= x, xval <= xval))
-  expect_silent(expect_equal(x <= x, xval <= xval))
-  options(errors.warn.bool = TRUE)
-  expect_warning(expect_equal(x >= x, xval >= xval))
-  expect_silent(expect_equal(x >= x, xval >= xval))
+  # uncorrelated equal
+  expect_equal(x1 <  x2, c(0, 0.5))
+  expect_equal(x1 >  x2, c(0, 0.5))
+  expect_equal(x1 <= x2, c(1, 0.5))
+  expect_equal(x1 >= x2, c(1, 0.5))
+  expect_equal(x1 == x2, c(TRUE, FALSE))
+  expect_equal(x1 != x2, c(FALSE, TRUE))
+
+  # uncorrelated different
+  expect_equal(x1 <  y2, c(1, 0.7602499), tolerance=1e-6)
+  expect_equal(x1 >  y2, c(0, 1 - 0.7602499), tolerance=1e-6)
+  expect_equal(x1 <= y2, c(1, 0.7602499), tolerance=1e-6)
+  expect_equal(x1 >= y2, c(0, 1 - 0.7602499), tolerance=1e-6)
+  expect_equal(x1 == y2, c(FALSE, FALSE))
+  expect_equal(x1 != y2, c(TRUE, TRUE))
+
+  # correlated equal
+  expect_equal(x1 <  x1, c(0, 0))
+  expect_equal(x1 >  x1, c(0, 0))
+  expect_equal(x1 <= x1, c(1, 1))
+  expect_equal(x1 >= x1, c(1, 1))
+  expect_equal(x1 == x1, c(TRUE, TRUE))
+  expect_equal(x1 != x1, c(FALSE, FALSE))
+
+  # correlated different
+  expect_equal(x1 <  y1, c(1, 1))
+  expect_equal(x1 >  y1, c(0, 0))
+  expect_equal(x1 <= y1, c(1, 1))
+  expect_equal(x1 >= y1, c(0, 0))
+  expect_equal(x1 == y1, c(FALSE, FALSE))
+  expect_equal(x1 != y1, c(TRUE, TRUE))
+
+  # not allowed
+  expect_error(!x1, "not allowed")
+  expect_error(x1 & x1, "not allowed")
+  expect_error(x1 | x1, "not allowed")
 })
 
-test_that("ops with numerics throw a warning", {
-  x <- set_errors(1, 1)
+test_that("numerics are treated as numbers with no uncertainty", {
+  xval <- 1:10
+  xerr <- seq(0.005, 0.05, 0.005)
+  x <- set_errors(xval, xerr)
 
-  expect_warning(1 + x)
-  expect_silent(1 + x)
-  options(errors.warn.coercion = TRUE)
-  expect_warning(x + 1)
-  expect_silent(x + 1)
+  expect_equal(1 + x, set_errors(1 + xval, xerr))
+  expect_equal(x + 1, set_errors(xval + 1, xerr))
 })
 
 test_that("ops work properly", {
