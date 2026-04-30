@@ -38,6 +38,8 @@ vec_restore.errors <- function(x, ...) {
 }
 
 vec_proxy_equal.errors <- function(x, ...) {
+  old <- options(errors.compare.probabilistic = FALSE)
+  on.exit(do.call(options, old), TRUE)
   x
 }
 # Currently necessary because of r-lib/vctrs/issues/1140
