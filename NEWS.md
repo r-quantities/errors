@@ -2,6 +2,10 @@
 
 - Fix `print()` method, which now correctly returns the object invisibly (#64).
 - Fix `all.equal.errors()` registration (@MichaelChirico #67 addressing #66).
+- Operations with errors and numeric vectors no longer warn about coercion;
+  comparisons no longer warn about errors being dropped (#69 addressing #68).
+  Also, probabilistic comparisons are now available via a dedicated option,
+  see `?Ops.errors` for details.
 
 # errors 0.4.4
 
