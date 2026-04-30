@@ -42,7 +42,6 @@ test_that("boolean ops return probabilities", {
   expect_equal(x1 != y1, c(TRUE, TRUE))
 
   # not allowed
-  expect_error(!x1, "not allowed")
   expect_error(x1 & x1, "not allowed")
   expect_error(x1 | x1, "not allowed")
 })

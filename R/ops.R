@@ -26,6 +26,9 @@
 #'
 #' @export
 Ops.errors <- function(e1, e2) {
+  if (.Generic == "!")
+    return(NextMethod())
+
   cmp <- .Generic %in% c("==", "!=", "<", ">", "<=", ">=") # comparison-type
   pm  <- .Generic %in% c("+", "-")                         # addition-type
   prd <- .Generic %in% c("*", "/", "%/%", "%%")            # product-type
