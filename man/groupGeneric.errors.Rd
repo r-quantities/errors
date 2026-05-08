@@ -34,10 +34,14 @@ error to the original uncertainty. \code{lgamma}, \code{gamma}, \code{digamma} a
 uncertainty as expected from the first-order Taylor series method.}
 
 \subsection{\code{Ops}}{
-Boolean operators drop the uncertainty (showing a warning once) and operate on the
-numeric values. The rest of the operators propagate the uncertainty as expected from
+Boolean operators drop the uncertainty and operate on the numeric values
+unless the option \code{errors.compare.probabilistic} is set to \code{TRUE}.
+In such case the comparison operators return a numeric value between 0 and 1,
+representing the probability that the comparison is true, assuming normal
+distribution of the errors.
+The rest of the operators propagate the uncertainty as expected from
 the first-order Taylor series method. Any numeric operand is automatically
-coerced to \code{errors} (showing a warning once) with no uncertainty.}
+coerced to \code{errors} with no uncertainty.}
 
 \subsection{\code{Summary}}{
 The methods \code{all} and \code{any} are not supported for \code{errors}
@@ -53,7 +57,7 @@ log(x)
 cumsum(x)
 cumprod(x)
 
-y <- set_errors(4:6, 0.2)
+y <- set_errors(1:3 + 0.1, c(0, 0.1, 0.2))
 x / sqrt(y) + y * sin(x)
 
 # numeric values are automatically coerced to errors
@@ -61,6 +65,10 @@ x^2
 
 # boolean operators drop uncertainty
 y > x
+# unless probabilistic comparisons are enabled
+options(errors.compare.probabilistic = TRUE)
+y > x
+options(errors.compare.probabilistic = NULL)
 
 c(min(x), max(x))
 range(x)

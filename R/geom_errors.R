@@ -147,6 +147,3 @@ MakeGeomErrors <- function() ggplot2::ggproto(
     grob
   }
 )
-
-# registered in .onLoad()
-scale_type.errors <- function(x) "continuous"

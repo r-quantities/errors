@@ -1,28 +1,18 @@
 .pm <- enc2native(intToUtf8(177))
 
-warn_once <- function(message, fun, type) {
-  type <- paste0("errors.warn.", type)
-  if (getOption(type)) {
-    options(as.list(setNames(FALSE, type)))
-    warning("In '", fun, "' : ", message, call. = FALSE)
-  }
-}
-
-warn_once_bool <- function(fun) warn_once(
-  "boolean operators not defined for 'errors' objects, uncertainty dropped",
-  fun = fun,
-  type = "bool"
-)
-
-warn_once_coercion <- function(fun) warn_once(
-  "non-'errors' operand automatically coerced to an 'errors' object with no uncertainty",
-  fun = "Ops",
-  type = "coercion"
-)
-
 # ensure it's numeric
 .v <- function(x) as.numeric(x)
 .e <- function(x) as.numeric(errors(x))
+.c <- function(x, y) {
+  if (is.null(cor <- correl(x, y)))
+    cor <- rep(0, length(x))
+  cor
+}
+
+zstd <- function(x, op) {
+  p <- pnorm(.v(x) / .e(x))
+  replace(p, is.nan(p), if (nchar(op) == 1L) 0 else 1)
+}
 
 get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)
 
