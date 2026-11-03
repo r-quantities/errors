@@ -16,7 +16,7 @@
     \describe{
       \item{\code{times}}{an integer-valued vector giving the
 	(non-negative) number of times to repeat each element if of
-	length \code{length(x)}, or to repeat the whole vector if of
+	length \code{length(x) * each}, or to repeat the whole vector if of
 	length 1.  Negative or \code{NA} values are an error.  A
 	\code{double} vector is accepted, other inputs being coerced to
 	an integer or double vector.}
