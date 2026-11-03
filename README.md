@@ -14,7 +14,7 @@ reporting.
 
 ## Documentation
 
-See [the initial blog post](https://www.enchufa2.es/archives/errors-0-0-1.html).
+See [the initial blog post](https://enchufa2.es/archives/errors-0-0-1.html).
 The package includes a vignette that is an up-to-date version of the following
 R Journal publication, which should be used for citations:
 
