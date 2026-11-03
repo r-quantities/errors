@@ -1,4 +1,4 @@
-# errors devel
+# errors 0.4.5
 
 - Fix `print()` method, which now correctly returns the object invisibly (#64).
 - Fix `all.equal.errors()` registration (@MichaelChirico #67 addressing #66).
@@ -6,6 +6,8 @@
   comparisons no longer warn about errors being dropped (#69 addressing #68).
   Also, probabilistic comparisons are now available via a dedicated option,
   see `?Ops.errors` for details.
+- Fix `str()` method, which now strips the 'errors' class tag whether or not the
+  default method adds a leading space, so it works with R-devel r90805
 
 # errors 0.4.4
 

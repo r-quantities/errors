@@ -1,6 +1,6 @@
 ## Patch release
 
-Several fixes an improvements.
+Several fixes an improvements, addresses current ERROR.
 
 ## Test environments
 

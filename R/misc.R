@@ -236,7 +236,7 @@ str.errors <- function(object, ...) {
   on.exit()
   sink()
   close(file)
-  cat(" Errors:", sub(" 'errors' ", "", rval), "\n")
+  cat(" Errors:", sub("^\\s*'errors'\\s*", "", rval), "\n")
 }
 
 #' @export
