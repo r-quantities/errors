@@ -42,13 +42,20 @@ format.errors = function(x,
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
 
   if (is.null(digits)) digits <- getOption("errors.digits", 1)
-  digits <- if (digits == "pdg") digits_pdg(.e(x)) else rep(digits, length(x))
+  is_pdg <- identical(digits, "pdg")
+  digits <- if (is_pdg) digits_pdg(.e(x)) else rep(digits, length(x))
 
   scipen <- getOption("scipen", 0)
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
   e <- signif(.e(x), digits)
+  if (is_pdg) {
+    pdg_round <- pdg_round_to_1000(.e(x))
+    if (any(pdg_round)) {
+      e[pdg_round] <- round(.e(x[pdg_round]), digits = -get_exponent(.e(x[pdg_round])))
+    }
+  }
   nulle <- e == 0 & !is.na(e)
   eexp <- get_exponent(e)
   xexp <- ifelse(.v(x) == 0, eexp + 1, get_exponent(x))

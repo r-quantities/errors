@@ -47,7 +47,7 @@ test_that("error formatting works properly", {
 
   x <- set_errors(rep(0.827, 3), c(0.119, 0.367, 0.962))
   expect_equal(format(x, notation="plus-minus", digits="pdg"), sapply(list(
-    c("0.83", "0.12"), c("0.8", "0.4"), c("1", "1")),
+    c("0.83", "0.12"), c("0.8", "0.4"), c("0.8", "1.0")),
     paste, collapse=paste("", .pm, "")))
 
   x <- set_errors(10, 1)
