@@ -16,22 +16,14 @@ zstd <- function(x, op) {
 
 get_exponent <- function(x) ifelse(.v(x), floor(log10(abs(.v(x)))), 0)
 
-pdg_round_to_1000 <- function(x) {
-  x <- ifelse(is.finite(x), x, 0)
-  x_sci <- formatC(abs(x), digits=2, format="e", decimal.mark=".")
-  x_hod <- as.integer(gsub("(\\.|e.*)", "", x_sci))
-
-  x_hod >= 950 & x_hod < 1000
-}
-
-digits_pdg <- function(x) {
+pdg_hod <- function(x) {
   # extract 3 highest order digits
   x <- ifelse(is.finite(x), x, 0)
   x_sci <- formatC(abs(x), digits=2, format="e", decimal.mark=".")
-  x_hod <- as.integer(gsub("(\\.|e.*)", "", x_sci))
-
-  ifelse(x_hod < 355, 2, ifelse(x_hod < 950, 1, 2))
+  as.integer(gsub("(\\.|e.*)", "", x_sci))
 }
+
+digits_pdg <- function(hod) ifelse(hod < 355, 2, ifelse(hod < 950, 1, 2))
 
 propagate <- function(xx, x, y, dx, dy, method=getOption("errors.propagation", "taylor-first-order")) {
   # if y not defined, use a vector of NAs
