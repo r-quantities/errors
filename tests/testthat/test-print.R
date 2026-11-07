@@ -47,7 +47,31 @@ test_that("error formatting works properly", {
 
   x <- set_errors(rep(0.827, 3), c(0.119, 0.367, 0.962))
   expect_equal(format(x, notation="plus-minus", digits="pdg"), sapply(list(
-    c("0.83", "0.12"), c("0.8", "0.4"), c("1", "1")),
+    c("0.83", "0.12"), c("0.8", "0.4"), c("0.8", "1.0")),
+    paste, collapse=paste("", .pm, "")))
+
+  # PDG 950-999 rounding up to 1000: boundary, magnitudes, notations
+  x <- set_errors(c(1, 1, 0.827, 827, 1e-5), c(0.95, 0.9495, 0.962, 96.2, 9.62e-6))
+  expect_equal(format(x, notation="plus-minus", digits="pdg"), c(sapply(list(
+    c("1.0", "1.0"), c("1.0", "1.0"), c("0.8", "1.0"), c("830", "100")),
+    paste, collapse=paste("", .pm, "")), paste0("(1.0 ", .pm, " 1.0)e-5")))
+  expect_equal(format(x, notation="parenthesis", digits="pdg"),
+               c("1.0(10)", "1.0(10)", "0.8(10)", "830(100)", "1.0(10)e-5"))
+  expect_equal(format(x, notation="parenthesis", digits="pdg", scientific=TRUE),
+               c("1.0(10)e0", "1.0(10)e0", "8(10)e-1", "8.3(10)e2", "1.0(10)e-5"))
+
+  # PDG band edges (three highest order digits are rounded, not truncated)
+  x <- set_errors(rep(0.827, 7), c(0.100, 0.354, 0.3549, 0.355, 0.949, 0.999, 0.9996))
+  expect_equal(format(x, notation="plus-minus", digits="pdg"), sapply(list(
+    c("0.83", "0.10"), c("0.83", "0.35"), c("0.8", "0.4"), c("0.8", "0.4"),
+    c("0.8", "0.9"), c("0.8", "1.0"), c("0.8", "1.0")),
+    paste, collapse=paste("", .pm, "")))
+
+  # PDG with zero/negative values and zero/non-finite errors
+  x <- set_errors(c(0, 0, -0.827, 0.827, 1, 1), c(0.962, 0.119, 0.962, 0, NA, Inf))
+  expect_equal(format(x, notation="plus-minus", digits="pdg"), sapply(list(
+    c("0.0", "1.0"), c("0.00", "0.12"), c("-0.8", "1.0"), c("0.827", "0"),
+    c("1", "NA"), c("1", "Inf")),
     paste, collapse=paste("", .pm, "")))
 
   x <- set_errors(10, 1)
