@@ -60,6 +60,20 @@ test_that("error formatting works properly", {
   expect_equal(format(x, notation="parenthesis", digits="pdg", scientific=TRUE),
                c("1.0(10)e0", "1.0(10)e0", "8(10)e-1", "8.3(10)e2", "1.0(10)e-5"))
 
+  # PDG band edges (three highest order digits are rounded, not truncated)
+  x <- set_errors(rep(0.827, 7), c(0.100, 0.354, 0.3549, 0.355, 0.949, 0.999, 0.9996))
+  expect_equal(format(x, notation="plus-minus", digits="pdg"), sapply(list(
+    c("0.83", "0.10"), c("0.83", "0.35"), c("0.8", "0.4"), c("0.8", "0.4"),
+    c("0.8", "0.9"), c("0.8", "1.0"), c("0.8", "1.0")),
+    paste, collapse=paste("", .pm, "")))
+
+  # PDG with zero/negative values and zero/non-finite errors
+  x <- set_errors(c(0, 0, -0.827, 0.827, 1, 1), c(0.962, 0.119, 0.962, 0, NA, Inf))
+  expect_equal(format(x, notation="plus-minus", digits="pdg"), sapply(list(
+    c("0.0", "1.0"), c("0.00", "0.12"), c("-0.8", "1.0"), c("0.827", "0"),
+    c("1", "NA"), c("1", "Inf")),
+    paste, collapse=paste("", .pm, "")))
+
   x <- set_errors(10, 1)
   expect_equal(format(x - set_errors(10)), "0(1)")
   expect_equal(format(x - x), "0(0)")
