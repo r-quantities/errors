@@ -42,13 +42,21 @@ format.errors = function(x,
   stopifnot(notation %in% c("parenthesis", "plus-minus"))
 
   if (is.null(digits)) digits <- getOption("errors.digits", 1)
-  digits <- if (digits == "pdg") digits_pdg(.e(x)) else rep(digits, length(x))
+  ee <- .e(x)
+  if (identical(digits, "pdg")) {
+    hod <- pdg_hod(ee)
+    digits <- digits_pdg(hod)
+    # PDG: 950-999 round up to 1000 and keep two significant digits
+    e <- ifelse(hod >= 950, 10^(get_exponent(ee) + 1), signif(ee, digits))
+  } else {
+    digits <- rep(digits, length(x))
+    e <- signif(ee, digits)
+  }
 
   scipen <- getOption("scipen", 0)
   prepend <- rep("", length(x))
   append <- rep("", length(x))
 
-  e <- signif(.e(x), digits)
   nulle <- e == 0 & !is.na(e)
   eexp <- get_exponent(e)
   xexp <- ifelse(.v(x) == 0, eexp + 1, get_exponent(x))

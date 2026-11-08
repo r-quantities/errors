@@ -1,3 +1,9 @@
+# errors devel
+
+- Fix PDG rounding (`digits="pdg"`) for uncertainties whose three highest
+  order digits are 950-999, which are now rounded up to 1000 and keep two
+  significant digits (@davidchall #70 addressing #65).
+
 # errors 0.4.5
 
 - Fix `print()` method, which now correctly returns the object invisibly (#64).
